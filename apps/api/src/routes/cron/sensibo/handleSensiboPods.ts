@@ -45,8 +45,11 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
         const conditionFields: APIEmbedField[] = [];
 
         if (action.currentMode !== null) {
-          if (action.currentMode === acState.mode) {
-            conditionFields.push({ name: "Current Mode", value: action.currentMode, inline: true });
+          if (!acState.on && action.currentMode === "off") {
+            conditionFields.push({ name: "Current Mode", value: capitalize(action.currentMode), inline: true });
+            mayFire = true;
+          } else if (action.currentMode === acState.mode) {
+            conditionFields.push({ name: "Current Mode", value: capitalize(action.currentMode), inline: true });
             mayFire = true;
           } else {
             canFire = false;
