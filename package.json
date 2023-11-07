@@ -20,6 +20,6 @@
     "tsconfig": "workspace:*",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@8.6.10",
+  "packageManager": "pnpm@8.10.2",
   "name": "turbo"
 }
