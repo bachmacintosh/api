@@ -25,7 +25,6 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
       },
     },
   });
-  let podsFired = 0;
   for (const pod of pods) {
     let hasFired = false;
     // eslint-disable-next-line no-await-in-loop -- Must be in order
@@ -202,15 +201,23 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
             });
 
             hasFired = true;
-            podsFired += 1;
           }
         }
       }
     }
-  }
-  if (podsFired === 0) {
-    await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_SENSIBO), {
-      body: { embeds: [resultEmbed("info", "No Actions Triggered", "No Sensibo Pods were updated at this hour.")] },
-    });
+    if (!hasFired) {
+      const currentFields: APIEmbedField[] = [
+        { name: "Current Mode", value: capitalize(acState.mode), inline: true },
+        { name: "Room Temp.", value: roomTemperature.toString(), inline: true },
+        { name: "Outdoor Temp.", value: outdoorTemperature.toString(), inline: true },
+        { name: "Hour", value: hour.toString(), inline: true },
+      ];
+      // eslint-disable-next-line no-await-in-loop -- Must be in order
+      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_SENSIBO), {
+        body: {
+          embeds: [resultEmbed("info", pod.name, "No actions were triggered for this Sensibo Pod.", currentFields)],
+        },
+      });
+    }
   }
 }
