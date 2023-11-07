@@ -1,0 +1,4 @@
+{
+  "extends": "tsconfig/cfworker.json",
+  "include": ["./**/*.*ts"]
+}

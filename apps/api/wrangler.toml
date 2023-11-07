@@ -1,0 +1,34 @@
+name = "api"
+main = "./src/index.ts"
+compatibility_date = "2023-10-31"
+
+logpush = true
+
+routes = [
+	{ pattern = "api.bachmac.com", custom_domain = true }
+]
+
+kv_namespaces = [{ binding = "KV", id = "f5008252a8a54f3280e56216d4a181bc" }]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "api"
+database_id = "0f1d5ed6-0388-4df7-8f2e-2ff8580d40fa"
+migrations_dir = "drizzle"
+
+[triggers]
+crons = ["*/10 * * * *"]
+
+[limits]
+cpu_ms = 1000
+
+[[queues.producers]]
+  queue = "bach-queue"
+  binding = "QUEUE"
+
+[[queues.consumers]]
+  queue = "bach-queue"
+	dead_letter_queue = "bach-dead-queue"
+  max_batch_size = 5
+  max_batch_timeout = 5
+  max_retries = 5

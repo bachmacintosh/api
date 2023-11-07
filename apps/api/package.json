@@ -1,0 +1,38 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "build": "pnpm check-types && wrangler deploy --dry-run --outdir dist",
+    "check-types": "tsc --noEmit",
+    "deploy": "pnpm check-types && wrangler deploy",
+    "dev": "wrangler dev",
+    "dev:cron": "wrangler dev --test-scheduled",
+    "generate": "drizzle-kit generate:sqlite",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "migrate": "wrangler d1 migrations apply api"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@bachmacintosh/api-types": "workspace:*",
+    "@cloudflare/workers-types": "4.20231025.0",
+    "@octokit/types": "12.1.1",
+    "@octokit/webhooks-types": "7.3.1",
+    "discord-api-types": "0.37.62",
+    "drizzle-kit": "0.19.13",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "5.2.2",
+    "undici": "5.27.0",
+    "wrangler": "3.15.0"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^2.0.1",
+    "drizzle-orm": "^0.28.6",
+    "itty-router": "^4.0.23"
+  }
+}
