@@ -11,6 +11,7 @@ import resultEmbed from "../../../discord/embeds/resultEmbed";
 import setAcState from "../../../sensibo/setAcState";
 
 export default async function handleSensiboPods(env: Env, rest: REST, hour: number): Promise<void> {
+  const FRACTIONAL_DIGITS = 2;
   const config = await get(env, "config_sensibo");
   const weather = await getWeather(env);
   const outdoorTemperature = weather.data.timelines[0].intervals[0].values.temperature;
@@ -45,10 +46,7 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
         const conditionFields: APIEmbedField[] = [];
 
         if (action.currentMode !== null) {
-          if (!acState.on && action.currentMode === "off") {
-            conditionFields.push({ name: "Current Mode", value: capitalize(action.currentMode), inline: true });
-            mayFire = true;
-          } else if (action.currentMode === acState.mode) {
+          if ((!acState.on && action.currentMode === "off") || (acState.on && action.currentMode === acState.mode)) {
             conditionFields.push({ name: "Current Mode", value: capitalize(action.currentMode), inline: true });
             mayFire = true;
           } else {
@@ -56,13 +54,17 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
           }
         }
         if (action.roomTempAbove !== null || action.roomTempBelow !== null) {
-          conditionFields.push({ name: "Current Room Temp.", value: roomTemperature.toString(), inline: true });
+          conditionFields.push({
+            name: "Current Room Temp.",
+            value: roomTemperature.toFixed(FRACTIONAL_DIGITS),
+            inline: true,
+          });
         }
         if (action.roomTempAbove !== null && action.roomTempBelow !== null) {
           if (roomTemperature > action.roomTempAbove && roomTemperature < action.roomTempBelow) {
             conditionFields.push({
               name: "Room Temp. Between",
-              value: `${action.roomTempAbove}-${action.roomTempBelow}`,
+              value: `${action.roomTempAbove} - ${action.roomTempBelow}`,
             });
             mayFire = true;
           } else {
@@ -85,13 +87,17 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
         }
 
         if (action.outdoorTempAbove !== null || action.outdoorTempBelow !== null) {
-          conditionFields.push({ name: "Current Outdoor Temp.", value: outdoorTemperature.toString(), inline: true });
+          conditionFields.push({
+            name: "Current Outdoor Temp.",
+            value: outdoorTemperature.toFixed(FRACTIONAL_DIGITS),
+            inline: true,
+          });
         }
         if (action.outdoorTempAbove !== null && action.outdoorTempBelow !== null) {
           if (outdoorTemperature > action.outdoorTempAbove && outdoorTemperature < action.outdoorTempBelow) {
             conditionFields.push({
               name: "Outdoor Temp. Between",
-              value: `${action.outdoorTempAbove}-${action.outdoorTempBelow}`,
+              value: `${action.outdoorTempAbove} - ${action.outdoorTempBelow}`,
             });
             mayFire = true;
           } else {
@@ -127,7 +133,7 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
           if (isHourBetween(hour, action.timeHourAfter, action.timeHourBefore)) {
             conditionFields.push({
               name: "Hour Between",
-              value: `${action.timeHourAfter}-${action.timeHourBefore}`,
+              value: `${action.timeHourAfter} - ${action.timeHourBefore}`,
             });
             mayFire = true;
           } else {
@@ -156,7 +162,7 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
             canFire = false;
           }
         }
-        // At least one condition was set, and no set conditions were NOT met
+        // At least one condition was set, and all set conditions were met
         if (canFire && mayFire) {
           const newAcState: Partial<AcState> = {};
           if (action.on !== null) {
@@ -209,10 +215,14 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
       }
     }
     if (!hasFired) {
+      let mode = capitalize(acState.mode);
+      if (!acState.on) {
+        mode = "Off";
+      }
       const currentFields: APIEmbedField[] = [
-        { name: "Current Mode", value: capitalize(acState.mode), inline: true },
-        { name: "Room Temp.", value: roomTemperature.toString(), inline: true },
-        { name: "Outdoor Temp.", value: outdoorTemperature.toString(), inline: true },
+        { name: "Current Mode", value: mode, inline: true },
+        { name: "Room Temp.", value: roomTemperature.toFixed(FRACTIONAL_DIGITS), inline: true },
+        { name: "Outdoor Temp.", value: outdoorTemperature.toFixed(FRACTIONAL_DIGITS), inline: true },
         { name: "Hour", value: hour.toString(), inline: true },
       ];
       // eslint-disable-next-line no-await-in-loop -- Must be in order
