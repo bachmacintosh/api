@@ -17,15 +17,15 @@ export default async function handleScheduled(env: Env): Promise<void> {
 
   const rest = getRest(env);
 
-  if (minute < MINUTE_10) {
-    await handleSensiboPods(env, rest, hour);
-  }
-
   switch (hour) {
     case HOUR_08:
       if (minute < MINUTE_10) {
         await cleanUpChannels(env, rest);
       }
     // No Default
+  }
+
+  if (minute < MINUTE_10) {
+    await handleSensiboPods(env, rest, hour);
   }
 }
