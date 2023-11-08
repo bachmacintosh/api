@@ -7,9 +7,7 @@ export default async function getPlayerSummaries(env: Env): Promise<SteamUserInf
   };
   const response = await fetch(url, init);
   if (response.ok) {
-    const text = await response.text();
-    const info = JSON.parse(text) as SteamUserInfo;
-    return info;
+    return await response.json();
   } else {
     throw new Error(`Steam API threw HTTP error ${response.status}`);
   }

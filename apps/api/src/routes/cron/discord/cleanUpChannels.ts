@@ -1,8 +1,13 @@
-import { type Env, type RESTGetAPIChannelMessagesResult, Routes } from "../../../types";
+import {
+  type Env,
+  type RESTGetAPIChannelMessagesResult,
+  type RESTPostAPIChannelMessagesBulkDeleteJSONBody,
+  Routes,
+} from "../../../types";
 import type { REST } from "@discordjs/rest";
 
 export default async function cleanUpChannels(env: Env, rest: REST): Promise<void> {
-  const discordChannels = [env.DISCORD_CHANNEL_GITHUB, env.DISCORD_CHANNEL_SENSIBO] as const;
+  const discordChannels = [env.DISCORD_CHANNEL_GITHUB, env.DISCORD_CHANNEL_SENSIBO, env.DISCORD_CHANNEL_STEAM] as const;
   for (const channel of discordChannels) {
     let hasMoreMessages = true;
     let before = "";
@@ -40,7 +45,9 @@ export default async function cleanUpChannels(env: Env, rest: REST): Promise<voi
         }
         const messageIdArray = Array.from(messageIds);
         // eslint-disable-next-line no-await-in-loop -- Must be in order
-        await rest.post(Routes.channelBulkDelete(env.DISCORD_CHANNEL_SENSIBO), { body: { messages: messageIdArray } });
+        await rest.post(Routes.channelBulkDelete(env.DISCORD_CHANNEL_SENSIBO), {
+          body: { messages: messageIdArray } satisfies RESTPostAPIChannelMessagesBulkDeleteJSONBody,
+        });
       }
     }
   }

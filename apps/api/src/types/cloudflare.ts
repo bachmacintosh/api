@@ -1,5 +1,5 @@
 import type { AcState, SensiboConfig } from "./sensibo";
-import type { SteamMonitorConfig } from "./steam";
+import type { SteamMonitorConfig, SteamUserInfo } from "./steam";
 
 export type CF = [env: Env, context: ExecutionContext];
 
@@ -11,6 +11,7 @@ export interface Env {
   DISCORD_BOT_TOKEN: string;
   DISCORD_CHANNEL_GITHUB: string;
   DISCORD_CHANNEL_SENSIBO: string;
+  DISCORD_CHANNEL_STEAM: string;
   DISCORD_GUILD_ID: string;
   DISCORD_MENTION_ID: string;
 
@@ -35,6 +36,7 @@ export interface Env {
 export interface KVMap {
   config_sensibo: SensiboConfig;
   config_steam: SteamMonitorConfig;
+  steam_user_info: SteamUserInfo | null;
 }
 
 export interface QueueMethods {

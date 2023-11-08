@@ -1,4 +1,10 @@
-import { type APIEmbedField, type AcState, type Env, Routes } from "../../../types";
+import {
+  type APIEmbedField,
+  type AcState,
+  type Env,
+  type RESTPostAPIChannelMessageJSONBody,
+  Routes,
+} from "../../../types";
 import type { REST } from "@discordjs/rest";
 import capitalize from "../../../util/capitalize";
 import convertTemperature from "../../../sensibo/convertTemperature";
@@ -206,7 +212,7 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
                   resultEmbed("success", pod.name, "The following A/C State was set:"),
                   resultEmbed("success", "", "It was set because these conditions were met:", conditionFields),
                 ],
-              },
+              } satisfies RESTPostAPIChannelMessageJSONBody,
             });
 
             hasFired = true;
@@ -229,7 +235,7 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_SENSIBO), {
         body: {
           embeds: [resultEmbed("info", pod.name, "No actions were triggered for this Sensibo Pod.", currentFields)],
-        },
+        } satisfies RESTPostAPIChannelMessageJSONBody,
       });
     }
   }
