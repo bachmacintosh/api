@@ -2,7 +2,7 @@ import { type Env, type RESTGetAPIChannelMessagesResult, Routes } from "../../..
 import type { REST } from "@discordjs/rest";
 
 export default async function cleanUpChannels(env: Env, rest: REST): Promise<void> {
-  const discordChannels = [env.DISCORD_CHANNEL_GITHUB, env.DISCORD_CHANNEL_SENSIBO] as const;
+  const discordChannels = [env.DISCORD_CHANNEL_GITHUB, env.DISCORD_CHANNEL_SENSIBO, env.DISCORD_CHANNEL_STEAM] as const;
   for (const channel of discordChannels) {
     let hasMoreMessages = true;
     let before = "";
