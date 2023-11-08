@@ -31,5 +31,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: "apps/api"
           packageManager: "pnpm"
-          preCommands: wrangler d1 migrations apply api
+          command: |
+            d1 migrations apply api
+            deploy
           wranglerVersion: "3.15.0"
