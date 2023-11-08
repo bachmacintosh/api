@@ -39,6 +39,7 @@ export default async function monitorSteamGame(env: Env, rest: REST): Promise<vo
       ) {
         await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_STEAM), {
           body: {
+            content: `<@${env.DISCORD_MENTION_ID}>`,
             embeds: resultEmbed(
               "error",
               `${previousSteamUserInfo.gameextrainfo} Has Crashed`,
