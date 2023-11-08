@@ -30,13 +30,13 @@ importers:
   apps/api:
     dependencies:
       '@discordjs/rest':
-        specifier: ^2.0.1
+        specifier: 2.0.1
         version: 2.0.1
       drizzle-orm:
-        specifier: ^0.28.6
+        specifier: 0.28.6
         version: 0.28.6(@cloudflare/workers-types@4.20231025.0)
       itty-router:
-        specifier: ^4.0.23
+        specifier: 4.0.23
         version: 4.0.23
     devDependencies:
       '@bachmacintosh/api-types':
