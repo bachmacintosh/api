@@ -48,6 +48,6 @@ export default async function monitorSteamGame(env: Env, rest: REST): Promise<vo
         });
       }
     }
-    await set(env, "steam_user_info", steamInfo);
+    await set(env, "steam_user_info", steamInfo, { expirationTtl: 86400 });
   }
 }
