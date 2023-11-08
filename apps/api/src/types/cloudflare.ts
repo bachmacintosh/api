@@ -11,6 +11,7 @@ export interface Env {
   DISCORD_BOT_TOKEN: string;
   DISCORD_CHANNEL_GITHUB: string;
   DISCORD_CHANNEL_SENSIBO: string;
+  DISCORD_CHANNEL_STEAM: string;
   DISCORD_GUILD_ID: string;
   DISCORD_MENTION_ID: string;
 
