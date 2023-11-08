@@ -30,8 +30,4 @@ export default async function handleScheduled(env: Env): Promise<void> {
       }
       await monitorSteamGame(env, rest);
   }
-
-  if (minute < MINUTE_10) {
-    await handleSensiboPods(env, rest, hour);
-  }
 }
