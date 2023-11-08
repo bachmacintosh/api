@@ -19,6 +19,9 @@ export async function get<K extends keyof KVMap>(env: Env, key: K): Promise<KVMa
         await env.KV.put(key, JSON.stringify(defaultConfig));
         return defaultConfig as KVMap[K];
       }
+      case "steam_user_info": {
+        return null as KVMap[K];
+      }
       default: {
         throw new Error("Unknown key specified");
       }
