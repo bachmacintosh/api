@@ -26,7 +26,7 @@ const handlePing: GitHubWebhookEventRunner<"ping"> = async (event, env, rest) =>
         resultEmbed(
           "success",
           `New ${event.hook.type} Webhook Ping`,
-          "GitHub sent a Ping from a Webhook, usually when a new one was added.",
+          "GitHub sent a Ping from a Webhook, usually when a new one was added, or when testing a webhook endpoint.",
           embedFields,
         ),
       ],
