@@ -2,6 +2,7 @@ import type {
   APIApplicationCommandAutocompleteInteraction,
   APIApplicationCommandAutocompleteResponse,
   APIApplicationCommandInteractionDataSubcommandOption,
+  APIButtonComponent,
   APIChatInputApplicationCommandInteraction,
   APIInteractionResponse,
   RESTPostAPIApplicationGuildCommandsJSONBody,
@@ -11,6 +12,8 @@ import type { Env } from "./cloudflare";
 export {
   APIVersion,
   ApplicationCommandOptionType,
+  ButtonStyle,
+  ComponentType,
   InteractionResponseType,
   InteractionType,
   Routes,
@@ -31,6 +34,8 @@ export type DiscordAutocompleteSubcommandHandler = (
   env: Env,
 ) => Promise<APIApplicationCommandAutocompleteResponse>;
 
+export type DiscordButton = (label: string, customIdOrUrl: string) => APIButtonComponent;
+
 export type DiscordCommandRunner = (
   interaction: APIChatInputApplicationCommandInteraction,
   env: Env,
@@ -44,18 +49,22 @@ export type DiscordSubcommandRunner = (
 export type DiscordErrorLevel = "error" | "info" | "success" | "warn";
 
 export type {
+  APIActionRowComponent,
   APIApplicationCommandAutocompleteInteraction,
   APIApplicationCommandBasicOption,
   APIApplicationCommandOption,
   APIApplicationCommandOptionChoice,
   APIApplicationCommandSubcommandGroupOption,
   APIApplicationCommandSubcommandOption,
+  APIButtonComponent,
   APIChatInputApplicationCommandInteraction,
   APIEmbed,
   APIEmbedField,
   APIInteraction,
   APIInteractionResponse,
   APIInteractionResponseCallbackData,
+  APIMessageActionRowComponent,
+  APIMessageComponent,
   RESTGetAPIChannelMessagesResult,
   RESTPatchAPIWebhookWithTokenMessageJSONBody,
   RESTPostAPIApplicationGuildCommandsJSONBody,
