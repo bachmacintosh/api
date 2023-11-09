@@ -6,26 +6,26 @@ import {
 } from "../../types";
 import resultEmbed from "../../discord/embeds/resultEmbed";
 
-const handlePing: GitHubWebhookEventRunner<"ping"> = async (pingEvent, env, rest) => {
-  const embedFields: APIEmbedField[] = [{ name: "Name", value: pingEvent.hook.name }];
-  if (pingEvent.hook.type === "Organization" && typeof pingEvent.organization !== "undefined") {
-    embedFields.push({ name: "Organization", value: pingEvent.organization.login });
-  } else if (pingEvent.hook.type === "Repository" && typeof pingEvent.repository !== "undefined") {
-    if (typeof pingEvent.sender !== "undefined") {
-      embedFields.push({ name: "User", value: pingEvent.sender.login });
-      embedFields.push({ name: "Repository", value: pingEvent.repository.name });
-    } else if (typeof pingEvent.organization !== "undefined") {
-      embedFields.push({ name: "Organization", value: pingEvent.organization.login });
-      embedFields.push({ name: "Repository", value: pingEvent.repository.name });
+const handlePing: GitHubWebhookEventRunner<"ping"> = async (event, env, rest) => {
+  const embedFields: APIEmbedField[] = [{ name: "Name", value: event.hook.name }];
+  if (event.hook.type === "Organization" && typeof event.organization !== "undefined") {
+    embedFields.push({ name: "Organization", value: event.organization.login });
+  } else if (event.hook.type === "Repository" && typeof event.repository !== "undefined") {
+    if (typeof event.organization !== "undefined") {
+      embedFields.push({ name: "Organization", value: event.organization.login });
+      embedFields.push({ name: "Repository", value: event.repository.name });
+    } else if (typeof event.sender !== "undefined") {
+      embedFields.push({ name: "User", value: event.sender.login });
+      embedFields.push({ name: "Repository", value: event.repository.name });
     }
   }
-  embedFields.push({ name: "Events", value: pingEvent.hook.events.join(", ") });
+  embedFields.push({ name: "Events", value: event.hook.events.join(", ") });
   await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
     body: {
       embeds: [
         resultEmbed(
           "success",
-          `New ${pingEvent.hook.type} Webhook Ping`,
+          `New ${event.hook.type} Webhook Ping`,
           "GitHub sent a Ping from a Webhook, usually when a new one was added.",
           embedFields,
         ),
