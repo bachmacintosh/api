@@ -1,9 +1,11 @@
 import type { CodeScanningAlertEvent, PingEvent, WebhookEventName } from "@octokit/webhooks-types";
+import { type Env, type RESTPostAPIChannelMessageJSONBody, Routes } from "../types";
 import { StatusError, json } from "itty-router";
 import { handleCodeScanningAlert, handlePing } from "./webhooks";
-import type { Env } from "../types";
 import { HttpStatusCode } from "@bachmacintosh/api-types";
 import getRest from "../discord/getRest";
+import mentionUser from "../discord/content/mentionUser";
+import resultEmbed from "../discord/embeds/resultEmbed";
 
 export default async function handleWebhook(request: Request, env: Env): Promise<Response> {
   const eventHeader = request.headers.get("X-GitHub-Event");
@@ -26,6 +28,12 @@ export default async function handleWebhook(request: Request, env: Env): Promise
       }
       break;
     default:
+      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+        body: {
+          content: mentionUser(env.DISCORD_MENTION_ID),
+          embeds: [resultEmbed("error", `Unimplemented Webhook Event: ${eventHeader}`)],
+        } satisfies RESTPostAPIChannelMessageJSONBody,
+      });
       throw new StatusError(HttpStatusCode.NotImplemented, `GitHub Webhook Event ${eventHeader} Not Implemented`);
   }
   return json({ message: "Webhook successfully processed!" }, { status: HttpStatusCode.Ok });
