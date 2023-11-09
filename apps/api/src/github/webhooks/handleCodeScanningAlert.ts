@@ -177,6 +177,12 @@ const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> =
       }
       break;
     default: {
+      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+        body: {
+          content: mentionUser(env.DISCORD_MENTION_ID),
+          embeds: [resultEmbed("error", "Unknown Code Scanning Alert Event Action")],
+        } satisfies RESTPostAPIChannelMessageJSONBody,
+      });
       throw new StatusError(HttpStatusCode.NotImplemented, "Unknown Code Scanning Alert Event Action");
     }
   }
