@@ -7,16 +7,16 @@ import {
 import resultEmbed from "../../discord/embeds/resultEmbed";
 
 const handlePing: GitHubWebhookEventRunner<"ping"> = async (event, env, rest) => {
-  const embedFields: APIEmbedField[] = [{ name: "Name", value: event.hook.name }];
+  const embedFields: APIEmbedField[] = [{ name: "Name", value: event.hook.name, inline: true }];
   if (event.hook.type === "Organization" && typeof event.organization !== "undefined") {
-    embedFields.push({ name: "Organization", value: event.organization.login });
+    embedFields.push({ name: "Organization", value: event.organization.login, inline: true });
   } else if (event.hook.type === "Repository" && typeof event.repository !== "undefined") {
     if (typeof event.organization !== "undefined") {
-      embedFields.push({ name: "Organization", value: event.organization.login });
-      embedFields.push({ name: "Repository", value: event.repository.name });
+      embedFields.push({ name: "Organization", value: event.organization.login, inline: true });
+      embedFields.push({ name: "Repository", value: event.repository.name, inline: true });
     } else if (typeof event.sender !== "undefined") {
-      embedFields.push({ name: "User", value: event.sender.login });
-      embedFields.push({ name: "Repository", value: event.repository.name });
+      embedFields.push({ name: "User", value: event.sender.login, inline: true });
+      embedFields.push({ name: "Repository", value: event.repository.name, inline: true });
     }
   }
   embedFields.push({ name: "Events", value: event.hook.events.join(", ") });
