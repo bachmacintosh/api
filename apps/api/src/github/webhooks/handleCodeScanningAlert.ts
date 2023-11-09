@@ -19,6 +19,7 @@ const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> =
   }
   const embedFields: APIEmbedField[] = [
     { name: "Repository", value: event.repository.full_name, inline: true },
+    { name: "Number", value: event.alert.number.toString() },
     {
       name: event.action === "closed_by_user" || event.action === "reopened_by_user" ? "User" : "Branch",
       value: branchOrUser,
