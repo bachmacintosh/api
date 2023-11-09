@@ -25,7 +25,7 @@ export default async function cleanUpChannels(env: Env, rest: REST): Promise<voi
       } else if (messages.length === 1) {
         hasMoreMessages = false;
         // eslint-disable-next-line no-await-in-loop -- Must be in order
-        await rest.delete(`${Routes.channelMessage(env.DISCORD_CHANNEL_SENSIBO, messages[0].id)}`);
+        await rest.delete(`${Routes.channelMessage(channel, messages[0].id)}`);
       } else {
         const messageIds = new Set<string>();
         messages.sort((messageA, messageB) => {
@@ -45,7 +45,7 @@ export default async function cleanUpChannels(env: Env, rest: REST): Promise<voi
         }
         const messageIdArray = Array.from(messageIds);
         // eslint-disable-next-line no-await-in-loop -- Must be in order
-        await rest.post(Routes.channelBulkDelete(env.DISCORD_CHANNEL_SENSIBO), {
+        await rest.post(Routes.channelBulkDelete(channel), {
           body: { messages: messageIdArray } satisfies RESTPostAPIChannelMessagesBulkDeleteJSONBody,
         });
       }
