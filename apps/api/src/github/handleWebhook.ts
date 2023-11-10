@@ -32,11 +32,32 @@ export default async function handleWebhook(request: Request, env: Env): Promise
         await handleDependabotAlert(event, env, rest);
       }
       break;
+    case "discussion":
+      break;
+    case "discussion_comment":
+      break;
+    case "issue_comment":
+      break;
+    case "issues":
+      break;
+    case "meta":
+      break;
     case "ping":
       {
         const event = await request.json<PingEvent>();
         await handlePing(event, env, rest);
       }
+      break;
+    case "pull_request":
+      break;
+    case "push":
+      break;
+    // TODO: repository_advisory -- when added to Octokit Webhook Types
+    case "secret_scanning_alert":
+      break;
+    case "secret_scanning_alert_location":
+      break;
+    case "star":
       break;
     default:
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
