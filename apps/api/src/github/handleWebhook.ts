@@ -1,7 +1,12 @@
-import type { CodeScanningAlertEvent, PingEvent, WebhookEventName } from "@octokit/webhooks-types";
+import type {
+  CodeScanningAlertEvent,
+  DependabotAlertEvent,
+  PingEvent,
+  WebhookEventName,
+} from "@octokit/webhooks-types";
 import { type Env, type RESTPostAPIChannelMessageJSONBody, Routes } from "../types";
 import { StatusError, json } from "itty-router";
-import { handleCodeScanningAlert, handlePing } from "./webhooks";
+import { handleCodeScanningAlert, handleDependabotAlert, handlePing } from "./webhooks";
 import { HttpStatusCode } from "@bachmacintosh/api-types";
 import getRest from "../discord/getRest";
 import mentionUser from "../discord/content/mentionUser";
@@ -19,6 +24,12 @@ export default async function handleWebhook(request: Request, env: Env): Promise
       {
         const event = await request.json<CodeScanningAlertEvent>();
         await handleCodeScanningAlert(event, env, rest);
+      }
+      break;
+    case "dependabot_alert":
+      {
+        const event = await request.json<DependabotAlertEvent>();
+        await handleDependabotAlert(event, env, rest);
       }
       break;
     case "ping":

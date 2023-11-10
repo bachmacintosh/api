@@ -1,4 +1,5 @@
 import handleCodeScanningAlert from "./handleCodeScanningAlert";
+import handleDependabotAlert from "./handleDependabotAlert";
 import handlePing from "./handlePing";
 
-export { handleCodeScanningAlert, handlePing };
+export { handleCodeScanningAlert, handleDependabotAlert, handlePing };
