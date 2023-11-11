@@ -48,18 +48,50 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
     { name: "Fixed Version", value: fixedVersion, inline: true },
   );
   switch (event.action) {
-    case "auto_dismissed": {
-      throw new Error('Not implemented yet: "auto_dismissed" case');
-    }
-    case "auto_reopened": {
-      throw new Error('Not implemented yet: "auto_reopened" case');
-    }
-    case "dismissed": {
-      throw new Error('Not implemented yet: "dismissed" case');
-    }
-    case "fixed": {
-      throw new Error('Not implemented yet: "fixed" case');
-    }
+    case "auto_dismissed":
+      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+        body: {
+          embeds: [
+            resultEmbed(
+              "info",
+              "Dependabot Alert Auto-Dismissed",
+              "Dependabot has automatically dismissed an alert in a repository.",
+              embedFields,
+            ),
+          ],
+          components: [actionRow(linkButton("View Alert", event.alert.html_url))],
+        } satisfies RESTPostAPIChannelMessageJSONBody,
+      });
+      break;
+    case "auto_reopened":
+      {
+        let alertLevel: DiscordErrorLevel = "warn";
+        switch (event.alert.security_advisory.severity) {
+          case "low":
+            alertLevel = "info";
+            break;
+          case "high":
+          case "critical":
+            alertLevel = "error";
+            break;
+          default:
+        }
+        await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+          body: {
+            content: mentionUser(env.DISCORD_MENTION_ID),
+            embeds: [
+              resultEmbed(
+                alertLevel,
+                "Dependabot Alert Auto-Reopened",
+                "Dependabot has automatically reopened an alert in a repository.",
+                embedFields,
+              ),
+            ],
+            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
+          } satisfies RESTPostAPIChannelMessageJSONBody,
+        });
+      }
+      break;
     case "created":
       {
         let alertLevel: DiscordErrorLevel = "warn";
@@ -89,12 +121,106 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
         });
       }
       break;
-    case "reintroduced": {
-      throw new Error('Not implemented yet: "reintroduced" case');
+    case "dismissed":
+      embedFields.push({ name: "Reason", value: event.alert.dismissed_reason ?? "<unknown>" });
+      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+        body: {
+          embeds: [
+            resultEmbed(
+              "info",
+              "Dependabot Alert Dismissed",
+              "A user has dismissed an alert in a repository.",
+              embedFields,
+            ),
+          ],
+          components: [actionRow(linkButton("View Alert", event.alert.html_url))],
+        } satisfies RESTPostAPIChannelMessageJSONBody,
+      });
+      break;
+    case "fixed": {
+      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+        body: {
+          embeds: [
+            resultEmbed(
+              "success",
+              "Dependabot Alert Fixed",
+              "A manifest file change has removed this vulnerability.",
+              embedFields,
+            ),
+          ],
+          components: [actionRow(linkButton("View Alert", event.alert.html_url))],
+        } satisfies RESTPostAPIChannelMessageJSONBody,
+      });
+      break;
     }
-    case "reopened": {
-      throw new Error('Not implemented yet: "reopened" case');
-    }
+    case "reintroduced":
+      {
+        let alertLevel: DiscordErrorLevel = "warn";
+        switch (event.alert.security_advisory.severity) {
+          case "low":
+            alertLevel = "info";
+            break;
+          case "high":
+          case "critical":
+            alertLevel = "error";
+            break;
+          default:
+        }
+        await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+          body: {
+            content: mentionUser(env.DISCORD_MENTION_ID),
+            embeds: [
+              resultEmbed(
+                alertLevel,
+                "Dependabot Alert Reintroduced",
+                "A previously fixed Dependabot Alert was reintroduced by a manifest file change.",
+                embedFields,
+              ),
+            ],
+            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
+          } satisfies RESTPostAPIChannelMessageJSONBody,
+        });
+      }
+      break;
+    case "reopened":
+      {
+        let alertLevel: DiscordErrorLevel = "warn";
+        switch (event.alert.security_advisory.severity) {
+          case "low":
+            alertLevel = "info";
+            break;
+          case "high":
+          case "critical":
+            alertLevel = "error";
+            break;
+          default:
+        }
+        await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+          body: {
+            content: mentionUser(env.DISCORD_MENTION_ID),
+            embeds: [
+              resultEmbed(
+                alertLevel,
+                "Dependabot Alert Reopened",
+                "A user has reopened an alert in a repository.",
+                embedFields,
+              ),
+            ],
+            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
+          } satisfies RESTPostAPIChannelMessageJSONBody,
+        });
+      }
+      break;
+    default:
+      console.error(event);
+      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
+        body: {
+          embeds: [
+            resultEmbed("error", "Unknown Dependabot Alert Event Action", "See logs for the event and its action."),
+          ],
+        } satisfies RESTPostAPIChannelMessageJSONBody,
+      });
+      throw new StatusError(HttpStatusCode.NotImplemented, "Unknown Dependabot Alert Event Action");
   }
 };
 
