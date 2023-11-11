@@ -333,7 +333,6 @@ module.exports = {
     "class-methods-use-this": "error",
     "consistent-this": ["error", "that"],
     curly: ["error", "all"],
-    "default-case": "error",
     "default-case-last": "error",
     eqeqeq: ["error", "always"],
     "func-name-matching": "error",
@@ -516,6 +515,7 @@ module.exports = {
       extends: ["plugin:@typescript-eslint/disable-type-checked"],
       rules: {
         "consistent-return": "error",
+        "default-case": "error",
         "dot-notation": "error",
         "no-implied-eval": "error",
         "no-throw-literal": "error",
