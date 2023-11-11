@@ -14,8 +14,6 @@ import resultEmbed from "../../discord/embeds/resultEmbed";
 
 const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = async (event, env, rest) => {
   let fixedVersion = "<none>";
-  // TODO: Check on this in future updates of Octokit's Webhook Types; this can be null
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Bug in Types
   if (event.alert.security_vulnerability.first_patched_version !== null) {
     fixedVersion = event.alert.security_vulnerability.first_patched_version.identifier;
   }
@@ -27,11 +25,15 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
     { name: "Repository", value: event.repository.full_name, inline: true },
     { name: "Number", value: event.alert.number.toString(), inline: true },
     { name: "By", value: userOrDependabot, inline: true },
-    {
+  ];
+  if (typeof event.alert.dependency.package !== "undefined") {
+    embedFields.push({
       name: "Package",
       value: `${event.alert.dependency.package.ecosystem}: ${event.alert.dependency.package.name}`,
       inline: true,
-    },
+    });
+  }
+  embedFields.push(
     {
       name: "CVE or GHSA",
       value: event.alert.security_advisory.cve_id ?? event.alert.security_advisory.ghsa_id,
@@ -44,8 +46,14 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
       inline: true,
     },
     { name: "Fixed Version", value: fixedVersion, inline: true },
-  ];
+  );
   switch (event.action) {
+    case "auto_dismissed": {
+      throw new Error('Not implemented yet: "auto_dismissed" case');
+    }
+    case "auto_reopened": {
+      throw new Error('Not implemented yet: "auto_reopened" case');
+    }
     case "dismissed": {
       throw new Error('Not implemented yet: "dismissed" case');
     }
@@ -86,15 +94,6 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
     }
     case "reopened": {
       throw new Error('Not implemented yet: "reopened" case');
-    }
-    default: {
-      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
-        body: {
-          content: mentionUser(env.DISCORD_MENTION_ID),
-          embeds: [resultEmbed("error", "Unknown Dependabot Alert Event Action")],
-        } satisfies RESTPostAPIChannelMessageJSONBody,
-      });
-      throw new StatusError(HttpStatusCode.NotImplemented, "Unknown Dependabot Alert Event Action");
     }
   }
 };

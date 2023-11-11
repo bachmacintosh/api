@@ -1,10 +1,12 @@
-import type {
-  CodeScanningAlertEvent,
-  DependabotAlertEvent,
-  PingEvent,
-  WebhookEventName,
-} from "@octokit/webhooks-types";
-import { type Env, type RESTPostAPIChannelMessageJSONBody, Routes } from "../types";
+import {
+  type CodeScanningAlertEvent,
+  type DependabotAlertEvent,
+  type Env,
+  type PingEvent,
+  type RESTPostAPIChannelMessageJSONBody,
+  Routes,
+  type WebhookEventName,
+} from "../types";
 import { StatusError, json } from "itty-router";
 import { handleCodeScanningAlert, handleDependabotAlert, handlePing } from "./webhooks";
 import { HttpStatusCode } from "@bachmacintosh/api-types";
