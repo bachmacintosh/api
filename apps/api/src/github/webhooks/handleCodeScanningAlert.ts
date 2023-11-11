@@ -177,6 +177,7 @@ const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> =
       }
       break;
     default: {
+      console.error(event);
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
         body: {
           content: mentionUser(env.DISCORD_MENTION_ID),
