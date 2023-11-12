@@ -54,7 +54,8 @@ export default async function handleWebhook(request: Request, env: Env): Promise
       break;
     case "push":
       break;
-    // TODO: repository_advisory -- when added to Octokit Webhook Types
+    case "repository_advisory":
+      break;
     case "secret_scanning_alert":
       break;
     case "secret_scanning_alert_location":
