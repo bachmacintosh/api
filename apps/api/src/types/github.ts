@@ -1,6 +1,16 @@
 import type { Env } from "./cloudflare";
 import type { REST } from "@discordjs/rest";
 
+export type AuthorAssociation =
+  | "COLLABORATOR"
+  | "CONTRIBUTOR"
+  | "FIRST_TIME_CONTRIBUTOR"
+  | "FIRST_TIMER"
+  | "MANNEQUIN"
+  | "MEMBER"
+  | "NONE"
+  | "OWNER";
+
 export type CodeScanningAlertEvent =
   | CodeScanningAlertEventAppearedInBranch
   | CodeScanningAlertEventClosedByUser
@@ -467,6 +477,119 @@ export interface DependabotAlertVulnerability {
   vulnerable_version_range: string;
 }
 
+export interface Discussion {
+  active_lock_reason: string | null;
+  answer_chosen_at: string | null;
+  answer_chosen_by: User | null;
+  answer_html_url: string | null;
+  author_association: AuthorAssociation;
+  body: string;
+  category: DiscussionCategory;
+  comments: number;
+  created_at: string;
+  html_url: string;
+  id: string;
+  locked: boolean;
+  node_id: string;
+  number: number;
+  reactions: Reactions;
+  repository_url: string;
+  state: "closed" | "converting" | "locked" | "open" | "transferring";
+  state_reason: "duplicate" | "outdated" | "reopened" | "resolved" | null;
+  title: string;
+  updated_at: string;
+  user: User;
+  timeline_url?: string;
+}
+
+export interface DiscussionCategory {
+  created_at: string;
+  description: string;
+  emoji: string;
+  id: number;
+  is_answerable: boolean;
+  name: string;
+  repository_id: number;
+  slug: string;
+  updated_at: string;
+  node_id?: string;
+}
+
+export interface DiscussionComment {
+  author_association: AuthorAssociation;
+  body: string;
+  child_comment_count: number;
+  created_at: string;
+  discussion_id: number;
+  html_url: string;
+  id: number;
+  node_id: number;
+  parent_id: number | null;
+  reactions: Reactions;
+  repository_url: string;
+  updated_at: string;
+  user: User;
+}
+
+export type DiscussionCommentEvent = {
+  comment: DiscussionComment;
+  discussion: Discussion;
+  repository: Repository;
+  sender: User;
+  installation?: PartialInstallation;
+  organization?: Organization;
+} & ({ action: "created" } | { action: "deleted" } | { action: "edited"; changes: { body: { from: string } } });
+
+export type DiscussionEvent = {
+  discussion: Discussion;
+  repository: Repository;
+  sender: User;
+  installation?: PartialInstallation;
+  organization?: Organization;
+} & (
+  | { action: "answered"; answer: DiscussionComment }
+  | { action: "category_changed"; changes: { category: { from: DiscussionCategory } } }
+  | { action: "closed" }
+  | { action: "created" }
+  | { action: "deleted" }
+  | { action: "edited"; changes?: { body?: { from: string }; title?: { from: string } } }
+  | { action: "labeled"; label: Label }
+  | { action: "locked" }
+  | { action: "pinned" }
+  | { action: "reopened" }
+  | { action: "transferred"; changes: { new_discussion: Discussion; new_repository: Repository } }
+  | { action: "unanswered"; old_answer: DiscussionComment }
+  | { action: "unlabeled"; label: Label }
+  | { action: "unlocked" }
+  | { action: "unpinned" }
+);
+
+export interface GitHubApp {
+  created_at: string;
+  description: string;
+  events: string[];
+  external_url: string;
+  html_url: string;
+  id: number;
+  name: string;
+  node_id: string;
+  owner: User;
+  permissions: {
+    checks?: string;
+    contents?: string;
+    deployments?: string;
+    issues?: string;
+    metadata?: string;
+  };
+  updated_at: string;
+  client_id?: string;
+  client_secret?: string;
+  installations_count?: number;
+  pem?: string;
+  slug?: string;
+  webhook_secret?: string;
+}
+
 export const gitHubThemselves = {
   login: "github",
   id: 9919,
@@ -492,12 +615,104 @@ export const gitHubThemselves = {
 
 export type GitHubThemselves = typeof gitHubThemselves;
 
+export interface Issue {
+  active_lock_reason: "off-topic" | "resolved" | "spam" | "too heated" | null;
+  assignees: (User | null)[] | null;
+  author_association: AuthorAssociation;
+  body: string | null;
+  closed_at: string | null;
+  comments: number;
+  comments_url: string;
+  created_at: string;
+  events_url: string;
+  html_url: string;
+  id: number;
+  labels_url: string;
+  milestone: Milestone;
+  node_id: string;
+  number: number;
+  reactions: Reactions;
+  repository_url: string;
+  title: string;
+  updated_at: string;
+  url: string;
+  user: User | null;
+  assignee?: User | null;
+  draft?: boolean;
+  labels?: Label[];
+  locked?: boolean;
+  performed_via_github_app?: GitHubApp;
+  pull_request?: {
+    diff_url?: string;
+    html_url?: string;
+    merged_at?: string | null;
+    patch_url?: string;
+    url?: string;
+  };
+  state?: "closed" | "open";
+  state_reason?: string | null;
+  timeline_url?: string;
+}
+
+export interface IssueComment {
+  author_association: AuthorAssociation;
+  body: string;
+  created_at: string;
+  html_url: string;
+  id: number;
+  issue_url: string;
+  node_id: string;
+  performed_via_github_app: GitHubApp | null;
+  reactions: Reactions;
+  updated_at: string;
+  url: string;
+  user: User | null;
+}
+
+export type IssueCommentEvent = {
+  comment: IssueComment;
+  issue: Issue;
+  repository: Repository;
+  sender: User;
+  installation?: PartialInstallation;
+  organization?: Organization;
+} & ({ action: "created" } | { action: "deleted" } | { action: "edited"; changes: { body?: { from: string } } });
+
+export interface Label {
+  color: string;
+  default: boolean;
+  description: string | null;
+  id: number;
+  name: string;
+  node_id: string;
+  url: string;
+}
+
 export interface License {
   key: string;
   name: string;
   node_id: string;
   spdx_id: string;
   url: string | null;
+}
+
+export interface Milestone {
+  closed_at: string | null;
+  closed_issues: number;
+  created_at: string;
+  creator: User | null;
+  description: string | null;
+  due_on: string | null;
+  html_url: string;
+  id: number;
+  labels_url: string;
+  node_id: string;
+  number: number;
+  open_issues: number;
+  state: "closed" | "open";
+  title: string;
+  updated_at: string;
+  url: string;
 }
 
 export interface Organization {
@@ -547,6 +762,19 @@ export interface PingEvent {
   repository?: Repository;
   sender?: User;
   zen?: string;
+}
+
+export interface Reactions {
+  "+1": number;
+  "-1": number;
+  confused: number;
+  eyes: number;
+  heart: number;
+  hooray: number;
+  laugh: number;
+  rocket: number;
+  total_count: number;
+  url: string;
 }
 
 export interface Repository {
@@ -679,9 +907,9 @@ export interface User {
 export interface WebhookEventMap {
   code_scanning_alert: CodeScanningAlertEvent;
   dependabot_alert: DependabotAlertEvent;
-  discussion: null;
-  discussion_comment: null;
-  issue_comment: null;
+  discussion: DiscussionEvent;
+  discussion_comment: DiscussionCommentEvent;
+  issue_comment: IssueCommentEvent;
   issues: null;
   meta: null;
   ping: PingEvent;
