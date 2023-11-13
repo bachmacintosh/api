@@ -1178,9 +1178,9 @@ export interface SecretScanningAlertEvent {
   action: "created" | "reopened" | "resolved" | "revoked";
   alert: Partial<SecretScanningAlert>;
   repository: Repository;
+  sender: User;
   installation?: PartialInstallation;
   organization?: Organization;
-  sender?: User;
 }
 
 export type SecretScanningAlertLocation =
@@ -1238,6 +1238,13 @@ export interface SecretScanningAlertLocationIssueTitle {
   issue_title_url: string;
 }
 
+export type StarEvent = {
+  repository: Repository;
+  sender: User;
+  installation?: PartialInstallation;
+  organization?: Organization;
+} & ({ action: "created"; starred_at: string | null } | { action: "deleted"; starred_at: null });
+
 export interface Team {
   deleted: boolean;
   description: string | null;
@@ -1292,7 +1299,7 @@ export interface WebhookEventMap {
   repository_advisory: RepositoryAdvisoryEvent;
   secret_scanning_alert: SecretScanningAlertEvent;
   secret_scanning_alert_location: SecretScanningAlertLocationEvent;
-  star: null;
+  star: StarEvent;
 }
 
 export type WebhookEventName = keyof WebhookEventMap;
