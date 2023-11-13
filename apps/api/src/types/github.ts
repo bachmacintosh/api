@@ -1103,6 +1103,60 @@ export interface Repository {
   use_squash_pr_title_as_default?: boolean;
 }
 
+export interface RepositoryAdvisory {
+  author: User | null;
+  closed_at: string | null;
+  collaborating_teams: Team[] | null;
+  collaborating_users: User[] | null;
+  created_at: string | null;
+  credits: { login?: string; type?: RepositoryActionCreditType }[] | null;
+  credits_detailed: (
+    | { state: "accepted" | "declined" | "pending"; type: RepositoryActionCreditType; user: User }[]
+    | null
+  )[];
+  cve_id: string | null;
+  cvss: {
+    score: number | null;
+    vector_string: string | null;
+  } | null;
+  cwe_ids: string[] | null;
+  cwes: { cwe_id: string; name: string } | null;
+  description: string | null;
+  ghsa_id: string;
+  html_url: string;
+  identifiers: { type: "CVE" | "GHSA"; value: string }[];
+  private_fork: Repository | null;
+  published_at: string | null;
+  publisher: User | null;
+  severity: "critical" | "high" | "low" | "medium" | null;
+  state: "closed" | "draft" | "published" | "triage" | "withdrawn";
+  submission: { accepted: boolean } | null;
+  summary: string;
+  updated_at: string | null;
+  url: string;
+  withdrawn_at: string | null;
+}
+
+export type RepositoryActionCreditType =
+  | "analyst"
+  | "coordinator"
+  | "finder"
+  | "other"
+  | "remediation_developer"
+  | "remediation_reviewer"
+  | "remediation_verifier"
+  | "reporter"
+  | "sponsor"
+  | "tool";
+
+export interface RepositoryAdvisoryEvent {
+  action: "published" | "reported";
+  repository: Repository;
+  installation?: PartialInstallation;
+  organization?: Organization;
+  sender?: User;
+}
+
 export interface Team {
   deleted: boolean;
   description: string | null;
@@ -1154,7 +1208,7 @@ export interface WebhookEventMap {
   ping: PingEvent;
   pull_request: PullRequestEvent;
   push: PushEvent;
-  repository_advisory: null;
+  repository_advisory: RepositoryAdvisoryEvent;
   secret_scanning_alert: null;
   secret_scanning_alert_location: null;
   star: null;
