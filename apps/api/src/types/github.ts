@@ -1,6 +1,8 @@
 import type { Env } from "./cloudflare";
 import type { REST } from "@discordjs/rest";
 
+export type ActiveLockReason = "off-topic" | "resolved" | "spam" | "too heated";
+
 export type AuthorAssociation =
   | "COLLABORATOR"
   | "CONTRIBUTOR"
@@ -478,7 +480,7 @@ export interface DependabotAlertVulnerability {
 }
 
 export interface Discussion {
-  active_lock_reason: string | null;
+  active_lock_reason: ActiveLockReason | null;
   answer_chosen_at: string | null;
   answer_chosen_by: User | null;
   answer_html_url: string | null;
@@ -616,7 +618,7 @@ export const gitHubThemselves = {
 export type GitHubThemselves = typeof gitHubThemselves;
 
 export interface Issue {
-  active_lock_reason: "off-topic" | "resolved" | "spam" | "too heated" | null;
+  active_lock_reason: ActiveLockReason | null;
   assignees: (User | null)[] | null;
   author_association: AuthorAssociation;
   body: string | null;
@@ -813,6 +815,134 @@ export interface PingEvent {
   zen?: string;
 }
 
+export interface PullRequest {
+  // eslint-disable-next-line @typescript-eslint/naming-convention -- GitHub name
+  _links: {
+    comments: {
+      href: string;
+    };
+    commits: {
+      href: string;
+    };
+    html: {
+      href: string;
+    };
+    issue: {
+      href: string;
+    };
+    review_comment: {
+      href: string;
+    };
+    review_comments: {
+      href: string;
+    };
+    self: {
+      href: string;
+    };
+    statuses: {
+      href: string;
+    };
+  };
+  active_lock_reason: ActiveLockReason | null;
+  assignee: User | null;
+  assignees: (User | null)[] | null;
+  author_association: AuthorAssociation;
+  auto_merge: {
+    commit_message: string | null;
+    commit_title: string | null;
+    enabled_by: User | null;
+    merge_method: "merge" | "rebase" | "squash";
+  } | null;
+  base: PullRequestLocation;
+  body: string | null;
+  closed_at: string | null;
+  comments_url: string;
+  commits_url: string;
+  created_at: string;
+  diff_url: string;
+  draft: boolean;
+  head: PullRequestLocation;
+  html_url: string;
+  id: number;
+  issue_url: string;
+  labels: Label[];
+  locked: boolean;
+  merge_commit_sha: string | null;
+  merged_at: string | null;
+  milestone: Milestone | null;
+  node_id: string;
+  number: number;
+  patch_url: string;
+  requested_reviewers: (Team | User)[];
+  requested_teams: Team[];
+  review_comment_url: string;
+  review_comments_url: string;
+  state: "closed" | "open";
+  statuses_url: string;
+  title: string;
+  updated_at: string;
+  url: string;
+  user: User | null;
+  additions?: number;
+  changed_files?: number;
+  comments?: number;
+  commits?: number;
+  deletions?: number;
+  maintainer_can_modify?: boolean;
+  mergeable?: boolean | null;
+  mergeable_state?: string;
+  merged?: boolean | null;
+  merged_by?: User | null;
+  rebaseable?: boolean | null;
+  review_comments?: number;
+}
+
+export type PullRequestEvent = {
+  number: number;
+  pull_request: PullRequest;
+  repository: Repository;
+  sender: User;
+  installation?: PartialInstallation;
+  organization?: Organization;
+} & (
+  | {
+      action: "edited";
+      changes: {
+        base?: { ref: { from: string }; sha: { from: string } };
+        body?: { from: string };
+        title?: { from: string };
+      };
+    }
+  | { action: "assigned"; assignee: User }
+  | { action: "auto_merge_disabled"; reason: string }
+  | { action: "auto_merge_enabled"; reason?: string }
+  | { action: "closed" }
+  | { action: "converted_to_draft" }
+  | { action: "demilestoned"; milestone?: Milestone }
+  | { action: "dequeued"; reason: string }
+  | { action: "enqueued" }
+  | { action: "labeled" }
+  | { action: "locked" }
+  | { action: "milestoned"; milestone?: Milestone }
+  | { action: "opened" }
+  | { action: "ready_for_review" }
+  | { action: "reopened" }
+  | { action: "review_request_removed"; requested_reviewer: User | null; requested_team: Team | null }
+  | { action: "review_requested"; requested_reviewer: User | null; requested_team: Team | null }
+  | { action: "synchronize"; after: string; before: string }
+  | { action: "unassigned"; assignee?: User | null }
+  | { action: "unlabeled"; label?: Label }
+  | { action: "unlocked" }
+);
+
+export interface PullRequestLocation {
+  label: string;
+  ref: string;
+  repo: Repository;
+  sha: string;
+  user: User | null;
+}
+
 export interface Reactions {
   "+1": number;
   "-1": number;
@@ -930,6 +1060,23 @@ export interface Repository {
   use_squash_pr_title_as_default?: boolean;
 }
 
+export interface Team {
+  deleted: boolean;
+  description: string | null;
+  html_url: string;
+  id: number;
+  members_url: string;
+  name: string;
+  node_id: string;
+  permission: string;
+  privacy: "closed" | "open" | "secret";
+  repositories_url: string;
+  slug: string;
+  url: string;
+  notification_setting?: "notifications_disabled" | "notifications_enabled";
+  parent?: Omit<Team, "parent"> | null;
+}
+
 export interface User {
   avatar_url: string;
   events_url: string;
@@ -962,7 +1109,7 @@ export interface WebhookEventMap {
   issues: IssuesEvent;
   meta: MetaEvent;
   ping: PingEvent;
-  pull_request: null;
+  pull_request: PullRequestEvent;
   push: null;
   repository_advisory: null;
   secret_scanning_alert: null;
