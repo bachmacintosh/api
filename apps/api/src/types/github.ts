@@ -1157,6 +1157,87 @@ export interface RepositoryAdvisoryEvent {
   sender?: User;
 }
 
+export interface SecretScanningAlert {
+  created_at: string;
+  html_url: string;
+  locations_url: string;
+  number: number;
+  push_protection_bypassed: boolean | null;
+  push_protection_bypassed_at: string | null;
+  push_protection_bypassed_by: User | null;
+  resolution: "false_positive" | "pattern_deleted" | "pattern_edited" | "revoked" | "used_in_tests" | "wont_fix" | null;
+  resolution_comment: string | null;
+  resolved_at: string | null;
+  resolved_by: User;
+  secret_type: string;
+  updated_at: null;
+  url: string;
+}
+
+export interface SecretScanningAlertEvent {
+  action: "created" | "reopened" | "resolved" | "revoked";
+  alert: Partial<SecretScanningAlert>;
+  repository: Repository;
+  installation?: PartialInstallation;
+  organization?: Organization;
+  sender?: User;
+}
+
+export type SecretScanningAlertLocation =
+  | {
+      details: SecretScanningAlertLocationCommit;
+      type: "commit";
+    }
+  | {
+      details: SecretScanningAlertLocationIssueBody;
+      type: "issue_body";
+    }
+  | {
+      details: SecretScanningAlertLocationIssueComment;
+      type: "issue_comment";
+    }
+  | {
+      details: SecretScanningAlertLocationIssueTitle;
+      type: "issue_title";
+    };
+
+export interface SecretScanningAlertLocationCommit {
+  blob_sha: string;
+  blob_url: string;
+  commit_sha: string;
+  commit_url: string;
+  end_column: number;
+  end_line: number;
+  path: string;
+  start_column: number;
+  start_line: number;
+}
+
+export interface SecretScanningAlertLocationEvent {
+  action: "created";
+  alert: Partial<SecretScanningAlert>;
+  location: SecretScanningAlertLocation;
+  repository: Repository;
+  sender: User;
+  installation?: PartialInstallation;
+  organization?: Organization;
+}
+
+export interface SecretScanningAlertLocationIssueBody {
+  issue_body_url: string;
+}
+
+export interface SecretScanningAlertLocationIssueComment {
+  issue_comment_url: string;
+}
+
+export interface SecretScanningAlertLocationIssueTitle {
+  /**
+   * The API URL to get the issue where the secret was detected.
+   */
+  issue_title_url: string;
+}
+
 export interface Team {
   deleted: boolean;
   description: string | null;
@@ -1209,8 +1290,8 @@ export interface WebhookEventMap {
   pull_request: PullRequestEvent;
   push: PushEvent;
   repository_advisory: RepositoryAdvisoryEvent;
-  secret_scanning_alert: null;
-  secret_scanning_alert_location: null;
+  secret_scanning_alert: SecretScanningAlertEvent;
+  secret_scanning_alert_location: SecretScanningAlertLocationEvent;
   star: null;
 }
 
