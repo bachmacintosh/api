@@ -678,6 +678,31 @@ export type IssueCommentEvent = {
   organization?: Organization;
 } & ({ action: "created" } | { action: "deleted" } | { action: "edited"; changes: { body?: { from: string } } });
 
+export type IssuesEvent = {
+  issue: Issue;
+  repository: Repository;
+  sender: User;
+  installation?: PartialInstallation;
+  organization?: Organization;
+} & (
+  | { action: "assigned"; assignee?: User | null }
+  | { action: "closed" }
+  | { action: "deleted" }
+  | { action: "demilestoned"; milestone?: Milestone }
+  | { action: "edited"; changes: { body?: { from: string }; title?: { from: string } }; label?: Label }
+  | { action: "labeled"; label?: Label }
+  | { action: "locked" }
+  | { action: "milestoned"; milestone: Milestone }
+  | { action: "opened"; changes?: { old_issue: Issue; old_repository: Repository } }
+  | { action: "pinned" }
+  | { action: "reopened" }
+  | { action: "transferred"; changes: { new_issue: Issue; new_repository: Repository } }
+  | { action: "unassigned"; assignee?: User | null }
+  | { action: "unlabeled"; label?: Label }
+  | { action: "unlocked" }
+  | { action: "unpinned" }
+);
+
 export interface Label {
   color: string;
   default: boolean;
@@ -694,6 +719,30 @@ export interface License {
   node_id: string;
   spdx_id: string;
   url: string | null;
+}
+
+export interface MetaEvent {
+  action: "deleted";
+  hook: {
+    active: boolean;
+    config: {
+      content_type: "form" | "json";
+      insecure_ssl: "0" | "1";
+      url: string;
+      secret?: string;
+    };
+    created_at: string;
+    events: string[];
+    id: number;
+    name: string;
+    type: string;
+    updated_at: string;
+  };
+  hook_id: number;
+  installation?: PartialInstallation;
+  organization?: Organization;
+  repository?: Repository;
+  sender?: User;
 }
 
 export interface Milestone {
@@ -910,8 +959,8 @@ export interface WebhookEventMap {
   discussion: DiscussionEvent;
   discussion_comment: DiscussionCommentEvent;
   issue_comment: IssueCommentEvent;
-  issues: null;
-  meta: null;
+  issues: IssuesEvent;
+  meta: MetaEvent;
   ping: PingEvent;
   pull_request: null;
   push: null;
