@@ -3,6 +3,17 @@ import type { REST } from "@discordjs/rest";
 
 export type ActiveLockReason = "off-topic" | "resolved" | "spam" | "too heated";
 
+export interface Author {
+  name: string;
+  date?: string;
+  email?: string | null;
+  username?: string;
+}
+
+export interface AuthorWithEmail extends Author {
+  email: string | null;
+}
+
 export type AuthorAssociation =
   | "COLLABORATOR"
   | "CONTRIBUTOR"
@@ -247,6 +258,20 @@ export interface CodeScanningAlertInstance {
   message?: {
     text?: string;
   };
+}
+
+export interface Commit {
+  author: AuthorWithEmail;
+  committer: AuthorWithEmail;
+  distinct: boolean;
+  id: string;
+  message: string;
+  timestamp: string;
+  tree_id: string;
+  url: string;
+  added?: string[];
+  modified?: string[];
+  removed?: string[];
 }
 
 export interface DependabotAlertDependency {
@@ -943,6 +968,24 @@ export interface PullRequestLocation {
   user: User | null;
 }
 
+export interface PushEvent {
+  after: string;
+  base_ref: string | null;
+  before: string;
+  commits: Commit[];
+  compare: string;
+  created: boolean;
+  deleted: boolean;
+  forced: boolean;
+  head_commit: Commit | null;
+  pusher: Author;
+  ref: string;
+  repository: Repository;
+  installation?: PartialInstallation;
+  organization?: Organization;
+  sender?: User;
+}
+
 export interface Reactions {
   "+1": number;
   "-1": number;
@@ -1110,7 +1153,7 @@ export interface WebhookEventMap {
   meta: MetaEvent;
   ping: PingEvent;
   pull_request: PullRequestEvent;
-  push: null;
+  push: PushEvent;
   repository_advisory: null;
   secret_scanning_alert: null;
   secret_scanning_alert_location: null;
