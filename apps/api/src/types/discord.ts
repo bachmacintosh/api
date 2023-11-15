@@ -9,6 +9,25 @@ import type {
 } from "discord-api-types/v10";
 import type { Env } from "./cloudflare";
 
+export const DISCORD_MAX = {
+  EMBED: {
+    TITLE: 256,
+    DESCRIPTION: 4096,
+    FIELD: {
+      NAME: 256,
+      VALUE: 1024,
+    },
+    FIELDS: 25,
+    FOOTER: {
+      TEXT: 2048,
+    },
+    AUTHOR: {
+      NAME: 256,
+    },
+    TOTAL_LENGTH: 6000,
+  },
+} as const;
+
 export {
   APIVersion,
   ApplicationCommandOptionType,
