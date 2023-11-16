@@ -1,5 +1,4 @@
 import {
-  type APIEmbedField,
   type DiscordErrorLevel,
   type GitHubWebhookEventRunner,
   type RESTPostAPIChannelMessageJSONBody,
@@ -7,27 +6,13 @@ import {
 } from "../../types";
 import { HttpStatusCode } from "@bachmacintosh/api-types";
 import { StatusError } from "itty-router";
-import actionRow from "../../discord/components/actionRow";
-import linkButton from "../../discord/components/buttons/linkButton";
+import capitalize from "../../util/capitalize";
+import githubEmbed from "../../discord/embeds/githubEmbed";
 import mentionUser from "../../discord/content/mentionUser";
 import resultEmbed from "../../discord/embeds/resultEmbed";
 
 const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> = async (event, env, rest) => {
-  let branchOrUser = event.ref.replace("refs/heads/", "");
-  if (event.action === "closed_by_user" || event.action === "reopened_by_user") {
-    branchOrUser = event.sender.login;
-  }
-  const embedFields: APIEmbedField[] = [
-    { name: "Repository", value: event.repository.full_name, inline: true },
-    { name: "Number", value: event.alert.number.toString() },
-    {
-      name: event.action === "closed_by_user" || event.action === "reopened_by_user" ? "User" : "Branch",
-      value: branchOrUser,
-      inline: true,
-    },
-    { name: "Severity", value: event.alert.rule.severity ?? "<unknown>", inline: true },
-    { name: "Rule", value: event.alert.rule.description, inline: true },
-  ];
+  const branch = event.ref.replace("refs/heads/", "");
   switch (event.action) {
     case "appeared_in_branch":
       {
@@ -46,31 +31,33 @@ const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> =
           body: {
             content: mentionUser(env.DISCORD_MENTION_ID),
             embeds: [
-              resultEmbed(
-                alertLevel,
-                "Code Scanning Alert Appeared in Branch",
-                "An existing Code Scanning Alert has appeared in another branch.",
-                embedFields,
-              ),
+              githubEmbed({
+                title: `[${event.repository.name}] Code Scanning Alert #${event.alert.number} Appered in \`${branch}\` Branch`,
+                description: `Found ${capitalize(event.alert.rule.severity ?? "Unknown Severity")} Rule: "${
+                  event.alert.rule.description
+                }"`,
+                url: event.alert.html_url,
+                user: event.sender,
+                level: alertLevel,
+              }),
             ],
-            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
           } satisfies RESTPostAPIChannelMessageJSONBody,
         });
       }
       break;
     case "closed_by_user":
-      embedFields.push({ name: "Reason", value: event.alert.dismissed_reason ?? "<unknown>", inline: true });
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
         body: {
           embeds: [
-            resultEmbed(
-              "info",
-              "Code Scanning Alert Closed by User",
-              "A user has manually closed the Code Scanning Alert.",
-              embedFields,
-            ),
+            githubEmbed({
+              title: `[${event.repository.name}] Code Scanning Alert #${event.alert.number} Closed by User`,
+              description: `${capitalize(event.alert.rule.severity ?? "Unknown Severity")} Rule "${
+                event.alert.rule.description
+              }" was closed for the following reason: ${event.alert.dismissed_reason ?? "Unknown"}`,
+              url: event.alert.html_url,
+              user: event.sender,
+            }),
           ],
-          components: [actionRow(linkButton("View Alert", event.alert.html_url))],
         } satisfies RESTPostAPIChannelMessageJSONBody,
       });
       break;
@@ -91,14 +78,16 @@ const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> =
           body: {
             content: mentionUser(env.DISCORD_MENTION_ID),
             embeds: [
-              resultEmbed(
-                alertLevel,
-                "Code Scanning Alert Created",
-                "GitHub has created a new Code Scanning Alert in the repository.",
-                embedFields,
-              ),
+              githubEmbed({
+                title: `[${event.repository.name}] Code Scanning Alert #${event.alert.number} Created`,
+                description: `Found ${capitalize(event.alert.rule.severity ?? "Unknown Severity")} Rule: "${
+                  event.alert.rule.description
+                }"`,
+                url: event.alert.html_url,
+                user: event.sender,
+                level: alertLevel,
+              }),
             ],
-            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
           } satisfies RESTPostAPIChannelMessageJSONBody,
         });
       }
@@ -107,14 +96,16 @@ const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> =
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
         body: {
           embeds: [
-            resultEmbed(
-              "success",
-              "Code Scanning Alert Fixed",
-              "A recent code change or update has fixed the Code Scanning Alert.",
-              embedFields,
-            ),
+            githubEmbed({
+              title: `[${event.repository.name}] Code Scanning Alert #${event.alert.number} Fixed`,
+              description: `${capitalize(event.alert.rule.severity ?? "Unknown Severity")} Rule: "${
+                event.alert.rule.description
+              }" was fixed by code changes.`,
+              url: event.alert.html_url,
+              user: event.sender,
+              level: "success",
+            }),
           ],
-          components: [actionRow(linkButton("View Alert", event.alert.html_url))],
         } satisfies RESTPostAPIChannelMessageJSONBody,
       });
       break;
@@ -135,14 +126,16 @@ const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> =
           body: {
             content: mentionUser(env.DISCORD_MENTION_ID),
             embeds: [
-              resultEmbed(
-                alertLevel,
-                "Code Scanning Alert Reopened",
-                "The Code Scanning Alert was reopened by GitHub",
-                embedFields,
-              ),
+              githubEmbed({
+                title: `[${event.repository.name}] Code Scanning Alert #${event.alert.number} Reopened`,
+                description: `Found ${capitalize(event.alert.rule.severity ?? "Unknown Severity")} Rule: "${
+                  event.alert.rule.description
+                }"`,
+                url: event.alert.html_url,
+                user: event.sender,
+                level: alertLevel,
+              }),
             ],
-            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
           } satisfies RESTPostAPIChannelMessageJSONBody,
         });
       }
@@ -164,14 +157,16 @@ const handleCodeScanningAlert: GitHubWebhookEventRunner<"code_scanning_alert"> =
           body: {
             content: mentionUser(env.DISCORD_MENTION_ID),
             embeds: [
-              resultEmbed(
-                alertLevel,
-                "Code Scanning Alert Reopened by User",
-                "A user has reopened a previously closed Code Scanning Alert.",
-                embedFields,
-              ),
+              githubEmbed({
+                title: `[${event.repository.name}] Code Scanning Alert #${event.alert.number} Reopened by User`,
+                description: `${capitalize(event.alert.rule.severity ?? "Unknown Severity")} Rule: "${
+                  event.alert.rule.description
+                }"`,
+                url: event.alert.html_url,
+                user: event.sender,
+                level: alertLevel,
+              }),
             ],
-            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
           } satisfies RESTPostAPIChannelMessageJSONBody,
         });
       }
