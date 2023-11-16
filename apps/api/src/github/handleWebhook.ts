@@ -67,7 +67,10 @@ export default async function handleWebhook(request: Request, env: Env): Promise
       break;
     case "star":
       break;
-    default:
+    default: {
+      const data = await request.json();
+      console.error("Unimplemented Webhook Event");
+      console.error(data);
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
         body: {
           content: mentionUser(env.DISCORD_MENTION_ID),
@@ -75,6 +78,7 @@ export default async function handleWebhook(request: Request, env: Env): Promise
         } satisfies RESTPostAPIChannelMessageJSONBody,
       });
       throw new StatusError(HttpStatusCode.NotImplemented, `GitHub Webhook Event ${eventHeader} Not Implemented`);
+    }
   }
   return json({ message: "Webhook successfully processed!" }, { status: HttpStatusCode.Ok });
 }
