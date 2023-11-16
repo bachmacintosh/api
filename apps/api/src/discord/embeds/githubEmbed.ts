@@ -57,13 +57,12 @@ const githubEmbed = ({
   user,
 }: {
   description: string;
-
   title: string;
-  url: string;
-  user: User;
   fields?: APIEmbedField[];
   hasMarkdownDescription?: boolean;
   level?: DiscordErrorLevel;
+  url?: string;
+  user?: User;
 }): APIEmbed => {
   const colors = {
     error: 0xed4245,
@@ -73,14 +72,19 @@ const githubEmbed = ({
   } as const;
   const trimmedTitle = ellipsize(title, DISCORD_MAX.EMBED.TITLE);
 
-  const embed: APIEmbed = {
-    title: maskedLink(trimmedTitle, url),
-    author: {
+  const embed: APIEmbed = {};
+  if (typeof url === "undefined") {
+    embed.title = trimmedTitle;
+  } else {
+    embed.title = maskedLink(trimmedTitle, url);
+  }
+  if (typeof user !== "undefined") {
+    embed.author = {
       name: user.login,
       url: user.html_url,
       icon_url: user.avatar_url,
-    },
-  };
+    };
+  }
   if (typeof hasMarkdownDescription !== "undefined" && hasMarkdownDescription) {
     const descriptionTree = fromMarkdown(description, { extensions: [gfm()], mdastExtensions: [gfmFromMarkdown()] });
     const newRoot = cleanUpMarkdown(descriptionTree);
