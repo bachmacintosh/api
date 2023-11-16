@@ -5,6 +5,7 @@ import {
   type DiscussionEvent,
   type Env,
   type IssueCommentEvent,
+  type IssuesEvent,
   type PingEvent,
   type RESTPostAPIChannelMessageJSONBody,
   Routes,
@@ -17,6 +18,7 @@ import {
   handleDiscussion,
   handleDiscussionComment,
   handleIssueComment,
+  handleIssues,
   handlePing,
 } from "./webhooks";
 import { HttpStatusCode } from "@bachmacintosh/api-types";
@@ -63,6 +65,10 @@ export default async function handleWebhook(request: Request, env: Env): Promise
       }
       break;
     case "issues":
+      {
+        const event = await request.json<IssuesEvent>();
+        await handleIssues(event, env, rest);
+      }
       break;
     case "meta":
       break;
