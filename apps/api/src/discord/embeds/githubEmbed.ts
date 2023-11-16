@@ -1,4 +1,4 @@
-import { type APIEmbed, type APIEmbedField, DISCORD_MAX, type User } from "../../types";
+import { type APIEmbed, type APIEmbedField, DISCORD_MAX, type DiscordErrorLevel, type User } from "../../types";
 import type { Paragraph, Root } from "mdast-util-from-markdown/lib";
 import ellipsize from "../../util/ellipsize";
 import { fromMarkdown } from "mdast-util-from-markdown";
@@ -52,14 +52,23 @@ const githubEmbed = ({
   title,
   url,
   user,
+  level,
   fields,
 }: {
   description: string;
+
   title: string;
   url: string;
   user: User;
   fields?: APIEmbedField[];
+  level?: DiscordErrorLevel;
 }): APIEmbed => {
+  const colors = {
+    error: 0xed4245,
+    warn: 0xfee75c,
+    success: 0x57f287,
+    info: 0x95a5a6,
+  } as const;
   const trimmedTitle = ellipsize(title, DISCORD_MAX.EMBED.TITLE);
   const descriptionTree = fromMarkdown(description, { extensions: [gfm()], mdastExtensions: [gfmFromMarkdown()] });
   const newRoot = cleanUpMarkdown(descriptionTree);
@@ -72,8 +81,12 @@ const githubEmbed = ({
       url: user.html_url,
       icon_url: user.avatar_url,
     },
-    color: 0x4078c0,
   };
+  if (typeof level === "undefined") {
+    embed.color = colors.info;
+  } else {
+    embed.color = colors[level];
+  }
   if (typeof fields !== "undefined") {
     embed.fields = fields;
   }
