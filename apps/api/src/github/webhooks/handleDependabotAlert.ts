@@ -7,8 +7,7 @@ import {
 } from "../../types";
 import { HttpStatusCode } from "@bachmacintosh/api-types";
 import { StatusError } from "itty-router";
-import actionRow from "../../discord/components/actionRow";
-import linkButton from "../../discord/components/buttons/linkButton";
+import githubEmbed from "../../discord/embeds/githubEmbed";
 import mentionUser from "../../discord/content/mentionUser";
 import resultEmbed from "../../discord/embeds/resultEmbed";
 
@@ -17,15 +16,7 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
   if (event.alert.security_vulnerability.first_patched_version !== null) {
     fixedVersion = event.alert.security_vulnerability.first_patched_version.identifier;
   }
-  let userOrDependabot = "Dependabot";
-  if (event.action === "dismissed" || event.action === "reopened") {
-    userOrDependabot = event.sender.login;
-  }
-  const embedFields: APIEmbedField[] = [
-    { name: "Repository", value: event.repository.full_name, inline: true },
-    { name: "Number", value: event.alert.number.toString(), inline: true },
-    { name: "By", value: userOrDependabot, inline: true },
-  ];
+  const embedFields: APIEmbedField[] = [];
   if (typeof event.alert.dependency.package !== "undefined") {
     embedFields.push({
       name: "Package",
@@ -52,14 +43,14 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
         body: {
           embeds: [
-            resultEmbed(
-              "info",
-              "Dependabot Alert Auto-Dismissed",
-              "Dependabot has automatically dismissed an alert in a repository.",
-              embedFields,
-            ),
+            githubEmbed({
+              title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Auto-Dismissed`,
+              description: "The alert was automatically dismissed, possibly due to a withdrawal.",
+              url: event.alert.html_url,
+              user: event.sender,
+              fields: embedFields,
+            }),
           ],
-          components: [actionRow(linkButton("View Alert", event.alert.html_url))],
         } satisfies RESTPostAPIChannelMessageJSONBody,
       });
       break;
@@ -80,14 +71,16 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
           body: {
             content: mentionUser(env.DISCORD_MENTION_ID),
             embeds: [
-              resultEmbed(
-                alertLevel,
-                "Dependabot Alert Auto-Reopened",
-                "Dependabot has automatically reopened an alert in a repository.",
-                embedFields,
-              ),
+              githubEmbed({
+                title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Auto-Reopened`,
+                description:
+                  "The alert was automatically reopened, possibly due to a regression in manifest file changes.",
+                url: event.alert.html_url,
+                user: event.sender,
+                fields: embedFields,
+                level: alertLevel,
+              }),
             ],
-            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
           } satisfies RESTPostAPIChannelMessageJSONBody,
         });
       }
@@ -109,14 +102,15 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
           body: {
             content: mentionUser(env.DISCORD_MENTION_ID),
             embeds: [
-              resultEmbed(
-                alertLevel,
-                "New Dependabot Alert",
-                "Dependabot has created a new alert in a repository.",
-                embedFields,
-              ),
+              githubEmbed({
+                title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Created`,
+                description: "Dependabot has detected a vulnerable package in the manifest file(s) of the repository.",
+                url: event.alert.html_url,
+                user: event.sender,
+                fields: embedFields,
+                level: alertLevel,
+              }),
             ],
-            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
           } satisfies RESTPostAPIChannelMessageJSONBody,
         });
       }
@@ -126,14 +120,14 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
         body: {
           embeds: [
-            resultEmbed(
-              "info",
-              "Dependabot Alert Dismissed",
-              "A user has dismissed an alert in a repository.",
-              embedFields,
-            ),
+            githubEmbed({
+              title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Dismissed`,
+              description: "The alert was dismissed by a user.",
+              url: event.alert.html_url,
+              user: event.sender,
+              fields: embedFields,
+            }),
           ],
-          components: [actionRow(linkButton("View Alert", event.alert.html_url))],
         } satisfies RESTPostAPIChannelMessageJSONBody,
       });
       break;
@@ -141,14 +135,15 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
         body: {
           embeds: [
-            resultEmbed(
-              "success",
-              "Dependabot Alert Fixed",
-              "A manifest file change has removed this vulnerability.",
-              embedFields,
-            ),
+            githubEmbed({
+              title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Fixed`,
+              description: "A manifest file update has resolved the alert.",
+              url: event.alert.html_url,
+              user: event.sender,
+              fields: embedFields,
+              level: "success",
+            }),
           ],
-          components: [actionRow(linkButton("View Alert", event.alert.html_url))],
         } satisfies RESTPostAPIChannelMessageJSONBody,
       });
       break;
@@ -170,14 +165,15 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
           body: {
             content: mentionUser(env.DISCORD_MENTION_ID),
             embeds: [
-              resultEmbed(
-                alertLevel,
-                "Dependabot Alert Reintroduced",
-                "A previously fixed Dependabot Alert was reintroduced by a manifest file change.",
-                embedFields,
-              ),
+              githubEmbed({
+                title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Re-Introduced`,
+                description: "A previously handled Dependabot Alert has reappeared in the repository.",
+                url: event.alert.html_url,
+                user: event.sender,
+                fields: embedFields,
+                level: alertLevel,
+              }),
             ],
-            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
           } satisfies RESTPostAPIChannelMessageJSONBody,
         });
       }
@@ -199,14 +195,15 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = asyn
           body: {
             content: mentionUser(env.DISCORD_MENTION_ID),
             embeds: [
-              resultEmbed(
-                alertLevel,
-                "Dependabot Alert Reopened",
-                "A user has reopened an alert in a repository.",
-                embedFields,
-              ),
+              githubEmbed({
+                title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Reopened`,
+                description: "A user has reopened a Dependabot Alert in the repository.",
+                url: event.alert.html_url,
+                user: event.sender,
+                fields: embedFields,
+                level: alertLevel,
+              }),
             ],
-            components: [actionRow(linkButton("View Alert", event.alert.html_url))],
           } satisfies RESTPostAPIChannelMessageJSONBody,
         });
       }
