@@ -4,18 +4,19 @@ import {
   type RESTPostAPIChannelMessageJSONBody,
   Routes,
 } from "../../types";
-import resultEmbed from "../../discord/embeds/resultEmbed";
+import githubEmbed from "../../discord/embeds/githubEmbed";
 
 const handlePing: GitHubWebhookEventRunner<"ping"> = async (event, env, rest) => {
   if (typeof event.hook === "undefined") {
     await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
       body: {
         embeds: [
-          resultEmbed(
-            "error",
-            `New Webhook Ping with Missing Hook`,
-            "GitHub sent a Ping from a Webhook, but did not include any info about the Webhook.",
-          ),
+          githubEmbed({
+            title: "Webhook Ping with Missing Hook",
+            description: "GitHub has sent a ping, but did not include info about the webhook.",
+            level: "error",
+            user: event.sender,
+          }),
         ],
       } satisfies RESTPostAPIChannelMessageJSONBody,
     });
@@ -36,12 +37,13 @@ const handlePing: GitHubWebhookEventRunner<"ping"> = async (event, env, rest) =>
     await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), {
       body: {
         embeds: [
-          resultEmbed(
-            "success",
-            `New ${event.hook.type} Webhook Ping`,
-            "GitHub sent a Ping from a Webhook, usually when a new one was added, or when testing a webhook endpoint.",
-            embedFields,
-          ),
+          githubEmbed({
+            title: `New ${event.hook.type} Webhook Ping`,
+            description: "Its events will now be delivered to this channel.",
+            fields: embedFields,
+            level: "success",
+            user: event.sender,
+          }),
         ],
       } satisfies RESTPostAPIChannelMessageJSONBody,
     });
