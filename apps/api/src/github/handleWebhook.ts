@@ -1,6 +1,7 @@
 import {
   type CodeScanningAlertEvent,
   type DependabotAlertEvent,
+  type DiscussionCommentEvent,
   type DiscussionEvent,
   type Env,
   type PingEvent,
@@ -9,7 +10,13 @@ import {
   type WebhookEventName,
 } from "../types";
 import { StatusError, json } from "itty-router";
-import { handleCodeScanningAlert, handleDependabotAlert, handleDiscussion, handlePing } from "./webhooks";
+import {
+  handleCodeScanningAlert,
+  handleDependabotAlert,
+  handleDiscussion,
+  handleDiscussionComment,
+  handlePing,
+} from "./webhooks";
 import { HttpStatusCode } from "@bachmacintosh/api-types";
 import getRest from "../discord/getRest";
 import mentionUser from "../discord/content/mentionUser";
@@ -42,6 +49,10 @@ export default async function handleWebhook(request: Request, env: Env): Promise
       }
       break;
     case "discussion_comment":
+      {
+        const event = await request.json<DiscussionCommentEvent>();
+        await handleDiscussionComment(event, env, rest);
+      }
       break;
     case "issue_comment":
       break;
