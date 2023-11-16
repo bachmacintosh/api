@@ -4,6 +4,7 @@ import handleDiscussion from "./handleDiscussion";
 import handleDiscussionComment from "./handleDiscussionComment";
 import handleIssueComment from "./handleIssueComment";
 import handleIssues from "./handleIssues";
+import handleMeta from "./handleMeta";
 import handlePing from "./handlePing";
 
 export {
@@ -13,5 +14,6 @@ export {
   handleDiscussionComment,
   handleIssueComment,
   handleIssues,
+  handleMeta,
   handlePing,
 };
