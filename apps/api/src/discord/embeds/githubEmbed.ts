@@ -49,11 +49,12 @@ const cleanUpMarkdown = (tree: Root): Root => {
 
 const githubEmbed = ({
   description,
+  fields,
+  hasMarkdownDescription,
+  level,
   title,
   url,
   user,
-  level,
-  fields,
 }: {
   description: string;
 
@@ -61,6 +62,7 @@ const githubEmbed = ({
   url: string;
   user: User;
   fields?: APIEmbedField[];
+  hasMarkdownDescription?: boolean;
   level?: DiscordErrorLevel;
 }): APIEmbed => {
   const colors = {
@@ -70,18 +72,23 @@ const githubEmbed = ({
     info: 0x95a5a6,
   } as const;
   const trimmedTitle = ellipsize(title, DISCORD_MAX.EMBED.TITLE);
-  const descriptionTree = fromMarkdown(description, { extensions: [gfm()], mdastExtensions: [gfmFromMarkdown()] });
-  const newRoot = cleanUpMarkdown(descriptionTree);
-  const newDescription = ellipsize(toMarkdown(newRoot), DISCORD_MAX.EMBED.DESCRIPTION);
+
   const embed: APIEmbed = {
     title: maskedLink(trimmedTitle, url),
-    description: newDescription,
     author: {
       name: user.login,
       url: user.html_url,
       icon_url: user.avatar_url,
     },
   };
+  if (typeof hasMarkdownDescription !== "undefined" && hasMarkdownDescription) {
+    const descriptionTree = fromMarkdown(description, { extensions: [gfm()], mdastExtensions: [gfmFromMarkdown()] });
+    const newRoot = cleanUpMarkdown(descriptionTree);
+    const newDescription = ellipsize(toMarkdown(newRoot), DISCORD_MAX.EMBED.DESCRIPTION);
+    embed.description = newDescription;
+  } else {
+    embed.description = description;
+  }
   if (typeof level === "undefined") {
     embed.color = colors.info;
   } else {
