@@ -21,7 +21,7 @@ export interface Env {
 
   KV: KVNamespace;
 
-  QUEUE: Queue<QueueBody<keyof QueueMethods>>;
+  QUEUE: Queue<QueueBody>;
 
   SENSIBO_API_KEY: string;
 
@@ -47,6 +47,13 @@ export type ProcessGitHubWebhookParams = {
   };
 }[WebhookEventName];
 
+export type QueueBody = {
+  [K in keyof QueueMethods]: {
+    method: K;
+    params: QueueMethods[K];
+  };
+}[keyof QueueMethods];
+
 export interface QueueMethods {
   processGitHubWebhook: ProcessGitHubWebhookParams;
   setAcState: {
@@ -54,9 +61,4 @@ export interface QueueMethods {
     interactionToken: string;
     podId: string;
   };
-}
-
-export interface QueueBody<K extends keyof QueueMethods> {
-  method: K;
-  params: QueueMethods[K];
 }

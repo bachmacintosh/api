@@ -1,21 +1,28 @@
 /* eslint-disable no-await-in-loop -- Must be in order */
-import type { Env, QueueBody, QueueMethods } from "../../types";
+import type { Env, QueueBody } from "../../types";
 import getRest from "../../discord/getRest";
 import handleSetAcState from "./methods/handleSetAcState";
 
 export default async function handleQueue(
-  batch: MessageBatch<QueueBody<keyof QueueMethods>>,
+  batch: MessageBatch<QueueBody>,
   env: Env,
   _context: ExecutionContext,
 ): Promise<void> {
   const rest = getRest(env);
   for (const message of batch.messages) {
-    switch (message.body.method) {
-      case "setAcState":
-        await handleSetAcState(env, rest, message);
-        message.ack();
-        break;
-      // No Default
+    try {
+      switch (message.body.method) {
+        case "processGitHubWebhook":
+          break;
+        case "setAcState":
+          await handleSetAcState(env, rest, message.body.params);
+          message.ack();
+          break;
+        // No Default
+      }
+    } catch (error) {
+      console.error(error);
+      message.retry();
     }
   }
 }
