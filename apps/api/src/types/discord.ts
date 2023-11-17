@@ -12,7 +12,7 @@ import type { Env } from "./cloudflare";
 export const DISCORD_MAX = {
   EMBED: {
     TITLE: 256,
-    DESCRIPTION: 4096,
+    DESCRIPTION: 200,
     FIELD: {
       NAME: 256,
       VALUE: 1024,
