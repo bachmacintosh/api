@@ -96,7 +96,7 @@ export default async function handleWebhook(request: Request, env: Env): Promise
           embeds: [resultEmbed("error", `Unimplemented Webhook Event: ${eventHeader}`)],
         } satisfies RESTPostAPIChannelMessageJSONBody,
       });
-      throw new StatusError(HttpStatusCode.NotImplemented, `GitHub Webhook Event ${eventHeader} Not Implemented`);
+      throw new StatusError(HttpStatusCode.BadRequest, `GitHub Webhook Event ${eventHeader} Not Implemented`);
     }
   }
   return json({ message: "Webhook Payload Accepted" }, { status: HttpStatusCode.Accepted });
