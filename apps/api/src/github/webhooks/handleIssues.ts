@@ -12,7 +12,7 @@ const handleIssues: GitHubWebhookEventRunner<"issues"> = (event) => {
         return {
           needsMention: true,
           embed: githubEmbed({
-            title: `Issue #${event.issue.number} Assigned: ${event.issue.title}`,
+            title: `[${event.repository.name}] Assigned Issue #${event.issue.number}: ${event.issue.title}`,
             description: event.issue.body ?? "",
             hasMarkdownDescription: true,
             url: event.issue.html_url,
@@ -25,7 +25,7 @@ const handleIssues: GitHubWebhookEventRunner<"issues"> = (event) => {
       return {
         needsMention: false,
         embed: githubEmbed({
-          title: `Issue #${event.issue.number} Closed: ${event.issue.title}`,
+          title: `[${event.repository.name}] Closed Issue #${event.issue.number}: ${event.issue.title}`,
           description: `Issue was closed for the following reason: ${event.issue.state_reason ?? "Unknown"}`,
           hasMarkdownDescription: true,
           url: event.issue.html_url,
@@ -36,7 +36,7 @@ const handleIssues: GitHubWebhookEventRunner<"issues"> = (event) => {
       return {
         needsMention: false,
         embed: githubEmbed({
-          title: `Issue #${event.issue.number} Locked: ${event.issue.title}`,
+          title: `[${event.repository.name}] Locked Issue #${event.issue.number}: ${event.issue.title}`,
           description: `Issue was locked for the following reason: ${event.issue.active_lock_reason ?? "Unknown"}`,
           hasMarkdownDescription: true,
           url: event.issue.html_url,
@@ -47,7 +47,7 @@ const handleIssues: GitHubWebhookEventRunner<"issues"> = (event) => {
       return {
         needsMention: true,
         embed: githubEmbed({
-          title: `New Issue #${event.issue.number}: ${event.issue.title}`,
+          title: `[${event.repository.name}] New Issue #${event.issue.number}: ${event.issue.title}`,
           description: event.issue.body ?? "",
           hasMarkdownDescription: true,
           url: event.issue.html_url,
@@ -58,7 +58,7 @@ const handleIssues: GitHubWebhookEventRunner<"issues"> = (event) => {
       return {
         needsMention: true,
         embed: githubEmbed({
-          title: `Issue #${event.issue.number} Reopened: ${event.issue.title}`,
+          title: `[${event.repository.name}] Reopened Issue #${event.issue.number}: ${event.issue.title}`,
           description: event.issue.body ?? "",
           hasMarkdownDescription: true,
           url: event.issue.html_url,
@@ -69,7 +69,7 @@ const handleIssues: GitHubWebhookEventRunner<"issues"> = (event) => {
       return {
         needsMention: true,
         embed: githubEmbed({
-          title: `Issue #${event.issue.number} Unlocked: ${event.issue.title}`,
+          title: `[${event.repository.name}] Unlocked Issue #${event.issue.number}: ${event.issue.title}`,
           description: "Issue is once again open for discussion.",
           hasMarkdownDescription: true,
           url: event.issue.html_url,

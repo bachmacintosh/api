@@ -34,7 +34,7 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = (eve
       return {
         needsMention: false,
         embed: githubEmbed({
-          title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Auto-Dismissed`,
+          title: `[${event.repository.name}] Auto-Dismissed Dependabot Alert #${event.alert.number}`,
           description: "The alert was automatically dismissed, possibly due to a withdrawal.",
           url: event.alert.html_url,
           user: event.sender,
@@ -56,7 +56,7 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = (eve
       return {
         needsMention: true,
         embed: githubEmbed({
-          title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Auto-Reopened`,
+          title: `[${event.repository.name}] Auto-Reopened Dependabot Alert #${event.alert.number}`,
           description: "The alert was automatically reopened, possibly due to a regression in manifest file changes.",
           url: event.alert.html_url,
           user: event.sender,
@@ -80,7 +80,7 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = (eve
       return {
         needsMention: true,
         embed: githubEmbed({
-          title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Created`,
+          title: `[${event.repository.name}] Created Dependabot Alert #${event.alert.number}`,
           description: "Dependabot has detected a vulnerable package in the manifest file(s) of the repository.",
           url: event.alert.html_url,
           user: event.sender,
@@ -94,7 +94,7 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = (eve
       return {
         needsMention: false,
         embed: githubEmbed({
-          title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Dismissed`,
+          title: `[${event.repository.name}] Dismissed Dependabot Alert #${event.alert.number}`,
           description: "The alert was dismissed by a user.",
           url: event.alert.html_url,
           user: event.sender,
@@ -105,7 +105,7 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = (eve
       return {
         needsMention: false,
         embed: githubEmbed({
-          title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Fixed`,
+          title: `[${event.repository.name}] Fixed Dependabot Alert #${event.alert.number}`,
           description: "A manifest file update has resolved the alert.",
           url: event.alert.html_url,
           user: event.sender,
@@ -129,7 +129,7 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = (eve
       return {
         needsMention: true,
         embed: githubEmbed({
-          title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Re-Introduced`,
+          title: `[${event.repository.name}] Re-Introduced Dependabot Alert #${event.alert.number}`,
           description: "A previously handled Dependabot Alert has reappeared in the repository.",
           url: event.alert.html_url,
           user: event.sender,
@@ -153,7 +153,7 @@ const handleDependabotAlert: GitHubWebhookEventRunner<"dependabot_alert"> = (eve
       return {
         needsMention: true,
         embed: githubEmbed({
-          title: `[${event.repository.name}] Dependabot Alert #${event.alert.number} Reopened`,
+          title: `[${event.repository.name}] Reopened Dependabot Alert #${event.alert.number}`,
           description: "A user has reopened a Dependabot Alert in the repository.",
           url: event.alert.html_url,
           user: event.sender,

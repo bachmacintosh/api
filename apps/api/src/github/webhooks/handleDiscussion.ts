@@ -18,7 +18,7 @@ const handleDiscussion: GitHubWebhookEventRunner<"discussion"> = (event) => {
       return {
         needsMention: true,
         embed: githubEmbed({
-          title: `[${event.repository.name}] Discussion #${event.discussion.number} Reopened: ${event.discussion.title}`,
+          title: `[${event.repository.name}] Reopened Discussion #${event.discussion.number}: ${event.discussion.title}`,
           description: event.discussion.body,
           hasMarkdownDescription: true,
           url: event.discussion.html_url,
