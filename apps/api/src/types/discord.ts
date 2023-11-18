@@ -4,6 +4,7 @@ import type {
   APIApplicationCommandInteractionDataSubcommandOption,
   APIButtonComponent,
   APIChatInputApplicationCommandInteraction,
+  APIEmbed,
   APIInteractionResponse,
   RESTPostAPIApplicationGuildCommandsJSONBody,
 } from "discord-api-types/v10";
@@ -66,6 +67,11 @@ export type DiscordSubcommandRunner = (
 ) => Promise<APIInteractionResponse>;
 
 export type DiscordErrorLevel = "error" | "info" | "success" | "warn";
+
+export interface QueuedEmbed {
+  embed: APIEmbed;
+  needsMention: boolean;
+}
 
 export type {
   APIActionRowComponent,

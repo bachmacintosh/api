@@ -1,5 +1,5 @@
 import type { Env } from "./cloudflare";
-import type { REST } from "@discordjs/rest";
+import type { QueuedEmbed } from "./discord";
 
 export type ActiveLockReason = "off-topic" | "resolved" | "spam" | "too heated";
 
@@ -1307,5 +1307,4 @@ export type WebhookEventName = keyof WebhookEventMap;
 export type GitHubWebhookEventRunner<K extends WebhookEventName> = (
   event: WebhookEventMap[K],
   env: Env,
-  rest: REST,
-) => Promise<void>;
+) => QueuedEmbed | null;
