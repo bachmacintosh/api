@@ -9,6 +9,7 @@ import {
   handleMeta,
   handlePing,
   handlePullRequest,
+  handlePush,
 } from "../../../github/webhooks";
 
 export default function handleProcessGitHubWebhook(env: Env, params: ProcessGitHubWebhookParams): QueuedEmbed | null {
@@ -32,7 +33,7 @@ export default function handleProcessGitHubWebhook(env: Env, params: ProcessGitH
     case "pull_request":
       return handlePullRequest(params.payload, env);
     case "push":
-      return null;
+      return handlePush(params.payload, env);
     case "repository_advisory":
       return null;
     case "secret_scanning_alert":
