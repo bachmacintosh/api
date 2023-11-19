@@ -8,6 +8,7 @@ import {
   handleIssues,
   handleMeta,
   handlePing,
+  handlePullRequest,
 } from "../../../github/webhooks";
 
 export default function handleProcessGitHubWebhook(env: Env, params: ProcessGitHubWebhookParams): QueuedEmbed | null {
@@ -29,7 +30,7 @@ export default function handleProcessGitHubWebhook(env: Env, params: ProcessGitH
     case "ping":
       return handlePing(params.payload, env);
     case "pull_request":
-      return null;
+      return handlePullRequest(params.payload, env);
     case "push":
       return null;
     case "repository_advisory":
