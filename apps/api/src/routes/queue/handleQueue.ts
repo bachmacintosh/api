@@ -23,7 +23,7 @@ export default async function handleQueue(
       switch (message.body.method) {
         case "processGitHubWebhook":
           {
-            const result = handleProcessGitHubWebhook(env, message.body.params);
+            const result = handleProcessGitHubWebhook(message.body.params);
             if (result !== null) {
               gitHubEmbeds.push(result);
             }

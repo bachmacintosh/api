@@ -1,4 +1,3 @@
-import type { Env } from "./cloudflare";
 import type { QueuedEmbed } from "./discord";
 
 export type ActiveLockReason = "off-topic" | "resolved" | "spam" | "too heated";
@@ -1302,7 +1301,4 @@ export interface WebhookEventMap {
 
 export type WebhookEventName = keyof WebhookEventMap;
 
-export type GitHubWebhookEventRunner<K extends WebhookEventName> = (
-  event: WebhookEventMap[K],
-  env: Env,
-) => QueuedEmbed | null;
+export type GitHubWebhookEventRunner<K extends WebhookEventName> = (event: WebhookEventMap[K]) => QueuedEmbed | null;
