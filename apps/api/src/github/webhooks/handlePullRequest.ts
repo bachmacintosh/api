@@ -30,8 +30,8 @@ const handlePullRequest: GitHubWebhookEventRunner<"pull_request"> = (event) => {
           title: `[${event.repository.name}] ${closedOrMerged} Pull Request #${event.pull_request.number}: ${event.pull_request.title}`,
           description:
             typeof event.pull_request.merged === "undefined"
-              ? `Merged into "${event.pull_request.base.ref}" branch`
-              : "The Pull Request was closed by a user, and was not merged.",
+              ? "The Pull Request was closed by a user, and was not merged."
+              : `Merged into "${event.pull_request.base.ref}" branch`,
           url: event.pull_request.html_url,
           user: event.sender,
           level:
