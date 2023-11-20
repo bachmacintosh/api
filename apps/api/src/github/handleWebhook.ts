@@ -8,8 +8,14 @@ import {
   type IssuesEvent,
   type MetaEvent,
   type PingEvent,
+  type PullRequestEvent,
+  type PushEvent,
   type RESTPostAPIChannelMessageJSONBody,
+  type RepositoryAdvisoryEvent,
   Routes,
+  type SecretScanningAlertEvent,
+  type SecretScanningAlertLocationEvent,
+  type StarEvent,
   type WebhookEventName,
 } from "../types";
 import { StatusError, json } from "itty-router";
@@ -75,16 +81,43 @@ export default async function handleWebhook(request: Request, env: Env): Promise
       }
       break;
     case "pull_request":
+      {
+        const payload = await request.json<PullRequestEvent>();
+        await env.QUEUE.send({ method: "processGitHubWebhook", params: { event: "pull_request", payload } });
+      }
       break;
     case "push":
+      {
+        const payload = await request.json<PushEvent>();
+        await env.QUEUE.send({ method: "processGitHubWebhook", params: { event: "push", payload } });
+      }
       break;
     case "repository_advisory":
+      {
+        const payload = await request.json<RepositoryAdvisoryEvent>();
+        await env.QUEUE.send({ method: "processGitHubWebhook", params: { event: "repository_advisory", payload } });
+      }
       break;
     case "secret_scanning_alert":
+      {
+        const payload = await request.json<SecretScanningAlertEvent>();
+        await env.QUEUE.send({ method: "processGitHubWebhook", params: { event: "secret_scanning_alert", payload } });
+      }
       break;
     case "secret_scanning_alert_location":
+      {
+        const payload = await request.json<SecretScanningAlertLocationEvent>();
+        await env.QUEUE.send({
+          method: "processGitHubWebhook",
+          params: { event: "secret_scanning_alert_location", payload },
+        });
+      }
       break;
     case "star":
+      {
+        const payload = await request.json<StarEvent>();
+        await env.QUEUE.send({ method: "processGitHubWebhook", params: { event: "star", payload } });
+      }
       break;
     default: {
       const data = await request.json();
