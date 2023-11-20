@@ -4,10 +4,11 @@ import githubEmbed from "../../discord/embeds/githubEmbed";
 import maskedLink from "../../discord/content/maskedLink";
 
 const handlePush: GitHubWebhookEventRunner<"push"> = (event) => {
-  let title = `[${event.repository.name}${event.base_ref === null ? "" : `:${event.base_ref}`}] `;
   if (event.commits.length === 0) {
-    title += "Push with No Commits";
-  } else if (event.commits.length === 1) {
+    return null;
+  }
+  let title = `[${event.repository.name}${event.base_ref === null ? "" : `:${event.base_ref}`}] `;
+  if (event.commits.length === 1) {
     title += "1 New Commit";
   } else {
     title += `${event.commits.length} New Commits`;
