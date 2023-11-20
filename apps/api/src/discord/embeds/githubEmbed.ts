@@ -4,7 +4,6 @@ import ellipsize from "../../util/ellipsize";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { gfm } from "micromark-extension-gfm";
 import { gfmFromMarkdown } from "mdast-util-gfm";
-import maskedLink from "../content/maskedLink";
 import { toMarkdown } from "mdast-util-to-markdown";
 
 const cleanUpMarkdown = (tree: Root): Root => {
@@ -76,7 +75,8 @@ const githubEmbed = ({
   if (typeof url === "undefined") {
     embed.title = trimmedTitle;
   } else {
-    embed.title = maskedLink(trimmedTitle, url);
+    embed.title = trimmedTitle;
+    embed.url = url;
   }
   if (typeof user !== "undefined") {
     embed.author = {
