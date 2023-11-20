@@ -6,7 +6,7 @@ import githubRouter from "./github";
 
 const fetchRoute = Router<IRequestStrict, CF>()
   .all("/discord/*", discordRouter.handle)
-  .all("/github", githubRouter.handle)
+  .all("/github/*", githubRouter.handle)
   .all("*", () => {
     return error(HttpStatusCode.NotFound);
   });
