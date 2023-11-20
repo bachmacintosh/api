@@ -29,6 +29,6 @@ cpu_ms = 1000
 [[queues.consumers]]
   queue = "bach-queue"
 	dead_letter_queue = "bach-dead-queue"
-  max_batch_size = 5
+  max_batch_size = 20
   max_batch_timeout = 5
   max_retries = 5

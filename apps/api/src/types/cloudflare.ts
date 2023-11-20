@@ -1,5 +1,6 @@
 import type { AcState, SensiboConfig } from "./sensibo";
 import type { SteamMonitorConfig, SteamUserInfo } from "./steam";
+import type { WebhookEventMap, WebhookEventName } from "./github";
 
 export type CF = [env: Env, context: ExecutionContext];
 
@@ -20,7 +21,7 @@ export interface Env {
 
   KV: KVNamespace;
 
-  QUEUE: Queue<QueueBody<keyof QueueMethods>>;
+  QUEUE: Queue<QueueBody>;
 
   SENSIBO_API_KEY: string;
 
@@ -39,14 +40,25 @@ export interface KVMap {
   steam_user_info: SteamUserInfo | null;
 }
 
+export type ProcessGitHubWebhookParams = {
+  [K in WebhookEventName]: {
+    event: K;
+    payload: WebhookEventMap[K];
+  };
+}[WebhookEventName];
+
+export type QueueBody = {
+  [K in keyof QueueMethods]: {
+    method: K;
+    params: QueueMethods[K];
+  };
+}[keyof QueueMethods];
+
 export interface QueueMethods {
+  processGitHubWebhook: ProcessGitHubWebhookParams;
   setAcState: {
     acState: Partial<AcState>;
     interactionToken: string;
     podId: string;
   };
-}
-export interface QueueBody<K extends keyof QueueMethods> {
-  method: K;
-  params: QueueMethods[K];
 }
