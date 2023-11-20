@@ -1233,9 +1233,6 @@ export interface SecretScanningAlertLocationIssueComment {
 }
 
 export interface SecretScanningAlertLocationIssueTitle {
-  /**
-   * The API URL to get the issue where the secret was detected.
-   */
   issue_title_url: string;
 }
 

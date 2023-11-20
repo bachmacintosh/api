@@ -9,7 +9,8 @@ import handlePing from "./handlePing";
 import handlePullRequest from "./handlePullRequest";
 import handlePush from "./handlePush";
 import handleRepositoryAdvisory from "./handleRepositoryAdvisory";
-// Secret Scanning
+import handleSecretScanningAlert from "./handleSecretScanningAlert";
+import handleSecretScanningAlertLocation from "./handleSecretScanningAlertLocation";
 import handleStar from "./handleStar";
 
 export {
@@ -24,6 +25,7 @@ export {
   handlePullRequest,
   handlePush,
   handleRepositoryAdvisory,
-  // Secret Scanning
+  handleSecretScanningAlert,
+  handleSecretScanningAlertLocation,
   handleStar,
 };

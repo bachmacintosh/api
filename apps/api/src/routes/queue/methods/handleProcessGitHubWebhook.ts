@@ -11,7 +11,8 @@ import {
   handlePullRequest,
   handlePush,
   handleRepositoryAdvisory,
-  // Secret Scanning
+  handleSecretScanningAlert,
+  handleSecretScanningAlertLocation,
   handleStar,
 } from "../../../github/webhooks";
 
@@ -40,9 +41,9 @@ export default function handleProcessGitHubWebhook(env: Env, params: ProcessGitH
     case "repository_advisory":
       return handleRepositoryAdvisory(params.payload, env);
     case "secret_scanning_alert":
-      return null;
+      return handleSecretScanningAlert(params.payload, env);
     case "secret_scanning_alert_location":
-      return null;
+      return handleSecretScanningAlertLocation(params.payload, env);
     case "star":
       return handleStar(params.payload, env);
   }
