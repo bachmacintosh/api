@@ -64,7 +64,7 @@ const handlePullRequest: GitHubWebhookEventRunner<"pull_request"> = (event) => {
       };
     case "opened":
       return {
-        needsMention: true,
+        needsMention: false,
         embed: githubEmbed({
           title: `[${event.repository.name}] New Pull Request #${event.pull_request.number}: ${event.pull_request.title}`,
           description: event.pull_request.body ?? "",
@@ -76,7 +76,7 @@ const handlePullRequest: GitHubWebhookEventRunner<"pull_request"> = (event) => {
       };
     case "ready_for_review":
       return {
-        needsMention: true,
+        needsMention: false,
         embed: githubEmbed({
           title: `[${event.repository.name}] Ready to Review Pull Request #${event.pull_request.number}: ${event.pull_request.title}`,
           description: "Pull Request went from Draft to being ready to be reviewed.",
@@ -87,7 +87,7 @@ const handlePullRequest: GitHubWebhookEventRunner<"pull_request"> = (event) => {
       };
     case "reopened":
       return {
-        needsMention: true,
+        needsMention: false,
         embed: githubEmbed({
           title: `[${event.repository.name}] Reopened Pull Request #${event.pull_request.number}: ${event.pull_request.title}`,
           description: event.pull_request.body ?? "",

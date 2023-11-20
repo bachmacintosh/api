@@ -5,7 +5,7 @@ const handleDiscussion: GitHubWebhookEventRunner<"discussion"> = (event) => {
   switch (event.action) {
     case "created":
       return {
-        needsMention: true,
+        needsMention: false,
         embed: githubEmbed({
           title: `[${event.repository.name}] New Discussion #${event.discussion.number}: ${event.discussion.title}`,
           description: event.discussion.body,
