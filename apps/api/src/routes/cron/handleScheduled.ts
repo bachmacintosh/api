@@ -22,6 +22,7 @@ export default async function handleScheduled(env: Env): Promise<void> {
     case HOUR_08:
       if (minute < MINUTE_10) {
         await cleanUpChannels(env, rest);
+        await handleSensiboPods(env, rest, hour);
       }
       break;
     default:

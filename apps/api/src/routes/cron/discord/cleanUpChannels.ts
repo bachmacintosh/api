@@ -5,6 +5,7 @@ import {
   Routes,
 } from "../../../types";
 import type { REST } from "@discordjs/rest";
+import snowflakeToDate from "../../../discord/snowflakeToDate";
 
 export default async function cleanUpChannels(env: Env, rest: REST): Promise<void> {
   const discordChannels = [env.DISCORD_CHANNEL_GITHUB, env.DISCORD_CHANNEL_SENSIBO, env.DISCORD_CHANNEL_STEAM] as const;
@@ -38,10 +39,16 @@ export default async function cleanUpChannels(env: Env, rest: REST): Promise<voi
           return Number(sortResult);
         });
         for (const message of messages) {
+          const ONE_DAY = 8.64e7;
+          const currentTime = Date.now();
+          const messageTime = snowflakeToDate(message.id).getTime();
+          const shouldDelete = message.author.id === env.DISCORD_BOT_CLIENT_ID && currentTime - messageTime > ONE_DAY;
           if (messages.indexOf(message) === 0) {
             before = message.id;
           }
-          messageIds.add(message.id);
+          if (shouldDelete) {
+            messageIds.add(message.id);
+          }
         }
         const messageIdArray = Array.from(messageIds);
         // eslint-disable-next-line no-await-in-loop -- Must be in order
