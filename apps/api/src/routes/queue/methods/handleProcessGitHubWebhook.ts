@@ -11,6 +11,8 @@ import {
   handlePullRequest,
   handlePush,
   handleRepositoryAdvisory,
+  // Secret Scanning
+  handleStar,
 } from "../../../github/webhooks";
 
 export default function handleProcessGitHubWebhook(env: Env, params: ProcessGitHubWebhookParams): QueuedEmbed | null {
@@ -42,6 +44,6 @@ export default function handleProcessGitHubWebhook(env: Env, params: ProcessGitH
     case "secret_scanning_alert_location":
       return null;
     case "star":
-      return null;
+      return handleStar(params.payload, env);
   }
 }
