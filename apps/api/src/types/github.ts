@@ -1152,6 +1152,7 @@ export type RepositoryActionCreditType =
 export interface RepositoryAdvisoryEvent {
   action: "published" | "reported";
   repository: Repository;
+  repository_advisory: RepositoryAdvisory;
   installation?: PartialInstallation;
   organization?: Organization;
   sender?: User;

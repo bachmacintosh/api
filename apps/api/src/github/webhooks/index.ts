@@ -8,6 +8,7 @@ import handleMeta from "./handleMeta";
 import handlePing from "./handlePing";
 import handlePullRequest from "./handlePullRequest";
 import handlePush from "./handlePush";
+import handleRepositoryAdvisory from "./handleRepositoryAdvisory";
 
 export {
   handleCodeScanningAlert,
@@ -20,4 +21,5 @@ export {
   handlePing,
   handlePullRequest,
   handlePush,
+  handleRepositoryAdvisory,
 };
