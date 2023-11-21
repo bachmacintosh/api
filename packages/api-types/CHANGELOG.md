@@ -1,5 +1,11 @@
 # @bachmacintosh/api-types
 
+## 0.1.1
+
+### Patch Changes
+
+- [#35](https://github.com/bachmacintosh/api/pull/35) [`7179c9e`](https://github.com/bachmacintosh/api/commit/7179c9e3d063b18ae9aeaf9c85463bb398be5f35) Thanks [@bachmacintosh](https://github.com/bachmacintosh)! - Only include built files in package
+
 ## 0.1.0
 
 ### Minor Changes
