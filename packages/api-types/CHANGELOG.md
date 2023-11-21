@@ -1,5 +1,11 @@
 # @bachmacintosh/api-types
 
+## 0.0.4
+
+### Patch Changes
+
+- [#30](https://github.com/bachmacintosh/api/pull/30) [`3a36770`](https://github.com/bachmacintosh/api/commit/3a36770a890805c4b3fedb96c17b3d06e7c68bfa) Thanks [@bachmacintosh](https://github.com/bachmacintosh)! - Version bump only
+
 ## 0.0.3
 
 ### Patch Changes
