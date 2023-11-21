@@ -1,5 +1,11 @@
 # @bachmacintosh/api-types
 
+## 0.1.0
+
+### Minor Changes
+
+- [#33](https://github.com/bachmacintosh/api/pull/33) [`5b1f4f2`](https://github.com/bachmacintosh/api/commit/5b1f4f21a37704df712953fb05e263c841810b82) Thanks [@bachmacintosh](https://github.com/bachmacintosh)! - Add Type Branding
+
 ## 0.0.4
 
 ### Patch Changes
