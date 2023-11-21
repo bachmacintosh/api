@@ -1,5 +1,11 @@
 # @bachmacintosh/api-types
 
+## 0.0.3
+
+### Patch Changes
+
+- [#28](https://github.com/bachmacintosh/api/pull/28) [`a436ed2`](https://github.com/bachmacintosh/api/commit/a436ed2ec3b2485d7019e7766db5dbf91971285a) Thanks [@bachmacintosh](https://github.com/bachmacintosh)! - Add MIT License
+
 ## 0.0.2
 
 ### Patch Changes
