@@ -8,7 +8,7 @@ const handlePush: GitHubWebhookEventRunner<"push"> = (event) => {
     return null;
   }
   const refRegex = /refs\/(?<type>heads|tags)\//u;
-  let title = `[${event.repository.name}:${event.ref.replace(refRegex, "")}`;
+  let title = `[${event.repository.name}:${event.ref.replace(refRegex, "")}] `;
   if (event.commits.length === 1) {
     title += "1 New Commit";
   } else {
