@@ -1,5 +1,23 @@
 import type { StreamType } from "./api.js";
 
+export type EventSubChannelRaidCondition =
+  | {
+      from_broadcaster_user_id: string;
+    }
+  | {
+      to_broadcaster_user_id: string;
+    };
+
+export interface EventSubChannelRaidEvent {
+  from_broadcaster_user_id: string;
+  from_broadcaster_user_login: string;
+  from_broadcaster_user_name: string;
+  to_broadcaster_user_id: string;
+  to_broadcaster_user_login: string;
+  to_broadcaster_user_name: string;
+  viewers: number;
+}
+
 export interface EventSubStreamOfflineCondition {
   broadcaster_user_id: string;
 }
@@ -32,11 +50,13 @@ export interface EventSubSubscriptionBase<S extends EventSubSubscriptionStatus =
 }
 
 export interface EventSubSubscriptionConditionMap {
+  "channel.raid": EventSubChannelRaidCondition;
   "stream.offline": EventSubStreamOfflineCondition;
   "stream.online": EventSubStreamOnlineCondition;
 }
 
 export interface EventSubSubscriptionEventMap {
+  "channel.raid": EventSubChannelRaidEvent;
   "stream.offline": EventSubStreamOfflineEvent;
   "stream.online": EventSubStreamOnlineEvent;
 }
@@ -58,8 +78,6 @@ export type EventSubSubscriptionStatus =
   | "websocket_network_timeout"
   | "websocket_received_inbound_traffic";
 
-export type EventSubSubscriptionStatusPick<K extends EventSubSubscriptionStatus> = K;
-
 export type EventSubSubscriptionTransport =
   | {
       callback: string;
@@ -73,7 +91,7 @@ export type EventSubSubscriptionTransport =
       session_id: string;
     };
 
-export type EventSubSubscriptionType = "stream.offline" | "stream.online";
+export type EventSubSubscriptionType = "channel.raid" | "stream.offline" | "stream.online";
 
 export type EventSubWebhookMessageNotification = {
   [T in EventSubSubscriptionType]: {
