@@ -23,6 +23,14 @@ export interface EventSubStreamOnlineEvent {
   type: StreamType;
 }
 
+export interface EventSubSubscriptionBase<S extends EventSubSubscriptionStatus = EventSubSubscriptionStatus> {
+  cost: number;
+  created_at: string;
+  id: string;
+  status: S;
+  version: string;
+}
+
 export interface EventSubSubscriptionConditionMap {
   "stream.offline": EventSubStreamOfflineCondition;
   "stream.online": EventSubStreamOnlineCondition;
@@ -76,7 +84,7 @@ export type EventSubWebhookMessageNotification = {
     };
   };
 }[EventSubSubscriptionType] & {
-  subscription: EventSubSubscriptionBase<"enabled">;
+  subscription: EventSubWebhookSubscription<"enabled">;
 };
 
 export type EventSubWebhookMessageRevocation = {
@@ -87,7 +95,7 @@ export type EventSubWebhookMessageRevocation = {
     };
   };
 }[EventSubSubscriptionType] & {
-  subscription: EventSubSubscriptionBase<
+  subscription: EventSubWebhookSubscription<
     "authorization_revoked" | "notification_failures_exceeded" | "user_removed" | "version_removed"
   >;
 };
@@ -101,21 +109,87 @@ export type EventSubWebhookMessageWebhookCallbackVerification = {
   };
 }[EventSubSubscriptionType] & {
   challenge: string;
-  subscription: EventSubSubscriptionBase<"webhook_callback_verification_pending">;
+  subscription: EventSubWebhookSubscription<"webhook_callback_verification_pending">;
 };
 
 export type EventSubWebhookMessageType = "notification" | "revocation" | "webhook_callback_verification";
 
-export interface EventSubSubscriptionBase<S extends EventSubSubscriptionStatus = EventSubSubscriptionStatus> {
-  cost: number;
-  created_at: string;
-  id: string;
-  status: S;
+export interface EventSubWebhookSubscription<S extends EventSubSubscriptionStatus = EventSubSubscriptionStatus>
+  extends EventSubSubscriptionBase<S> {
   transport: EventSubWebhookSubscriptionTransport;
-  version: string;
 }
 
 export interface EventSubWebhookSubscriptionTransport {
   callback: string;
   method: "webhook";
+}
+
+export type EventSubWebSocketMessage = {
+  metadata: {
+    message_id: string;
+    message_timestamp: string;
+  };
+} & (
+  | {
+      [S in EventSubSubscriptionType]: {
+        metadata: {
+          message_type: "notification";
+          subscription_type: S;
+          subscription_version: string;
+        };
+        payload: {
+          event: EventSubSubscriptionEventMap[S];
+          subscription: EventSubWebSocketSubscription<"enabled">;
+        };
+      };
+    }[EventSubSubscriptionType]
+  | {
+      [S in EventSubSubscriptionType]: {
+        metadata: {
+          message_type: "revocation";
+          subscription_type: S;
+          subscription_version: string;
+        };
+        payload: {
+          subscription: EventSubWebSocketSubscription<"authorization_revoked" | "user_removed" | "version_removed">;
+        };
+      };
+    }[EventSubSubscriptionType]
+  | {
+      metadata: {
+        message_type: "session_reconnect";
+      };
+      payload: {
+        session: {
+          connected_at: string;
+          id: string;
+          keepalive_timeout_seconds: null;
+          reconnect_url: string;
+          status: "reconnecting";
+        };
+      };
+    }
+  | {
+      metadata: { message_type: "session_welcome" };
+      payload: {
+        session: {
+          connected_at: string;
+          id: string;
+          keepalive_timeout_seconds: number;
+          reconnect_url: null;
+          status: "connected";
+        };
+      };
+    }
+  | { metadata: { message_type: "session_keepalive" }; payload: Record<string, never> }
+);
+
+export interface EventSubWebSocketSubscription<S extends EventSubSubscriptionStatus = EventSubSubscriptionStatus>
+  extends EventSubSubscriptionBase<S> {
+  transport: EventSubWebSocketSubscriptionTransport;
+}
+
+export interface EventSubWebSocketSubscriptionTransport {
+  method: "websocket";
+  session_id: string;
 }
