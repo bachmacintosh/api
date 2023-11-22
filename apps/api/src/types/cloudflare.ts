@@ -31,6 +31,8 @@ export interface Env {
   TOMORROW_API_KEY: string;
   TOMORROW_LOCATION_ID: string;
 
+  TWITCH_EVENTSUB_SECRET: string;
+
   WORKER_ENV: string;
 }
 
