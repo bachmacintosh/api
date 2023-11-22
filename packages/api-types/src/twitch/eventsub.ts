@@ -131,27 +131,33 @@ export type EventSubWebSocketMessage = {
   };
 } & (
   | {
-      [S in EventSubSubscriptionType]: {
+      [T in EventSubSubscriptionType]: {
         metadata: {
           message_type: "notification";
-          subscription_type: S;
+          subscription_type: T;
           subscription_version: string;
         };
         payload: {
-          event: EventSubSubscriptionEventMap[S];
-          subscription: EventSubWebSocketSubscription<"enabled">;
+          event: EventSubSubscriptionEventMap[T];
+          subscription: EventSubWebSocketSubscription<"enabled"> & {
+            condition: EventSubSubscriptionConditionMap[T];
+            type: T;
+          };
         };
       };
     }[EventSubSubscriptionType]
   | {
-      [S in EventSubSubscriptionType]: {
+      [T in EventSubSubscriptionType]: {
         metadata: {
           message_type: "revocation";
-          subscription_type: S;
+          subscription_type: T;
           subscription_version: string;
         };
         payload: {
-          subscription: EventSubWebSocketSubscription<"authorization_revoked" | "user_removed" | "version_removed">;
+          subscription: EventSubWebSocketSubscription<"authorization_revoked" | "user_removed" | "version_removed"> & {
+            condition: EventSubSubscriptionConditionMap[T];
+            type: T;
+          };
         };
       };
     }[EventSubSubscriptionType]
