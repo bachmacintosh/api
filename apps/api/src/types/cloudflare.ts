@@ -1,4 +1,10 @@
 import type { AcState, SensiboConfig } from "./sensibo";
+import type {
+  EventSubSubscriptionConditionMap,
+  EventSubSubscriptionEventMap,
+  EventSubSubscriptionType,
+  EventSubWebhookSubscription,
+} from "@bachmacintosh/api-types";
 import type { SteamMonitorConfig, SteamUserInfo } from "./steam";
 import type { WebhookEventMap, WebhookEventName } from "./github";
 
@@ -49,6 +55,31 @@ export type ProcessGitHubWebhookParams = {
   };
 }[WebhookEventName];
 
+export type ProcessTwitchEventSubParams = {
+  [T in EventSubSubscriptionType]:
+    | {
+        condition: EventSubSubscriptionConditionMap[T];
+        event: EventSubSubscriptionEventMap[T];
+        message: "notification";
+        subscription: EventSubWebhookSubscription<"enabled"> & {
+          condition: EventSubSubscriptionConditionMap[T];
+          type: T;
+        };
+        subscriptionType: T;
+      }
+    | {
+        condition: EventSubSubscriptionConditionMap[T];
+        message: "revocation";
+        subscription: EventSubWebhookSubscription<
+          "authorization_revoked" | "notification_failures_exceeded" | "user_removed" | "version_removed"
+        > & {
+          condition: EventSubSubscriptionConditionMap[T];
+          type: T;
+        };
+        subscriptionType: T;
+      };
+}[EventSubSubscriptionType];
+
 export type QueueBody = {
   [K in keyof QueueMethods]: {
     method: K;
@@ -58,6 +89,7 @@ export type QueueBody = {
 
 export interface QueueMethods {
   processGitHubWebhook: ProcessGitHubWebhookParams;
+  processTwitchEventSub: ProcessTwitchEventSubParams;
   setAcState: {
     acState: Partial<AcState>;
     interactionToken: string;

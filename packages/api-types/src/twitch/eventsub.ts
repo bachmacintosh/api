@@ -93,42 +93,30 @@ export type EventSubSubscriptionTransport =
 
 export type EventSubSubscriptionType = "channel.raid" | "stream.offline" | "stream.online";
 
-export type EventSubWebhookMessageNotification = {
-  [T in EventSubSubscriptionType]: {
-    event: EventSubSubscriptionEventMap[T];
-    subscription: {
-      condition: EventSubSubscriptionConditionMap[T];
-      type: T;
-    };
+export interface EventSubWebhookMessageNotification<T extends EventSubSubscriptionType> {
+  event: EventSubSubscriptionEventMap[T];
+  subscription: EventSubWebhookSubscription<"enabled"> & {
+    condition: EventSubSubscriptionConditionMap[T];
+    type: T;
   };
-}[EventSubSubscriptionType] & {
-  subscription: EventSubWebhookSubscription<"enabled">;
-};
+}
 
-export type EventSubWebhookMessageRevocation = {
-  [T in EventSubSubscriptionType]: {
-    subscription: {
-      condition: EventSubSubscriptionConditionMap[T];
-      type: T;
-    };
-  };
-}[EventSubSubscriptionType] & {
+export interface EventSubWebhookMessageRevocation<T extends EventSubSubscriptionType> {
   subscription: EventSubWebhookSubscription<
     "authorization_revoked" | "notification_failures_exceeded" | "user_removed" | "version_removed"
-  >;
-};
-
-export type EventSubWebhookMessageWebhookCallbackVerification = {
-  [T in EventSubSubscriptionType]: {
-    subscription: {
-      condition: EventSubSubscriptionConditionMap[T];
-      type: T;
-    };
+  > & {
+    condition: EventSubSubscriptionConditionMap[T];
+    type: T;
   };
-}[EventSubSubscriptionType] & {
+}
+
+export interface EventSubWebhookMessageWebhookCallbackVerification<T extends EventSubSubscriptionType> {
   challenge: string;
-  subscription: EventSubWebhookSubscription<"webhook_callback_verification_pending">;
-};
+  subscription: EventSubWebhookSubscription<"webhook_callback_verification_pending"> & {
+    condition: EventSubSubscriptionConditionMap[T];
+    type: T;
+  };
+}
 
 export type EventSubWebhookMessageType = "notification" | "revocation" | "webhook_callback_verification";
 
