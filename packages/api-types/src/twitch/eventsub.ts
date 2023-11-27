@@ -3,9 +3,11 @@ import type { StreamType } from "./api.js";
 export type EventSubChannelRaidCondition =
   | {
       from_broadcaster_user_id: string;
+      to_broadcaster_user_id?: never;
     }
   | {
       to_broadcaster_user_id: string;
+      from_broadcaster_user_id?: never;
     };
 
 export interface EventSubChannelRaidEvent {
