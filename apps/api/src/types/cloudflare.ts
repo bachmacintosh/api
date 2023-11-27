@@ -1,6 +1,5 @@
 import type { AcState, SensiboConfig } from "./sensibo";
 import type {
-  EventSubSubscriptionConditionMap,
   EventSubSubscriptionEventMap,
   EventSubSubscriptionType,
   EventSubWebhookSubscription,
@@ -58,25 +57,16 @@ export type ProcessGitHubWebhookParams = {
 export type ProcessTwitchEventSubParams = {
   [T in EventSubSubscriptionType]:
     | {
-        condition: EventSubSubscriptionConditionMap[T];
         event: EventSubSubscriptionEventMap[T];
         message: "notification";
-        subscription: EventSubWebhookSubscription<"enabled"> & {
-          condition: EventSubSubscriptionConditionMap[T];
-          type: T;
-        };
-        subscriptionType: T;
+        subscription: EventSubWebhookSubscription<T, "enabled">;
       }
     | {
-        condition: EventSubSubscriptionConditionMap[T];
         message: "revocation";
         subscription: EventSubWebhookSubscription<
+          EventSubSubscriptionType,
           "authorization_revoked" | "notification_failures_exceeded" | "user_removed" | "version_removed"
-        > & {
-          condition: EventSubSubscriptionConditionMap[T];
-          type: T;
-        };
-        subscriptionType: T;
+        >;
       };
 }[EventSubSubscriptionType];
 
