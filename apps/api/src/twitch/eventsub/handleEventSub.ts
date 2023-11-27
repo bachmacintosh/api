@@ -29,19 +29,7 @@ export default async function handleEventSub(request: Request, env: Env): Promis
               method: "processTwitchEventSub",
               params: {
                 message: "notification",
-                subscription: body.subscription,
-                event: body.event,
-              },
-            });
-          }
-          break;
-        case "stream.offline":
-          {
-            const body = await request.json<EventSubWebhookMessageNotification<"stream.offline">>();
-            await env.QUEUE.send({
-              method: "processTwitchEventSub",
-              params: {
-                message: "notification",
+                subscriptionType: "channel.raid",
                 subscription: body.subscription,
                 event: body.event,
               },
@@ -55,6 +43,7 @@ export default async function handleEventSub(request: Request, env: Env): Promis
               method: "processTwitchEventSub",
               params: {
                 message: "notification",
+                subscriptionType: "stream.online",
                 subscription: body.subscription,
                 event: body.event,
               },

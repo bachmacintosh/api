@@ -20,16 +20,6 @@ export interface EventSubChannelRaidEvent {
   viewers: number;
 }
 
-export interface EventSubStreamOfflineCondition {
-  broadcaster_user_id: string;
-}
-
-export interface EventSubStreamOfflineEvent {
-  broadcaster_user_id: string;
-  broadcaster_user_login: string;
-  broadcaster_user_name: string;
-}
-
 export interface EventSubStreamOnlineCondition {
   broadcaster_user_id: string;
 }
@@ -58,13 +48,11 @@ export interface EventSubSubscriptionBase<
 
 export interface EventSubSubscriptionConditionMap {
   "channel.raid": EventSubChannelRaidCondition;
-  "stream.offline": EventSubStreamOfflineCondition;
   "stream.online": EventSubStreamOnlineCondition;
 }
 
 export interface EventSubSubscriptionEventMap {
   "channel.raid": EventSubChannelRaidEvent;
-  "stream.offline": EventSubStreamOfflineEvent;
   "stream.online": EventSubStreamOnlineEvent;
 }
 
@@ -98,7 +86,7 @@ export type EventSubSubscriptionTransport =
       session_id: string;
     };
 
-export type EventSubSubscriptionType = "channel.raid" | "stream.offline" | "stream.online";
+export type EventSubSubscriptionType = "channel.raid" | "stream.online";
 
 export interface EventSubWebhookMessageNotification<T extends EventSubSubscriptionType> {
   event: EventSubSubscriptionEventMap[T];

@@ -10,6 +10,7 @@ import getRest from "../../discord/getRest";
 import handleProcessGitHubWebhook from "./methods/handleProcessGitHubWebhook";
 import handleSetAcState from "./methods/handleSetAcState";
 import mentionUser from "../../discord/content/mentionUser";
+import processEventSubNotification from "./methods/processEventSubNotification";
 
 export default async function handleQueue(
   batch: MessageBatch<QueueBody>,
@@ -17,7 +18,7 @@ export default async function handleQueue(
   _context: ExecutionContext,
 ): Promise<void> {
   const rest = getRest(env);
-  const gitHubEmbeds: QueuedEmbed[] = [];
+  const queuedEmbeds: QueuedEmbed[] = [];
   for (const message of batch.messages) {
     try {
       switch (message.body.method) {
@@ -25,7 +26,15 @@ export default async function handleQueue(
           {
             const result = handleProcessGitHubWebhook(message.body.params);
             if (result !== null) {
-              gitHubEmbeds.push(result);
+              queuedEmbeds.push(result);
+            }
+          }
+          break;
+        case "processTwitchEventSub":
+          {
+            const result = processEventSubNotification(message.body.params);
+            if (result !== null) {
+              queuedEmbeds.push(result);
             }
           }
           break;
@@ -33,22 +42,21 @@ export default async function handleQueue(
           await handleSetAcState(env, rest, message.body.params);
           message.ack();
           break;
-        // No Default
       }
     } catch (error) {
       console.error(error);
       message.retry();
     }
   }
-  if (gitHubEmbeds.length > 0) {
+  if (queuedEmbeds.length > 0) {
     try {
       const body: RESTPostAPIChannelMessageJSONBody = {
-        embeds: gitHubEmbeds.map((gitHubEmbed) => {
-          return gitHubEmbed.embed;
+        embeds: queuedEmbeds.map((queuedEmbed) => {
+          return queuedEmbed.embed;
         }),
       };
-      const shallMention = gitHubEmbeds.some((gitHubEmbed) => {
-        return gitHubEmbed.needsMention;
+      const shallMention = queuedEmbeds.some((queuedEmbed) => {
+        return queuedEmbed.needsMention;
       });
       if (shallMention) {
         body.content = mentionUser(env.DISCORD_MENTION_ID);

@@ -54,12 +54,13 @@ export type ProcessGitHubWebhookParams = {
   };
 }[WebhookEventName];
 
-export type ProcessTwitchEventSubParams = {
+export type ProcessEventSubNotificationParams = {
   [T in EventSubSubscriptionType]:
     | {
         event: EventSubSubscriptionEventMap[T];
         message: "notification";
         subscription: EventSubWebhookSubscription<T, "enabled">;
+        subscriptionType: T;
       }
     | {
         message: "revocation";
@@ -79,7 +80,7 @@ export type QueueBody = {
 
 export interface QueueMethods {
   processGitHubWebhook: ProcessGitHubWebhookParams;
-  processTwitchEventSub: ProcessTwitchEventSubParams;
+  processTwitchEventSub: ProcessEventSubNotificationParams;
   setAcState: {
     acState: Partial<AcState>;
     interactionToken: string;
