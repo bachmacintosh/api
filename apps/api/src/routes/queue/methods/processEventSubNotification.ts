@@ -7,11 +7,10 @@ const processEventSubNotification = (params: ProcessEventSubNotificationParams):
       switch (params.subscriptionType) {
         case "channel.raid":
           return handleChannelRaid(params.event, params.subscription);
-        case "stream.online":
+        default:
           return null;
       }
-      break;
-    case "revocation":
+    default:
       return null;
   }
 };
