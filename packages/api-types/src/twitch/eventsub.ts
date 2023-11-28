@@ -1,6 +1,66 @@
 import type { StreamType } from "./api.js";
 
-export type EventSubChannelRaidCondition =
+// Conditions and Events
+
+export interface EventSubChannelBanV1Condition {
+  broadcaster_user_id: string;
+}
+
+export type EventSubChannelBanV1Event = {
+  banned_at: string;
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  moderator_user_id: string;
+  moderator_user_login: string;
+  moderator_user_name: string;
+  reason: string;
+  user_id: string;
+  user_login: string;
+  user_name: string;
+} & ({ ends_at: null; is_permanent: true } | { ends_at: string; is_permanent: false });
+
+export interface EventSubChannelChatClearV1Condition {
+  broadcaster_user_id: string;
+  user_id: string;
+}
+
+export interface EventSubChannelChatClearV1Event {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+}
+
+export interface EventSubChannelChatClearUserMessagesV1Condition {
+  broadcaster_user_id: string;
+  user_id: string;
+}
+
+export interface EventSubChannelChatClearUserMessagesV1Event {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  target_user_id: string;
+  target_user_login: string;
+  target_user_name: string;
+}
+
+export interface EventSubChannelChatMessageDeleteV1Condition {
+  broadcaster_user_id: string;
+  user_id: string;
+}
+
+export interface EventSubChannelChatMessageDeleteV1Event {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  message_id: string;
+  target_user_id: string;
+  target_user_login: string;
+  target_user_name: string;
+}
+
+export type EventSubChannelRaidV1Condition =
   | {
       from_broadcaster_user_id: string;
       to_broadcaster_user_id?: never;
@@ -10,7 +70,7 @@ export type EventSubChannelRaidCondition =
       from_broadcaster_user_id?: never;
     };
 
-export interface EventSubChannelRaidEvent {
+export interface EventSubChannelRaidV1Event {
   from_broadcaster_user_id: string;
   from_broadcaster_user_login: string;
   from_broadcaster_user_name: string;
@@ -20,11 +80,94 @@ export interface EventSubChannelRaidEvent {
   viewers: number;
 }
 
-export interface EventSubStreamOnlineCondition {
+export interface EventSubChannelShieldModeBeginV1Condition {
+  broadcaster_user_id: string;
+  moderator_user_id: string;
+}
+
+export interface EventSubChannelShieldModeBeginV1Event {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  moderator_user_id: string;
+  moderator_user_login: string;
+  moderator_user_name: string;
+  started_at: string;
+}
+
+export interface EventSubChannelShieldModeEndV1Condition {
+  broadcaster_user_id: string;
+  moderator_user_id: string;
+}
+
+export interface EventSubChannelShieldModeEndV1Event {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  ended_at: string;
+  moderator_user_id: string;
+  moderator_user_login: string;
+  moderator_user_name: string;
+}
+
+export interface EventSubChannelShoutoutCreateV1Condition {
+  broadcaster_user_id: string;
+  moderator_user_id: string;
+}
+
+export interface EventSubChannelShoutoutCreateV1Event {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  cooldown_ends_at: string;
+  moderator_user_id: string;
+  moderator_user_login: string;
+  moderator_user_name: string;
+  started_at: string;
+  target_cooldown_ends_at: string;
+  to_broadcaster_user_id: string;
+  to_broadcaster_user_login: string;
+  to_broadcaster_user_name: string;
+  viewer_count: number;
+}
+
+export interface EventSubChannelShoutoutReceiveV1Condition {
+  broadcaster_user_id: string;
+  moderator_user_id: string;
+}
+
+export interface EventSubChannelShoutoutReceiveV1Event {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  from_broadcaster_user_id: string;
+  from_broadcaster_user_login: string;
+  from_broadcaster_user_name: string;
+  started_at: string;
+  viewer_count: number;
+}
+
+export interface EventSubChannelUnbanV1Condition {
   broadcaster_user_id: string;
 }
 
-export interface EventSubStreamOnlineEvent {
+export interface EventSubChannelUnbanV1Event {
+  broadcaster_user_id: string;
+  broadcaster_user_login: string;
+  broadcaster_user_name: string;
+  moderator_user_id: string;
+  moderator_user_login: string;
+  moderator_user_name: string;
+  user_id: string;
+  user_login: string;
+  user_name: string;
+}
+
+export interface EventSubStreamOnlineV1Condition {
+  broadcaster_user_id: string;
+}
+
+export interface EventSubStreamOnlineV1Event {
   broadcaster_user_id: string;
   broadcaster_user_login: string;
   broadcaster_user_name: string;
@@ -32,6 +175,43 @@ export interface EventSubStreamOnlineEvent {
   started_at: string;
   type: StreamType;
 }
+
+export interface EventSubUserAuthorizationGrantV1Condition {
+  client_id: string;
+}
+
+export interface EventSubUserAuthorizationGrantV1Event {
+  client_id: string;
+  user_id: string;
+  user_login: string;
+  user_name: string;
+}
+
+export interface EventSubUserAuthorizationRevokeV1Condition {
+  client_id: string;
+}
+
+export interface EventSubUserAuthorizationRevokeV1Event {
+  client_id: string;
+  user_id: string;
+  user_login: string | null;
+  user_name: string | null;
+}
+
+export interface EventSubUserUpdateV1Condition {
+  user_id: string;
+}
+
+export interface EventSubUserUpdateV1Event {
+  description: string;
+  email: string;
+  email_verified: boolean;
+  user_id: string;
+  user_login: string;
+  user_name: string;
+}
+
+// Subscriptions
 
 export interface EventSubSubscriptionBase<
   T extends EventSubSubscriptionType,
@@ -43,17 +223,41 @@ export interface EventSubSubscriptionBase<
   id: string;
   status: S;
   type: T;
-  version: string;
+  version: EventSubSubscriptionVersionMap[T];
 }
 
 export interface EventSubSubscriptionConditionMap {
-  "channel.raid": EventSubChannelRaidCondition;
-  "stream.online": EventSubStreamOnlineCondition;
+  "channel.ban": EventSubChannelBanV1Condition;
+  "channel.chat.clear": EventSubChannelChatClearV1Condition;
+  "channel.chat.clear_user_messages": EventSubChannelChatClearUserMessagesV1Condition;
+  "channel.chat.message_delete": EventSubChannelChatMessageDeleteV1Condition;
+  "channel.raid": EventSubChannelRaidV1Condition;
+  "channel.shield_mode.begin": EventSubChannelShieldModeBeginV1Condition;
+  "channel.shield_mode.end": EventSubChannelShieldModeEndV1Condition;
+  "channel.shoutout.create": EventSubChannelShoutoutCreateV1Condition;
+  "channel.shoutout.receive": EventSubChannelShoutoutReceiveV1Condition;
+  "channel.unban": EventSubChannelUnbanV1Condition;
+  "stream.online": EventSubStreamOnlineV1Condition;
+  "user.authorization.grant": EventSubUserAuthorizationGrantV1Condition;
+  "user.authorization.revoke": EventSubUserAuthorizationRevokeV1Condition;
+  "user.update": EventSubUserUpdateV1Condition;
 }
 
 export interface EventSubSubscriptionEventMap {
-  "channel.raid": EventSubChannelRaidEvent;
-  "stream.online": EventSubStreamOnlineEvent;
+  "channel.ban": EventSubChannelBanV1Event;
+  "channel.chat.clear": EventSubChannelChatClearV1Event;
+  "channel.chat.clear_user_messages": EventSubChannelChatClearUserMessagesV1Event;
+  "channel.chat.message_delete": EventSubChannelChatMessageDeleteV1Event;
+  "channel.raid": EventSubChannelRaidV1Event;
+  "channel.shield_mode.begin": EventSubChannelShieldModeBeginV1Event;
+  "channel.shield_mode.end": EventSubChannelShieldModeEndV1Event;
+  "channel.shoutout.create": EventSubChannelShoutoutCreateV1Event;
+  "channel.shoutout.receive": EventSubChannelShoutoutReceiveV1Event;
+  "channel.unban": EventSubChannelUnbanV1Event;
+  "stream.online": EventSubStreamOnlineV1Event;
+  "user.authorization.grant": EventSubUserAuthorizationGrantV1Event;
+  "user.authorization.revoke": EventSubUserAuthorizationRevokeV1Event;
+  "user.update": EventSubUserUpdateV1Event;
 }
 
 export type EventSubSubscriptionStatus =
@@ -86,7 +290,45 @@ export type EventSubSubscriptionTransport =
       session_id: string;
     };
 
-export type EventSubSubscriptionType = "channel.raid" | "stream.online";
+export type EventSubSubscriptionType =
+  | "channel.ban"
+  | "channel.chat.clear_user_messages"
+  | "channel.chat.clear"
+  | "channel.chat.message_delete"
+  /* TODO: Add the following subscription types after they leave Beta
+     | "channel.guest_star_guest.update"
+     | "channel.guest_star_session.begin"
+     | "channel.guest_star_session.end"
+     | "channel.guest_star_settings.update" */
+  | "channel.raid"
+  | "channel.shield_mode.begin"
+  | "channel.shield_mode.end"
+  | "channel.shoutout.create"
+  | "channel.shoutout.receive"
+  | "channel.unban"
+  | "stream.online"
+  | "user.authorization.grant"
+  | "user.authorization.revoke"
+  | "user.update";
+
+export interface EventSubSubscriptionVersionMap {
+  "channel.ban": "1";
+  "channel.chat.clear": "1";
+  "channel.chat.clear_user_messages": "1";
+  "channel.chat.message_delete": "1";
+  "channel.raid": "1";
+  "channel.shield_mode.begin": "1";
+  "channel.shield_mode.end": "1";
+  "channel.shoutout.create": "1";
+  "channel.shoutout.receive": "1";
+  "channel.unban": "1";
+  "stream.online": "1";
+  "user.authorization.grant": "1";
+  "user.authorization.revoke": "1";
+  "user.update": "1";
+}
+
+// Webhooks
 
 export interface EventSubWebhookMessageNotification<T extends EventSubSubscriptionType> {
   event: EventSubSubscriptionEventMap[T];
@@ -118,6 +360,8 @@ export interface EventSubWebhookSubscriptionTransport {
   callback: string;
   method: "webhook";
 }
+
+// WebSockets
 
 export interface EventSubWebSocketMessage<
   M extends EventSubWebSocketMessageType,
