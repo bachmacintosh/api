@@ -22,6 +22,62 @@ export default async function handleEventSub(request: Request, env: Env): Promis
   switch (messageType) {
     case "notification":
       switch (subscriptionType) {
+        case "channel.ban":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.ban">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.ban",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "channel.chat.clear_user_messages":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.chat.clear_user_messages">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.chat.clear_user_messages",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "channel.chat.clear":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.chat.clear">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.chat.clear",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "channel.chat.message_delete":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.chat.message_delete">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.chat.message_delete",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
         case "channel.raid":
           {
             const body = await request.json<EventSubWebhookMessageNotification<"channel.raid">>();
@@ -30,6 +86,76 @@ export default async function handleEventSub(request: Request, env: Env): Promis
               params: {
                 message: "notification",
                 subscriptionType: "channel.raid",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "channel.shield_mode.begin":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.shield_mode.begin">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.shield_mode.begin",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "channel.shield_mode.end":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.shield_mode.end">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.shield_mode.end",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "channel.shoutout.create":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.shoutout.create">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.shoutout.create",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "channel.shoutout.receive":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.shoutout.receive">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.shoutout.receive",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "channel.unban":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"channel.unban">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "channel.unban",
                 subscription: body.subscription,
                 event: body.event,
               },
@@ -50,14 +176,48 @@ export default async function handleEventSub(request: Request, env: Env): Promis
             });
           }
           break;
-        default: {
-          const body = await request.json();
-          console.error(body);
-          throw new StatusError(
-            HttpStatusCode.BadRequest,
-            "EventSub Notification Subscription Type Type Not Implemented",
-          );
-        }
+        case "user.authorization.grant":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"user.authorization.grant">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "user.authorization.grant",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "user.authorization.revoke":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"user.authorization.revoke">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "user.authorization.revoke",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
+        case "user.update":
+          {
+            const body = await request.json<EventSubWebhookMessageNotification<"user.update">>();
+            await env.QUEUE.send({
+              method: "processTwitchEventSub",
+              params: {
+                message: "notification",
+                subscriptionType: "user.update",
+                subscription: body.subscription,
+                event: body.event,
+              },
+            });
+          }
+          break;
       }
       return json({ message: "EventSub Event Accepted" }, { status: HttpStatusCode.Accepted });
     case "revocation": {
