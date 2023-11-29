@@ -338,7 +338,11 @@ export interface EventSubWebhookMessageNotification<T extends EventSubSubscripti
 export interface EventSubWebhookMessageRevocation<T extends EventSubSubscriptionType> {
   subscription: EventSubWebhookSubscription<
     T,
-    "authorization_revoked" | "notification_failures_exceeded" | "user_removed" | "version_removed"
+    | "authorization_revoked"
+    | "moderator_removed"
+    | "notification_failures_exceeded"
+    | "user_removed"
+    | "version_removed"
   >;
 }
 
@@ -442,7 +446,10 @@ export interface EventSubWebSocketPayloadMap<T extends EventSubSubscriptionType 
     : never;
   revocation: T extends EventSubSubscriptionType
     ? {
-        subscription: EventSubWebSocketSubscription<T, "authorization_revoked" | "user_removed" | "version_removed">;
+        subscription: EventSubWebSocketSubscription<
+          T,
+          "authorization_revoked" | "moderator_removed" | "user_removed" | "version_removed"
+        >;
       }
     : never;
   session_keepalive: T extends undefined ? Record<string, never> : never;
