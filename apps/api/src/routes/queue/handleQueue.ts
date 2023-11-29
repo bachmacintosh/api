@@ -18,7 +18,8 @@ export default async function handleQueue(
   _context: ExecutionContext,
 ): Promise<void> {
   const rest = getRest(env);
-  const queuedEmbeds: QueuedEmbed[] = [];
+  const gitHubEmbeds: QueuedEmbed[] = [];
+  const twitchEmbeds: QueuedEmbed[] = [];
   for (const message of batch.messages) {
     try {
       switch (message.body.method) {
@@ -26,7 +27,7 @@ export default async function handleQueue(
           {
             const result = handleProcessGitHubWebhook(message.body.params);
             if (result !== null) {
-              queuedEmbeds.push(result);
+              gitHubEmbeds.push(result);
             }
           }
           break;
@@ -34,7 +35,7 @@ export default async function handleQueue(
           {
             const result = processEventSubNotification(message.body.params);
             if (result !== null) {
-              queuedEmbeds.push(result);
+              twitchEmbeds.push(result);
             }
           }
           break;
@@ -48,20 +49,39 @@ export default async function handleQueue(
       message.retry();
     }
   }
-  if (queuedEmbeds.length > 0) {
+  if (gitHubEmbeds.length > 0) {
     try {
       const body: RESTPostAPIChannelMessageJSONBody = {
-        embeds: queuedEmbeds.map((queuedEmbed) => {
+        embeds: gitHubEmbeds.map((queuedEmbed) => {
           return queuedEmbed.embed;
         }),
       };
-      const shallMention = queuedEmbeds.some((queuedEmbed) => {
+      const shallMention = gitHubEmbeds.some((queuedEmbed) => {
         return queuedEmbed.needsMention;
       });
       if (shallMention) {
         body.content = mentionUser(env.DISCORD_MENTION_ID);
       }
       await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_GITHUB), { body });
+    } catch (error) {
+      console.error(error);
+      batch.retryAll();
+    }
+  }
+  if (twitchEmbeds.length > 0) {
+    try {
+      const body: RESTPostAPIChannelMessageJSONBody = {
+        embeds: twitchEmbeds.map((queuedEmbed) => {
+          return queuedEmbed.embed;
+        }),
+      };
+      const shallMention = twitchEmbeds.some((queuedEmbed) => {
+        return queuedEmbed.needsMention;
+      });
+      if (shallMention) {
+        body.content = mentionUser(env.DISCORD_MENTION_ID);
+      }
+      await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_TWITCH), { body });
     } catch (error) {
       console.error(error);
       batch.retryAll();
