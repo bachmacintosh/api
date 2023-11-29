@@ -18,6 +18,7 @@ export interface Env {
   DISCORD_CHANNEL_GITHUB: string;
   DISCORD_CHANNEL_SENSIBO: string;
   DISCORD_CHANNEL_STEAM: string;
+  DISCORD_CHANNEL_TWITCH: string;
   DISCORD_GUILD_ID: string;
   DISCORD_MENTION_ID: string;
 
@@ -66,7 +67,11 @@ export type ProcessEventSubNotificationParams = {
         message: "revocation";
         subscription: EventSubWebhookSubscription<
           EventSubSubscriptionType,
-          "authorization_revoked" | "notification_failures_exceeded" | "user_removed" | "version_removed"
+          | "authorization_revoked"
+          | "moderator_removed"
+          | "notification_failures_exceeded"
+          | "user_removed"
+          | "version_removed"
         >;
       };
 }[EventSubSubscriptionType];

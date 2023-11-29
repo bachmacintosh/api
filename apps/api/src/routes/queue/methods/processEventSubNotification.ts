@@ -1,5 +1,5 @@
 import type { ProcessEventSubNotificationParams, QueuedEmbed } from "../../../types";
-import { handleChannelRaid } from "../../../twitch";
+import { handleChannelRaid, handleRevocation } from "../../../twitch";
 
 const processEventSubNotification = (params: ProcessEventSubNotificationParams): QueuedEmbed | null => {
   switch (params.message) {
@@ -10,8 +10,8 @@ const processEventSubNotification = (params: ProcessEventSubNotificationParams):
         default:
           return null;
       }
-    default:
-      return null;
+    case "revocation":
+      return handleRevocation(params.subscription);
   }
 };
 
