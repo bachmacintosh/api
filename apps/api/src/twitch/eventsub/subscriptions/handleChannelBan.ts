@@ -6,7 +6,7 @@ const handleChannelBan: EventSubWebhookNotificationHanlder<"channel.ban"> = (eve
   if (event.moderator_user_id === event.broadcaster_user_id) {
     moderatorOrBroadcaster = "Broadcaster";
   }
-  const title = `User ${event.user_login} Banned by ${moderatorOrBroadcaster} ${event.moderator_user_login}`;
+  const title = `User ${event.user_name} Banned by ${moderatorOrBroadcaster} ${event.moderator_user_name}`;
   const description = `Banned for: ${event.reason} -- ${
     event.is_permanent ? "Ban is Permanent" : `Ban Expires at ${event.ends_at}`
   }`;
