@@ -1,7 +1,9 @@
 import type { ProcessEventSubNotificationParams, QueuedEmbed } from "../../../types";
 import {
   handleChannelBan,
+  handleChannelChatClear,
   handleChannelChatClearUserMessages,
+  handleChannelChatMessageDelete,
   handleChannelRaid,
   handleRevocation,
 } from "../../../twitch";
@@ -14,8 +16,12 @@ const processEventSubNotification = (params: ProcessEventSubNotificationParams):
           return handleChannelBan(params.event);
         case "channel.chat.clear_user_messages":
           return handleChannelChatClearUserMessages(params.event);
+        case "channel.chat.clear":
+          return handleChannelChatClear(params.event);
+        case "channel.chat.message_delete":
+          return handleChannelChatMessageDelete(params.event);
         case "channel.raid":
-          return handleChannelRaid(params.event);
+          return handleChannelRaid(params.event, params.subscription);
       }
       break;
     case "revocation":
