@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@discordjs/rest": "2.0.1",
-    "drizzle-orm": "0.28.6",
+    "drizzle-orm": "0.29.1",
     "itty-router": "4.0.23",
     "mdast-util-from-markdown": "2.0.0",
     "mdast-util-gfm": "3.0.0",
