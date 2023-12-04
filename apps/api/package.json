@@ -27,7 +27,7 @@
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "5.2.2",
-    "undici": "5.27.2",
+    "undici": "5.28.2",
     "wrangler": "3.15.0"
   },
   "dependencies": {
