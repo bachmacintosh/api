@@ -31,7 +31,7 @@
     "wrangler": "3.18.0"
   },
   "dependencies": {
-    "@discordjs/rest": "2.0.1",
+    "@discordjs/rest": "2.2.0",
     "drizzle-orm": "0.29.1",
     "itty-router": "4.0.23",
     "mdast-util-from-markdown": "2.0.0",
