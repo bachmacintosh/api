@@ -19,20 +19,20 @@
   "license": "MIT",
   "devDependencies": {
     "@bachmacintosh/api-types": "workspace:*",
-    "@cloudflare/workers-types": "4.20231025.0",
-    "@octokit/types": "12.3.0",
+    "@cloudflare/workers-types": "4.20231121.0",
+    "@octokit/types": "12.4.0",
     "@octokit/webhooks-types": "7.3.1",
-    "discord-api-types": "0.37.63",
-    "drizzle-kit": "0.19.13",
+    "discord-api-types": "0.37.66",
+    "drizzle-kit": "0.20.6",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "5.2.2",
-    "undici": "5.27.2",
-    "wrangler": "3.15.0"
+    "undici": "5.28.2",
+    "wrangler": "3.18.0"
   },
   "dependencies": {
-    "@discordjs/rest": "2.0.1",
-    "drizzle-orm": "0.28.6",
+    "@discordjs/rest": "2.2.0",
+    "drizzle-orm": "0.29.1",
     "itty-router": "4.0.23",
     "mdast-util-from-markdown": "2.0.0",
     "mdast-util-gfm": "3.0.0",
