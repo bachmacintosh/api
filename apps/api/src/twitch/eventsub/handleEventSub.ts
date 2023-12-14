@@ -204,20 +204,6 @@ export default async function handleEventSub(request: Request, env: Env): Promis
             });
           }
           break;
-        case "user.update":
-          {
-            const body = await request.json<EventSubWebhookMessageNotification<"user.update">>();
-            await env.QUEUE.send({
-              method: "processTwitchEventSub",
-              params: {
-                message: "notification",
-                subscriptionType: "user.update",
-                subscription: body.subscription,
-                event: body.event,
-              },
-            });
-          }
-          break;
       }
       return json({ message: "EventSub Event Accepted" }, { status: HttpStatusCode.Accepted });
     case "revocation": {

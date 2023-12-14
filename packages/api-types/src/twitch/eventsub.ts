@@ -308,8 +308,7 @@ export type EventSubSubscriptionType =
   | "channel.unban"
   | "stream.online"
   | "user.authorization.grant"
-  | "user.authorization.revoke"
-  | "user.update";
+  | "user.authorization.revoke";
 
 export interface EventSubSubscriptionVersionMap {
   "channel.ban": "1";

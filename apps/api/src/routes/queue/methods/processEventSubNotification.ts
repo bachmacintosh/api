@@ -5,7 +5,15 @@ import {
   handleChannelChatClearUserMessages,
   handleChannelChatMessageDelete,
   handleChannelRaid,
+  handleChannelShieldModeBegin,
+  handleChannelShieldModeEnd,
+  handleChannelShoutoutCreate,
+  handleChannelShoutoutReceive,
+  handleChannelUnban,
   handleRevocation,
+  handleStreamOnline,
+  handleUserAuthorizationGrant,
+  handleUserAuthorizationRevoke,
 } from "../../../twitch";
 
 const processEventSubNotification = (params: ProcessEventSubNotificationParams): QueuedEmbed | null => {
@@ -22,6 +30,22 @@ const processEventSubNotification = (params: ProcessEventSubNotificationParams):
           return handleChannelChatMessageDelete(params.event);
         case "channel.raid":
           return handleChannelRaid(params.event, params.subscription);
+        case "channel.shield_mode.begin":
+          return handleChannelShieldModeBegin(params.event);
+        case "channel.shield_mode.end":
+          return handleChannelShieldModeEnd(params.event);
+        case "channel.shoutout.create":
+          return handleChannelShoutoutCreate(params.event);
+        case "channel.shoutout.receive":
+          return handleChannelShoutoutReceive(params.event);
+        case "channel.unban":
+          return handleChannelUnban(params.event);
+        case "stream.online":
+          return handleStreamOnline(params.event);
+        case "user.authorization.grant":
+          return handleUserAuthorizationGrant(params.event);
+        case "user.authorization.revoke":
+          return handleUserAuthorizationRevoke(params.event);
       }
       break;
     case "revocation":
