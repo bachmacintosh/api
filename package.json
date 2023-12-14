@@ -4,7 +4,7 @@
     "build": "turbo run build",
     "changeset": "changeset",
     "check-types": "turbo run check-types",
-    "ci:publish": "pnpm build && pnpm publish -r --access public && pnpm changeset tag",
+    "ci:publish": "pnpm build && pnpm publish -r --no-git-checks --access public && pnpm changeset tag",
     "ci:version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile && git add .",
     "deploy": "turbo run deploy",
     "dev": "turbo run dev",
