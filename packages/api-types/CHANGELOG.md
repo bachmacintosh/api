@@ -1,5 +1,11 @@
 # @bachmacintosh/api-types
 
+## 0.1.2
+
+### Patch Changes
+
+- [#38](https://github.com/bachmacintosh/api/pull/38) [`b84bba7`](https://github.com/bachmacintosh/api/commit/b84bba7df4890dd7e6c97ce8e0771a2ab30c5649) Thanks [@bachmacintosh](https://github.com/bachmacintosh)! - Added Twitch EventSub and initial API types
+
 ## 0.1.1
 
 ### Patch Changes
