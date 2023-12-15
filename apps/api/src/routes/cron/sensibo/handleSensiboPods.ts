@@ -209,7 +209,7 @@ export default async function handleSensiboPods(env: Env, rest: REST, hour: numb
             await rest.post(Routes.channelMessages(env.DISCORD_CHANNEL_SENSIBO), {
               body: {
                 embeds: [
-                  resultEmbed("success", pod.name, "The following A/C State was set:"),
+                  resultEmbed("success", pod.name, "The following A/C State was set:", acStateFields),
                   resultEmbed("success", "", "It was set because these conditions were met:", conditionFields),
                 ],
               } satisfies RESTPostAPIChannelMessageJSONBody,
