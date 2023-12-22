@@ -34,7 +34,7 @@ importers:
         version: 2.2.0
       drizzle-orm:
         specifier: 0.29.1
-        version: 0.29.1(@cloudflare/workers-types@4.20231121.0)
+        version: 0.29.1(@cloudflare/workers-types@4.20231218.0)
       itty-router:
         specifier: 4.0.23
         version: 4.0.23
@@ -55,8 +55,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/api-types
       '@cloudflare/workers-types':
-        specifier: 4.20231121.0
-        version: 4.20231121.0
+        specifier: 4.20231218.0
+        version: 4.20231218.0
       discord-api-types:
         specifier: 0.37.66
         version: 0.37.66
@@ -406,8 +406,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workers-types@4.20231121.0:
-    resolution: {integrity: sha512-+kWfpCkqiepwAKXyHoE0gnkPgkLhz0/9HOBIGhHRsUvUKvhUtm3mbqqoGRWgF1qcjzrDUBbrrOq4MYHfFtc2RA==}
+  /@cloudflare/workers-types@4.20231218.0:
+    resolution: {integrity: sha512-Vs1FKjfUjXYGbCsXzkl+ITp0Iyb6QiW6+vTERTNThC+v96T0IvPVAioH4tT20rXwoxAfxh380mAaxYtTrJUNVg==}
 
   /@discordjs/collection@2.0.0:
     resolution: {integrity: sha512-YTWIXLrf5FsrLMycpMM9Q6vnZoR/lN2AWX23/Cuo8uOOtS8eHB2dyQaaGnaF8aZPYnttf2bkLMcXn/j6JUOi3w==}
@@ -1938,7 +1938,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /drizzle-orm@0.29.1(@cloudflare/workers-types@4.20231121.0):
+  /drizzle-orm@0.29.1(@cloudflare/workers-types@4.20231218.0):
     resolution: {integrity: sha512-yItc4unfHnk8XkDD3/bdC63vdboTY7e7I03lCF1OJYABXSIfQYU9BFTQJXMMovVeb3T1/OJWwfW/70T1XPnuUA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -2000,7 +2000,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@cloudflare/workers-types': 4.20231121.0
+      '@cloudflare/workers-types': 4.20231218.0
     dev: false
 
   /emoji-regex@8.0.0:
