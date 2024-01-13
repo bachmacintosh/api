@@ -10,6 +10,8 @@ import type { WebhookEventMap, WebhookEventName } from "../github";
 export type CF = [env: Env, context: ExecutionContext];
 
 export interface Env {
+  CLOUDFLARE_GQL_TOKEN: string;
+
   DB: D1Database;
 
   DISCORD_BOT_CLIENT_ID: string;
