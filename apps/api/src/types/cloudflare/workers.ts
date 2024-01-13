@@ -10,6 +10,7 @@ import type { WebhookEventMap, WebhookEventName } from "../github";
 export type CF = [env: Env, context: ExecutionContext];
 
 export interface Env {
+  CLOUDFLARE_ACCOUNT_TAG: string;
   CLOUDFLARE_GQL_TOKEN: string;
 
   DB: D1Database;
