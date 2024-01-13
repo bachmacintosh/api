@@ -10,7 +10,7 @@ const config: CodegenConfig = {
       },
     },
   ],
-  documents: "./src/gql/queries.gql",
+  documents: ["./src/gql/**.gql"],
   emitLegacyCommonJSImports: false,
   generates: {
     "./src/types/cloudflare/graphql.ts": {

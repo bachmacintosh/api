@@ -1,32 +1,3 @@
-query GetR2Analytics($accountTag: string!, $startDate: Date, $endDate: Date) {
-  viewer {
-    accounts(filter: { accountTag: $accountTag }) {
-      r2OperationsAdaptiveGroups(limit: 10000, filter: { date_geq: $startDate, date_leq: $endDate }) {
-        dimensions {
-          bucketName
-          actionType
-          date
-        }
-        sum {
-          requests
-        }
-      }
-      r2StorageAdaptiveGroups(limit: 10000, filter: { date_geq: $startDate, date_leq: $endDate }) {
-        dimensions {
-          bucketName
-          date
-        }
-        max {
-          objectCount
-          uploadCount
-          metadataSize
-          payloadSize
-        }
-      }
-    }
-  }
-}
-
 query GetWorkersAnalytics($accountTag: string!, $startDate: Date, $endDate: Date, $startTime: Time, $endTime: Time) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
