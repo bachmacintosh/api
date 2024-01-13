@@ -1,11 +1,11 @@
-import type { AcState, SensiboConfig } from "./sensibo";
+import type { AcState, SensiboConfig } from "../sensibo";
 import type {
   EventSubSubscriptionEventMap,
   EventSubSubscriptionType,
   EventSubWebhookSubscription,
 } from "@bachmacintosh/api-types";
-import type { SteamMonitorConfig, SteamUserInfo } from "./steam";
-import type { WebhookEventMap, WebhookEventName } from "./github";
+import type { SteamMonitorConfig, SteamUserInfo } from "../steam";
+import type { WebhookEventMap, WebhookEventName } from "../github";
 
 export type CF = [env: Env, context: ExecutionContext];
 

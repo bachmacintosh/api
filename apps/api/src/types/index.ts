@@ -1,4 +1,4 @@
-export * from "./cloudflare";
+export * from "./cloudflare/workers";
 export * from "./discord";
 export * from "./github";
 export * from "./sensibo";

@@ -1,0 +1,65 @@
+query GetWorkersAndR2Analytics(
+  $accountTag: string!
+  $startDate: Date
+  $endDate: Date
+  $startTime: Time
+  $endTime: Time
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      r2OperationsAdaptiveGroups(limit: 10000, filter: { date_geq: $startDate, date_leq: $endDate }) {
+        dimensions {
+          bucketName
+          actionType
+          date
+        }
+        sum {
+          requests
+        }
+      }
+      r2StorageAdaptiveGroups(limit: 10000, filter: { date_geq: $startDate, date_leq: $endDate }) {
+        dimensions {
+          bucketName
+          date
+        }
+        max {
+          objectCount
+          uploadCount
+          metadataSize
+          payloadSize
+        }
+      }
+      workersInvocationsAdaptive(limit: 10000, filter: { date_geq: $startDate, date_leq: $endDate }) {
+        dimensions {
+          scriptName
+          date
+        }
+        quantiles {
+          cpuTimeP25
+          cpuTimeP50
+          cpuTimeP75
+          cpuTimeP90
+          cpuTimeP99
+          cpuTimeP999
+        }
+        sum {
+          requests
+        }
+        min {
+          cpuTime
+        }
+        max {
+          cpuTime
+        }
+      }
+      workersInvocationsScheduled(limit: 10000, filter: { datetime_geq: $startTime, datetime_leq: $endTime }) {
+        datetime
+        scheduledDatetime
+        scriptName
+        cron
+        cpuTimeUs
+        status
+      }
+    }
+  }
+}

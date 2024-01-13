@@ -8,7 +8,7 @@ import type {
   APIInteractionResponse,
   RESTPostAPIApplicationGuildCommandsJSONBody,
 } from "discord-api-types/v10";
-import type { Env } from "./cloudflare";
+import type { Env } from "./cloudflare/workers";
 
 export const DISCORD_MAX = {
   EMBED: {
