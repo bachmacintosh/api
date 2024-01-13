@@ -17,6 +17,7 @@ export default class CloudflareAnalytics {
   public constructor(env: Env) {
     this.env = env;
     this.client = new GraphQLClient("https://api.cloudflare.com/client/v4/graphql", {
+      fetch,
       headers: {
         Authorization: `Bearer ${env.CLOUDFLARE_GQL_TOKEN}`,
       },
