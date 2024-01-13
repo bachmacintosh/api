@@ -1,10 +1,4 @@
-query GetWorkersAndR2Analytics(
-  $accountTag: string!
-  $startDate: Date
-  $endDate: Date
-  $startTime: Time
-  $endTime: Time
-) {
+query GetR2Analytics($accountTag: string!, $startDate: Date, $endDate: Date) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
       r2OperationsAdaptiveGroups(limit: 10000, filter: { date_geq: $startDate, date_leq: $endDate }) {
@@ -29,6 +23,13 @@ query GetWorkersAndR2Analytics(
           payloadSize
         }
       }
+    }
+  }
+}
+
+query GetWorkersAnalytics($accountTag: string!, $startDate: Date, $endDate: Date, $startTime: Time, $endTime: Time) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
       workersInvocationsAdaptive(limit: 10000, filter: { date_geq: $startDate, date_leq: $endDate }) {
         dimensions {
           scriptName
