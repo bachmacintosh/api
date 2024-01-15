@@ -1,12 +1,12 @@
 import {
+  type Env,
   GetR2AnalyticsDocument,
   type GetR2AnalyticsQuery,
   type GetR2AnalyticsQueryVariables,
   GetWorkersAnalyticsDocument,
   type GetWorkersAnalyticsQuery,
   type GetWorkersAnalyticsQueryVariables,
-} from "../types/cloudflare/graphql";
-import type { Env } from "../types";
+} from "../types";
 import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
 
