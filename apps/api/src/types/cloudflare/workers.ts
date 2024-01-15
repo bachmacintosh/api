@@ -28,6 +28,9 @@ export interface Env {
   GITHUB_ACCESS_TOKEN: string;
   GITHUB_WEBHOOK_SECRET: string;
 
+  GOOGLE_SERVICE_ACCOUNT_CREDENTIALS: string;
+  GOOGLE_SPREADSHEET_ID_ANALYTICS: string;
+
   KV: KVNamespace;
 
   QUEUE: Queue<QueueBody>;
