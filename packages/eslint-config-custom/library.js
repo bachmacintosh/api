@@ -234,6 +234,13 @@ const namingConventionRules = [
     format: ["camelCase", "UPPER_CASE"],
   },
   {
+    // Relaxed for imports
+    selector: "import",
+    leadingUnderscore: "forbid",
+    trailingUnderscore: "forbid",
+    format: ["camelCase", "snake_case", "PascalCase", "UPPER_CASE"],
+  },
+  {
     // A good catch-all for everything else
     selector: "default",
     leadingUnderscore: "forbid",
