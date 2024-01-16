@@ -37,13 +37,14 @@
   },
   "dependencies": {
     "@discordjs/rest": "2.2.0",
+    "@googleapis/sheets": "5.0.5",
+    "cloudflare-workers-and-google-oauth": "2.0.0",
     "drizzle-orm": "0.29.3",
     "graphql": "16.8.1",
     "itty-router": "4.0.26",
     "mdast-util-from-markdown": "2.0.0",
     "mdast-util-gfm": "3.0.0",
     "mdast-util-to-markdown": "2.1.0",
-    "micromark-extension-gfm": "3.0.0",
-    "web-auth-library": "1.0.3"
+    "micromark-extension-gfm": "3.0.0"
   }
 }
