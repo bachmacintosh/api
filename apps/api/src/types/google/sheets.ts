@@ -2,6 +2,8 @@ import type { sheets_v4 } from "@googleapis/sheets";
 
 // BEGIN OUR OWN GOOGLE SHEETS TYPES
 
+type Maybe<T> = T | null;
+
 type Explode<T> = keyof T extends infer K
   ? K extends unknown
     ? { [I in keyof T]: I extends K ? T[I] : never }
@@ -28,13 +30,13 @@ type ExactlyOneOf<T> = AtLeastOneOf<T> & AtMostOneOf<T>;
 /** A chart embedded in a sheet. */
 interface EmbeddedChart {
   /** The border of the chart. */
-  border: EmbeddedObjectBorder;
+  border?: EmbeddedObjectBorder;
   /** The ID of the chart. */
-  chartId: number;
+  chartId?: Maybe<number>;
   /** The position of the chart. */
-  position: EmbeddedObjectPosition;
+  position?: EmbeddedObjectPosition;
   /** The specification of the chart. */
-  spec: ChartSpec;
+  spec?: ChartSpec;
 }
 
 type ChartSpec = ExactlyOneOf<{
@@ -61,47 +63,47 @@ type ChartSpec = ExactlyOneOf<{
   waterfallChart: WaterfallChartSpec;
 }> & {
   /** The alternative text that describes the chart. This is often used for accessibility. */
-  altText: string;
+  altText?: Maybe<string>;
   /**
    * The background color of the entire chart. Not applicable to Org charts.
    * @deprecated Use backgroundColorStyle.
    */
-  backgroundColor: Color;
+  backgroundColor?: Color;
   /**
    * The background color of the entire chart. Not applicable to Org charts. If backgroundColor is also set, this field
    * takes precedence.
    */
-  backgroundColorStyle: ColorStyle;
+  backgroundColorStyle?: ColorStyle;
   /** If present, the field contains data source chart specific properties. */
-  dataSourceChartProperties: DataSourceChartProperties;
+  dataSourceChartProperties?: DataSourceChartProperties;
   /** The filters applied to the source data of the chart. Only supported for data source charts. */
-  filterSpecs: FilterSpec[];
+  filterSpecs?: FilterSpec[];
   /**
    * The name of the font to use by default for all chart text (e.g. title, axis labels, legend). If a font is specified
    * for a specific part of the chart it will override this font name.
    */
-  fontName: string;
+  fontName?: Maybe<string>;
   /** Determines how the charts will use hidden rows or columns. */
-  hiddenDimensionStrategy: ChartHiddenDimensionStrategy;
+  hiddenDimensionStrategy?: Maybe<ChartHiddenDimensionStrategy>;
   /**
    * True to make a chart fill the entire space in which it's rendered with minimum padding. False to use the default
    * padding. (Not applicable to Geo and Org charts.)
    */
-  maximized: boolean;
+  maximized?: Maybe<boolean>;
   /**
    * The order to sort the chart data by. Only a single sort spec is supported. Only supported for data source charts.
    */
-  sortSpecs: SortSpec[];
+  sortSpecs?: SortSpec[];
   /** The subtitle of the chart. */
-  subtitle: string;
+  subtitle?: Maybe<string>;
   /** The subtitle text format. Strikethrough, underline, and link are not supported. */
-  subtitleTextFormat: TextFormat;
+  subtitleTextFormat?: TextFormat;
   /** The subtitle text position. This field is optional. */
-  subtitleTextPosition: TextPosition;
+  subtitleTextPosition?: TextPosition;
   /** The title of the chart. */
-  title: string;
+  title?: Maybe<string>;
   /** The title text format. Strikethrough, underline, and link are not supported. */
-  titleTextFormat: TextFormat;
+  titleTextFormat?: TextFormat;
   /** The title text position. This field is optional. */
   titleTextPosition?: TextPosition;
 };
@@ -109,52 +111,52 @@ type ChartSpec = ExactlyOneOf<{
 /** Position settings for text. */
 interface TextPosition {
   /** Horizontal alignment setting for the piece of text. */
-  horizontalAlignment: HorizontalAlign;
+  horizontalAlignment?: Maybe<HorizontalAlign>;
 }
 
 /** Properties of a data source chart. */
 interface DataSourceChartProperties {
-  /** ID of the data source that the chart is associated with. */
-  dataSourceId: string;
   /** Output only. The data execution status. */
   dataExecutionStatus?: DataExecutionStatus;
+  /** ID of the data source that the chart is associated with. */
+  dataSourceId?: Maybe<string>;
 }
 
 /** The specification for a basic chart. See BasicChartType for the list of charts this supports. */
 interface BasicChartSpec {
   /** The axis on the chart. */
-  axis: BasicChartAxis[];
+  axis?: BasicChartAxis[];
   /** The type of the chart. */
-  chartType: BasicChartType;
+  chartType?: Maybe<BasicChartType>;
   /** The behavior of tooltips and data highlighting when hovering on data and chart area. */
-  compareMode: BasicChartCompareMode;
+  compareMode?: Maybe<BasicChartCompareMode>;
   /** The domain of data this is charting. Only a single domain is supported. */
-  domains: BasicChartDomain[];
+  domains?: BasicChartDomain[];
   /**
    * The number of rows or columns in the data that are "headers". If not set, Google Sheets will guess how many rows
    * are headers based on the data.
    *
    * (Note that BasicChartAxis.title may override the axis title inferred from the header values.)
    */
-  headerCount: number;
-  /** The position of the chart legend. */
-  legendPosition: BasicChartLegendPosition;
-  /** The data this chart is visualizing. */
-  series: BasicChartSeries[];
+  headerCount?: Maybe<number>;
   /**
    * If some values in a series are missing, gaps may appear in the chart (e.g, segments of lines in a line chart will
    * be missing). To eliminate these gaps set this to true. Applies to Line, Area, and Combo charts.
    */
-  interpolateNulls?: boolean;
+  interpolateNulls?: Maybe<boolean>;
+  /** The position of the chart legend. */
+  legendPosition?: Maybe<BasicChartLegendPosition>;
   /** Gets whether all lines should be rendered smooth or straight by default. Applies to Line charts. */
-  lineSmoothing?: boolean;
+  lineSmoothing?: Maybe<boolean>;
+  /** The data this chart is visualizing. */
+  series?: BasicChartSeries[];
   /**
    * The stacked type for charts that support vertical stacking. Applies to Area, Bar, Column, Combo, and Stepped Area
    * charts.
    */
-  stackedType?: BasicChartStackedType;
+  stackedType?: Maybe<BasicChartStackedType>;
   /** True to make the chart 3D. Applies to Bar and Column charts. */
-  threeDimensional?: boolean;
+  threeDimensional?: Maybe<boolean>;
   /**
    * Controls whether to display additional data labels on stacked charts which sum the total value of all stacked
    * values at each value along the domain axis. These data labels can only be set when chartType is one of AREA, BAR,
@@ -208,15 +210,15 @@ interface BasicChartAxis {
   /**
    * The format of the title. Only valid if the axis is not associated with the domain. The link field is not supported.
    */
-  format: TextFormat;
+  format?: TextFormat;
   /** The position of this axis. */
-  position: BasicChartAxisPosition;
-  /** The axis title text position. */
-  titleTextPosition: TextPosition;
-  /** The view window options for this axis. */
-  viewWindowOptions: ChartAxisViewWindowOptions;
+  position?: Maybe<BasicChartAxisPosition>;
   /** The title of this axis. If set, this overrides any title inferred from headers of the data. */
-  title?: string;
+  title?: Maybe<string>;
+  /** The axis title text position. */
+  titleTextPosition?: TextPosition;
+  /** The view window options for this axis. */
+  viewWindowOptions?: ChartAxisViewWindowOptions;
 }
 
 /** The position of a chart axis. */
@@ -242,18 +244,18 @@ enum BasicChartAxisPosition {
 
 /** The options that define a "view window" for a chart (such as the visible values in an axis). */
 interface ChartAxisViewWindowOptions {
-  /** The view window's mode. */
-  viewWindowMode: ViewWindowMode;
   /**
    * The maximum numeric value to be shown in this view window. If unset, will automatically determine a maximum value
    * that looks good for the data.
    */
-  viewWindowMax?: number;
+  viewWindowMax?: Maybe<number>;
   /**
    * The minimum numeric value to be shown in this view window. If unset, will automatically determine a minimum value
    * that looks good for the data.
    */
-  viewWindowMin?: number;
+  viewWindowMin?: Maybe<number>;
+  /** The view window's mode. */
+  viewWindowMode?: Maybe<ViewWindowMode>;
 }
 
 /** The view window's mode. It defines how to treat the min and max of the view window. */
@@ -276,9 +278,9 @@ interface BasicChartDomain {
   /**
    * The data of the domain. For example, if charting stock prices over time, this is the data representing the dates.
    */
-  domain: ChartData;
+  domain?: ChartData;
   /** True to reverse the order of the domain values (horizontal axis). */
-  reversed: boolean;
+  reversed?: Maybe<boolean>;
 }
 
 /** The data included in a domain or series. */
@@ -289,7 +291,7 @@ type ChartData = ExactlyOneOf<{
   sourceRange: ChartSourceRange;
 }> & {
   /** The aggregation type for the series of a data source chart. Only supported for data source charts. */
-  aggregateType?: ChartAggregateType;
+  aggregateType?: Maybe<ChartAggregateType>;
   /**
    * The rule to group the data by if the ChartData backs the domain of a data source chart. Only supported for data
    * source charts.
@@ -317,7 +319,7 @@ interface ChartSourceRange {
    * series2 sources: C1:C5, E10:E12
    * ```
    */
-  sources: GridRange[];
+  sources?: GridRange[];
 }
 
 /**
@@ -341,7 +343,7 @@ type ChartGroupRule = ExactlyOneOf<{
  */
 interface ChartDateTimeRule {
   /** The type of date-time grouping to apply. */
-  type: ChartDateTimeRuleType;
+  type?: Maybe<ChartDateTimeRuleType>;
 }
 
 /** The available types of date-time grouping rules. */
@@ -392,17 +394,17 @@ enum ChartDateTimeRuleType {
 /** Allows you to organize numeric values in a source data column into buckets of constant size. */
 interface ChartHistogramRule {
   /** The size of the buckets that are created. Must be positive. */
-  intervalSize: number;
+  intervalSize?: Maybe<number>;
   /**
    * The maximum value at which items are placed into buckets. Values greater than the maximum are grouped into a single
    * bucket. If omitted, it is determined by the maximum item value.
    */
-  maxValue?: number;
+  maxValue?: Maybe<number>;
   /**
    * The minimum value at which items are placed into buckets. Values that are less than the minimum are grouped into a
    * single bucket. If omitted, it is determined by the minimum item value.
    */
-  minValue?: number;
+  minValue?: Maybe<number>;
 }
 
 /** The type of aggregation for chart series. */
@@ -428,17 +430,6 @@ enum ChartAggregateType {
  * for the "Open Price", "High Price", "Low Price" and "Close Price".
  */
 interface BasicChartSeries {
-  /** Information about the data labels for this series. */
-  dataLabel: DataLabel;
-  /** The data being visualized in this chart series. */
-  series: ChartData;
-  /**
-   * The minor axis that will specify the range of values for this series. For example, if charting stocks over time,
-   * the "Volume" series may want to be pinned to the right with the prices pinned to the left, because the scale of
-   * trading volume is different than the scale of prices. It is an error to specify an axis that isn't a valid minor
-   * axis for the chart's type.
-   */
-  targetAxis: BasicChartAxisPosition;
   /**
    * The color for elements (such as bars, lines, and points) associated with this series. If empty, a default color is
    * used.
@@ -450,6 +441,8 @@ interface BasicChartSeries {
    * used. If color is also set, this field takes precedence.
    */
   colorStyle?: ColorStyle;
+  /** Information about the data labels for this series. */
+  dataLabel?: DataLabel;
   /**
    * The line style of this series. Valid only if the chartType is AREA, LINE, or SCATTER. COMBO charts are also
    * supported if the series chart type is AREA or LINE.
@@ -461,21 +454,30 @@ interface BasicChartSeries {
    * used.
    */
   pointStyle?: PointStyle;
+  /** The data being visualized in this chart series. */
+  series?: ChartData;
   /** Style override settings for series data points. */
   styleOverrides?: BasicSeriesDataPointStyleOverride[];
+  /**
+   * The minor axis that will specify the range of values for this series. For example, if charting stocks over time,
+   * the "Volume" series may want to be pinned to the right with the prices pinned to the left, because the scale of
+   * trading volume is different than the scale of prices. It is an error to specify an axis that isn't a valid minor
+   * axis for the chart's type.
+   */
+  targetAxis?: Maybe<BasicChartAxisPosition>;
   /**
    * The type of this series. Valid only if the chartType is COMBO. Different types will change the way the series is
    * visualized. Only LINE, AREA, and COLUMN are supported.
    */
-  type?: BasicChartType;
+  type?: Maybe<BasicChartType>;
 }
 
 /** Properties that describe the style of a line. */
 interface LineStyle {
   /** The dash type of the line. */
-  type: LineDashType;
+  type?: Maybe<LineDashType>;
   /** The thickness of the line, in px. */
-  width: number;
+  width?: Maybe<number>;
 }
 
 /** The dash type of a line. */
@@ -506,12 +508,6 @@ enum LineDashType {
  * representation of the value behind that point on the graph.
  */
 interface DataLabel {
-  /** The placement of the data label relative to the labeled data. */
-  placement: DataLabelPlacement;
-  /** The text format used for the data label. The link field is not supported. */
-  textFormat: TextFormat;
-  /** The type of the data label. */
-  type: DataLabelType;
   /**
    * Data to use for custom labels. Only used if type is set to CUSTOM. This data must be the same length as the series
    * or other element this data label is applied to. In addition, if the series is split into multiple source ranges,
@@ -519,6 +515,12 @@ interface DataLabel {
    * this data must come from C2:C4,F6:F8.
    */
   customLabelData?: ChartData;
+  /** The placement of the data label relative to the labeled data. */
+  placement?: Maybe<DataLabelPlacement>;
+  /** The text format used for the data label. The link field is not supported. */
+  textFormat?: TextFormat;
+  /** The type of the data label. */
+  type?: Maybe<DataLabelType>;
 }
 
 /** The type of a data label. */
@@ -561,9 +563,9 @@ enum DataLabelPlacement {
 /** The style of a point on the chart. */
 interface PointStyle {
   /** The point shape. If empty or unspecified, a default shape is used. */
-  shape?: PointShape;
+  shape?: Maybe<PointShape>;
   /** The point size. If empty, a default size is used. */
-  size?: number;
+  size?: Maybe<number>;
 }
 
 /** The shape of a point. */
@@ -590,8 +592,6 @@ enum PointShape {
 
 /** Style override settings for a single series data point. */
 interface BasicSeriesDataPointStyleOverride {
-  /** The zero-based index of the series data point. */
-  index: number;
   /**
    * Color of the series data point. If empty, the series default is used.
    * @deprecated Use colorStyle.
@@ -602,6 +602,8 @@ interface BasicSeriesDataPointStyleOverride {
    * precedence.
    */
   colorStyle?: ColorStyle;
+  /** The zero-based index of the series data point. */
+  index?: Maybe<number>;
   /**
    * Point style of the series data point. Valid only if the chartType is AREA, LINE, or SCATTER. COMBO charts are also
    * supported if the series chart type is AREA, LINE, or SCATTER. If empty, the series default is used.
@@ -642,15 +644,15 @@ enum BasicChartCompareMode {
 /** A pie chart. */
 interface PieChartSpec {
   /** The data that covers the domain of the pie chart. */
-  domain: ChartData;
+  domain?: ChartData;
   /** Where the legend of the pie chart should be drawn. */
-  legendPosition: PieChartLegendPosition;
+  legendPosition?: Maybe<PieChartLegendPosition>;
   /** The size of the hole in the pie chart. */
-  pieHole: number;
+  pieHole?: Maybe<number>;
   /** The data that covers the one and only series of the pie chart. */
-  series: ChartData;
+  series?: ChartData;
   /** True if the pie is three dimensional. */
-  threeDimensional: boolean;
+  threeDimensional?: Maybe<boolean>;
 }
 
 /** Where the legend of the chart should be positioned. */
@@ -673,16 +675,6 @@ enum PieChartLegendPosition {
 
 /** A bubble chart. */
 interface BubbleChartSpec {
-  /** The data containing the bubble labels. These do not need to be unique. */
-  bubbleLabels: ChartData;
-  /** The opacity of the bubbles between 0 and 1.0. 0 is fully transparent and 1 is fully opaque. */
-  bubbleOpacity: number;
-  /** The data containing the bubble x-values. These values locate the bubbles in the chart horizontally. */
-  domain: ChartData;
-  /** Where the legend of the chart should be drawn. */
-  legendPosition: BubbleChartLegendPosition;
-  /** The data containing the bubble y-values. These values locate the bubbles in the chart vertically. */
-  series: ChartData;
   /**
    * The bubble border color.
    * @deprecated Use bubbleBorderColorStyle.
@@ -690,10 +682,14 @@ interface BubbleChartSpec {
   bubbleBorderColor?: Color;
   /** The bubble border color. If bubbleBorderColor is also set, this field takes precedence. */
   bubbleBorderColorStyle?: ColorStyle;
+  /** The data containing the bubble labels. These do not need to be unique. */
+  bubbleLabels?: ChartData;
   /** The max radius size of the bubbles, in pixels. If specified, the field must be a positive value. */
-  bubbleMaxRadiusSize?: number;
+  bubbleMaxRadiusSize?: Maybe<number>;
   /** The minimum radius size of the bubbles, in pixels. If specific, the field must be a positive value. */
-  bubbleMinRadiusSize?: number;
+  bubbleMinRadiusSize?: Maybe<number>;
+  /** The opacity of the bubbles between 0 and 1.0. 0 is fully transparent and 1 is fully opaque. */
+  bubbleOpacity?: Maybe<number>;
   /**
    * The data containing the bubble sizes. Bubble sizes are used to draw the bubbles at different sizes relative to each
    * other. If specified, groupIds must also be specified. This field is optional.
@@ -701,12 +697,18 @@ interface BubbleChartSpec {
   bubbleSizes?: ChartData;
   /** The format of the text inside the bubbles. Strikethrough, underline, and link are not supported. */
   bubbleTextStyle?: TextFormat;
+  /** The data containing the bubble x-values. These values locate the bubbles in the chart horizontally. */
+  domain?: ChartData;
   /**
    * The data containing the bubble group IDs. All bubbles with the same group ID are drawn in the same color. If
    * bubbleSizes is specified then this field must also be specified but may contain blank values. This field is
    * optional.
    */
   groupIds?: ChartData;
+  /** Where the legend of the chart should be drawn. */
+  legendPosition?: Maybe<BubbleChartLegendPosition>;
+  /** The data containing the bubble y-values. These values locate the bubbles in the chart vertically. */
+  series?: ChartData;
 }
 
 /** Where the legend of the chart should be positioned. */
@@ -728,20 +730,20 @@ enum BubbleChartLegendPosition {
 /** A candlestick chart. */
 interface CandlestickChartSpec {
   /** The Candlestick chart data. Only one CandlestickData is supported. */
-  data: CandlestickData[];
+  data?: CandlestickData[];
   /**
    * The domain data (horizontal axis) for the candlestick chart. String data will be treated as discrete labels, other
    * data will be treated as continuous values.
    */
-  domain: CandlestickDomain;
+  domain?: CandlestickDomain;
 }
 
 /** The domain of a CandlestickChart. */
 interface CandlestickDomain {
   /** The data of the CandlestickDomain. */
-  data: ChartData;
+  data?: ChartData;
   /** True to reverse the order of the domain values (horizontal axis). */
-  reversed: boolean;
+  reversed?: Maybe<boolean>;
 }
 
 /** The Candlestick chart data, each containing the low, open, close, and high values for a series. */
@@ -750,28 +752,28 @@ interface CandlestickData {
    * The range data (vertical axis) for the close/final value for each candle. This is the top of the candle body. If
    * greater than the open value the candle will be filled. Otherwise the candle will be hollow.
    */
-  closeSeries: CandlestickSeries;
+  closeSeries?: CandlestickSeries;
   /**
    * The range data (vertical axis) for the high/maximum value for each candle. This is the top of the candle's center
    * line.
    */
-  highSeries: CandlestickSeries;
+  highSeries?: CandlestickSeries;
   /**
    * The range data (vertical axis) for the low/minimum value for each candle. This is the bottom of the candle's center
    * line.
    */
-  lowSeries: CandlestickSeries;
+  lowSeries?: CandlestickSeries;
   /**
    * The range data (vertical axis) for the open/initial value for each candle. This is the bottom of the candle body.
    * If less than the close value the candle will be filled. Otherwise the candle will be hollow.
    */
-  openSeries: CandlestickSeries;
+  openSeries?: CandlestickSeries;
 }
 
 /** The series of a CandlestickData. */
 interface CandlestickSeries {
   /** The data of the CandlestickSeries. */
-  data: ChartData;
+  data?: ChartData;
 }
 
 /**
@@ -785,14 +787,7 @@ interface CandlestickSeries {
  */
 interface OrgChartSpec {
   /** The data containing the labels for all the nodes in the chart. Labels must be unique. */
-  labels: ChartData;
-  /** The size of the org chart nodes. */
-  nodeSize: OrgChartNodeSize;
-  /**
-   * The data containing the tooltip for the corresponding node. A blank value results in no tooltip being displayed for
-   * the node. This field is optional.
-   */
-  tooltips: ChartData;
+  labels?: ChartData;
   /**
    * The color of the org chart nodes.
    * @deprecated Use nodeColorStyle.
@@ -800,6 +795,8 @@ interface OrgChartSpec {
   nodeColor?: Color;
   /** The color of the org chart nodes. If nodeColor is also set, this field takes precedence. */
   nodeColorStyle?: ColorStyle;
+  /** The size of the org chart nodes. */
+  nodeSize?: Maybe<OrgChartNodeSize>;
   /**
    * The data containing the label of the parent for the corresponding node. A blank value indicates that the node has
    * no parent and is a top-level node. This field is optional.
@@ -812,6 +809,11 @@ interface OrgChartSpec {
   selectedNodeColor?: Color;
   /** The color of the selected org chart nodes. If selectedNodeColor is also set, this field takes precedence. */
   selectedNodeColorStyle?: ColorStyle;
+  /**
+   * The data containing the tooltip for the corresponding node. A blank value results in no tooltip being displayed for
+   * the node. This field is optional.
+   */
+  tooltips?: ChartData;
 }
 
 /** The size of the org chart nodes. */
@@ -832,34 +834,32 @@ enum OrgChartNodeSize {
  * those items fall. The number of bins can be chosen automatically or specified explicitly.
  */
 interface HistogramChartSpec {
+  /**
+   * By default the bucket size (the range of values stacked in a single column) is chosen automatically, but it may be
+   * overridden here. E.g., A bucket size of 1.5 results in buckets from 0 - 1.5, 1.5 - 3.0, etc. Cannot be negative.
+   * This field is optional.
+   */
+  bucketSize?: Maybe<number>;
   /** The position of the chart legend. */
-  legendPosition: HistogramChartLegendPosition;
+  legendPosition?: Maybe<HistogramChartLegendPosition>;
   /**
    * The outlier percentile is used to ensure that outliers do not adversely affect the calculation of bucket sizes. For
    * example, setting an outlier percentile of 0.05 indicates that the top and bottom 5% of values when calculating
    * buckets. The values are still included in the chart, they will be added to the first or last buckets instead of
    * their own buckets. Must be between 0.0 and 0.5.
    */
-  outlierPercentile: number;
+  outlierPercentile?: Maybe<number>;
   /**
    * The series for a histogram may be either a single series of values to be bucketed or multiple series, each of the
    * same length, containing the name of the series followed by the values to be bucketed for that series.
    */
-  series: HistogramSeries[];
+  series?: HistogramSeries[];
   /** Whether horizontal divider lines should be displayed between items in each column. */
-  showItemDividers: boolean;
-  /**
-   * By default the bucket size (the range of values stacked in a single column) is chosen automatically, but it may be
-   * overridden here. E.g., A bucket size of 1.5 results in buckets from 0 - 1.5, 1.5 - 3.0, etc. Cannot be negative.
-   * This field is optional.
-   */
-  bucketSize?: number;
+  showItemDividers?: Maybe<boolean>;
 }
 
 /** A histogram series containing the series color and data. */
 interface HistogramSeries {
-  /** The data for this histogram series. */
-  data: ChartData;
   /**
    * The color of the column representing this series in each bucket. This field is optional.
    * @deprecated Use barColorStyle.
@@ -870,6 +870,8 @@ interface HistogramSeries {
    * this field takes precedence.
    */
   barColorStyle?: ColorStyle;
+  /** The data for this histogram series. */
+  data?: ChartData;
 }
 
 /** Where the legend of the chart should be positioned. */
@@ -893,17 +895,17 @@ enum HistogramChartLegendPosition {
 /** A waterfall chart. */
 interface WaterfallChartSpec {
   /** The line style for the connector lines. */
-  connectorLineStyle: LineStyle;
+  connectorLineStyle?: LineStyle;
   /** The domain data (horizontal axis) for the waterfall chart. */
-  domain: WaterfallChartDomain;
+  domain?: WaterfallChartDomain;
   /** True to interpret the first value as a total. */
-  firstValueIsTotal: boolean;
+  firstValueIsTotal?: Maybe<boolean>;
   /** True to hide connector lines between columns. */
-  hideConnectorLines: boolean;
+  hideConnectorLines?: Maybe<boolean>;
   /** The data this waterfall chart is visualizing. */
-  series: WaterfallChartSeries[];
+  series?: WaterfallChartSeries[];
   /** The stacked type. */
-  stackedType: WaterfallChartStackedType;
+  stackedType?: Maybe<WaterfallChartStackedType>;
   /**
    * Controls whether to display additional data labels on stacked charts which sum the total value of all stacked
    * values at each value along the domain axis. stackedType must be STACKED and neither CUSTOM nor placement can be set
@@ -915,9 +917,9 @@ interface WaterfallChartSpec {
 /** The domain of a waterfall chart. */
 interface WaterfallChartDomain {
   /** The data of the WaterfallChartDomain. */
-  data: ChartData;
+  data?: ChartData;
   /** True to reverse the order of the domain values (horizontal axis). */
-  reversed: boolean;
+  reversed?: Maybe<boolean>;
 }
 
 /** A single series of data for a waterfall chart. */
@@ -926,28 +928,26 @@ interface WaterfallChartSeries {
    * Custom subtotal columns appearing in this series. The order in which subtotals are defined is not significant. Only
    * one subtotal may be defined for each data point.
    */
-  customSubtotals: WaterfallChartCustomSubtotal[];
+  customSubtotals?: WaterfallChartCustomSubtotal[];
   /** The data being visualized in this series. */
-  data: ChartData;
+  data?: ChartData;
   /** Information about the data labels for this series. */
-  dataLabel: DataLabel;
+  dataLabel?: DataLabel;
   /**
    * True to hide the subtotal column from the end of the series. By default, a subtotal column will appear at the end
    * of each series. Setting this field to true will hide that subtotal column for this series.
    */
-  hideTrailingSubtotal: boolean;
+  hideTrailingSubtotal?: Maybe<boolean>;
   /** Styles for all columns in this series with negative values. */
-  negativeColumnsStyle: WaterfallChartColumnStyle;
+  negativeColumnsStyle?: WaterfallChartColumnStyle;
   /** Styles for all columns in this series with positive values. */
-  positiveColumnsStyle: WaterfallChartColumnStyle;
+  positiveColumnsStyle?: WaterfallChartColumnStyle;
   /** Styles for all subtotal columns in this series. */
-  subtotalColumnsStyle: WaterfallChartColumnStyle;
+  subtotalColumnsStyle?: WaterfallChartColumnStyle;
 }
 
 /** Styles for a waterfall chart column. */
 interface WaterfallChartColumnStyle {
-  /** The label of the column's legend. */
-  label: string;
   /**
    * The color of the column.
    * @deprecated Use colorStyle.
@@ -955,6 +955,8 @@ interface WaterfallChartColumnStyle {
   color?: Color;
   /** The color of the column. If color is also set, this field takes precedence. */
   colorStyle?: ColorStyle;
+  /** The label of the column's legend. */
+  label?: Maybe<string>;
 }
 
 /** A custom subtotal column for a waterfall chart series. */
@@ -963,9 +965,9 @@ interface WaterfallChartCustomSubtotal {
    * True if the data point at subtotalIndex is the subtotal. If false, the subtotal will be computed and appear after
    * the data point.
    */
-  dataIsSubtotal: boolean;
+  dataIsSubtotal?: Maybe<boolean>;
   /** A label for the subtotal column. */
-  label: string;
+  label?: Maybe<string>;
   /**
    * The zero-based index of a data point within the series. If dataIsSubtotal is true, the data point at this index is
    * the subtotal. Otherwise, the subtotal appears after the data point with this index. A series can have multiple
@@ -973,7 +975,7 @@ interface WaterfallChartCustomSubtotal {
    * series has three data points, their indices will always be 0, 1, and 2, regardless of how many subtotals exist on
    * the series or what data points they are associated with.
    */
-  subtotalIndex: number;
+  subtotalIndex?: Maybe<number>;
 }
 
 /** Stacked type options for waterfall charts. */
@@ -988,16 +990,6 @@ enum WaterfallChartStackedType {
 
 /** A Treemap chart. */
 interface TreemapChartSpec {
-  /** The data that contains the treemap cell labels. */
-  labels: ChartData;
-  /** The data the contains the treemap cells' parent labels. */
-  parentLabels: ChartData;
-  /**
-   * The data that determines the size of each treemap data cell. This data is expected to be numeric. The cells
-   * corresponding to non-numeric or missing data will not be rendered. If colorData is not specified, this data is used
-   * to determine data cell background colors as well.
-   */
-  sizeData: ChartData;
   /**
    * The data that determines the background color of each treemap data cell. This field is optional. If not specified,
    * sizeData is used to determine background colors. If specified, the data is expected to be numeric. colorScale will
@@ -1022,29 +1014,39 @@ interface TreemapChartSpec {
   /** The background color for header cells. If headerColor is also set, this field takes precedence. */
   headerColorStyle?: ColorStyle;
   /** True to hide tooltips. */
-  hideTooltips?: boolean;
+  hideTooltips?: Maybe<boolean>;
   /**
    * The number of additional data levels beyond the labeled levels to be shown on the treemap chart. These levels are
    * not interactive and are shown without their labels. Defaults to 0 if not specified.
    */
-  hintedLevels?: number;
+  hintedLevels?: Maybe<number>;
+  /** The data that contains the treemap cell labels. */
+  labels?: ChartData;
   /**
    * The number of data levels to show on the treemap chart. These levels are interactive and are shown with their
    * labels. Defaults to 2 if not specified.
    */
-  levels?: number;
+  levels?: Maybe<number>;
   /**
    * The maximum possible data value. Cells with values greater than this will have the same color as cells with this
    * value. If not specified, defaults to the actual maximum value from colorData, or the maximum value from sizeData if
    * colorData is not specified.
    */
-  maxValue?: number;
+  maxValue?: Maybe<number>;
   /**
    * The minimum possible data value. Cells with values less than this will have the same color as cells with this
    * value. If not specified, defaults to the actual minimum value from colorData, or the minimum value from sizeData if
    * colorData is not specified.
    */
-  minValue?: number;
+  minValue?: Maybe<number>;
+  /** The data the contains the treemap cells' parent labels. */
+  parentLabels?: ChartData;
+  /**
+   * The data that determines the size of each treemap data cell. This data is expected to be numeric. The cells
+   * corresponding to non-numeric or missing data will not be rendered. If colorData is not specified, this data is used
+   * to determine data cell background colors as well.
+   */
+  sizeData?: ChartData;
   /** The text format for all labels on the chart. The link field is not supported. */
   textFormat?: TextFormat;
 }
@@ -1103,16 +1105,12 @@ interface TreemapChartColorScale {
  * value can be highlighted, like changes over time.
  */
 interface ScorecardChartSpec {
-  /** The data for scorecard key value. */
-  keyValueData: ChartData;
-  /** Formatting options for key value. */
-  keyValueFormat: KeyValueFormat;
   /**
    * The aggregation type for key and baseline chart data in scorecard chart. This field is not supported for data
    * source charts. Use the ChartData.aggregateType field of the keyValueData or baselineValueData instead for data
    * source charts. This field is optional.
    */
-  aggregateType?: ChartAggregateType;
+  aggregateType?: Maybe<ChartAggregateType>;
   /** The data for scorecard baseline value. This field is optional. */
   baselineValueData?: ChartData;
   /** Formatting options for baseline value. This field is needed only if baselineValueData is specified. */
@@ -1122,13 +1120,17 @@ interface ScorecardChartSpec {
    * numberFormatSource is set to CUSTOM. This field is optional.
    */
   customFormatOptions?: ChartCustomNumberFormatOptions;
+  /** The data for scorecard key value. */
+  keyValueData?: ChartData;
+  /** Formatting options for key value. */
+  keyValueFormat?: KeyValueFormat;
   /** The number format source used in the scorecard chart. This field is optional. */
-  numberFormatSource?: ChartNumberFormatSource;
+  numberFormatSource?: Maybe<ChartNumberFormatSource>;
   /**
    * Value to scale scorecard key and baseline value. For example, a factor of 10 can be used to divide all values in
    * the chart by 10. This field is optional.
    */
-  scaleFactor?: number;
+  scaleFactor?: Maybe<number>;
 }
 
 /** Formatting options for key value. */
@@ -1145,9 +1147,9 @@ interface KeyValueFormat {
 /** Formatting options for baseline value. */
 interface BaselineValueFormat {
   /** The comparison type of key value with baseline value. */
-  comparisonType: ComparisonType;
+  comparisonType?: Maybe<ComparisonType>;
   /** Description which is appended after the baseline value. This field is optional. */
-  description?: string;
+  description?: Maybe<string>;
   /**
    * Color to be used, in case baseline value represents a negative change for key value. This field is optional.
    * @deprecated Use negativeColorStyle.
@@ -1200,9 +1202,9 @@ enum ChartNumberFormatSource {
 /** Custom number formatting options for chart attributes. */
 interface ChartCustomNumberFormatOptions {
   /** Custom prefix to be prepended to the chart attribute. This field is optional. */
-  prefix?: string;
+  prefix?: Maybe<string>;
   /** Custom suffix to be appended to the chart attribute. This field is optional. */
-  suffix?: string;
+  suffix?: Maybe<string>;
 }
 
 /**
@@ -1250,13 +1252,13 @@ interface Color {
    * distinguish between a default value and the value being unset. If omitted, this color object is rendered as a solid
    * color (as if the alpha value had been explicitly given a value of 1.0).
    */
-  alpha: number;
+  alpha?: Maybe<number>;
   /** The amount of blue in the color as a value in the interval [0, 1]. */
-  blue: number;
+  blue?: Maybe<number>;
   /** The amount of green in the color as a value in the interval [0, 1]. */
-  green: number;
+  green?: Maybe<number>;
   /** The amount of red in the color as a value in the interval [0, 1]. */
-  red: number;
+  red?: Maybe<number>;
 }
 
 /** A color value. */
@@ -1311,11 +1313,11 @@ enum HorizontalAlign {
 /** The format of a run of text in a cell. Absent values indicate that the field isn't specified. */
 interface TextFormat {
   /** True if the text is bold. */
-  bold?: boolean;
+  bold?: Maybe<boolean>;
   /** The font family. */
-  fontFamily?: string;
+  fontFamily?: Maybe<string>;
   /** The size of the font. */
-  fontSize?: number;
+  fontSize?: Maybe<number>;
   /**
    * The foreground color of the text.
    * @deprecated Use foregroundColorStyle.
@@ -1324,7 +1326,7 @@ interface TextFormat {
   /** The foreground color of the text. If foregroundColor is also set, this field takes precedence. */
   foregroundColorStyle?: ColorStyle;
   /** True if the text is italicized. */
-  italic?: boolean;
+  italic?: Maybe<boolean>;
   /**
    * The link destination of the text, if any. Setting the link field in a TextFormatRun will clear the cell's existing
    * links or a cell-level link set in the same request. When a link is set, the text foreground color will be set to
@@ -1333,29 +1335,29 @@ interface TextFormat {
    */
   link?: Link;
   /** True if the text has a strikethrough. */
-  strikethrough?: boolean;
+  strikethrough?: Maybe<boolean>;
   /** True if the text is underlined. */
-  underline?: boolean;
+  underline?: Maybe<boolean>;
 }
 
 /** An external or local reference. */
 interface Link {
   /** The link identifier. */
-  uri: string;
+  uri?: Maybe<string>;
 }
 
 /** A column in a data source. */
 interface DataSourceColumn {
   /** The formula of the calculated column. */
-  formula: string;
+  formula?: Maybe<string>;
   /** The column reference. */
-  reference: DataSourceColumnReference;
+  reference?: DataSourceColumnReference;
 }
 
 /** An unique identifier that references a data source column. */
 interface DataSourceColumnReference {
   /** The display name of the column. It should be unique within a data source. */
-  name: string;
+  name?: Maybe<string>;
 }
 
 /**
@@ -1373,13 +1375,13 @@ interface DataSourceColumnReference {
  */
 interface DataExecutionStatus {
   /** The error code. */
-  errorCode: DataExecutionErrorCode;
+  errorCode?: Maybe<DataExecutionErrorCode>;
   /** The error message, which may be empty. */
-  errorMessage: string;
+  errorMessage?: Maybe<string>;
   /** Gets the time the data last successfully refreshed.  */
-  lastRefreshTime: string;
+  lastRefreshTime?: Maybe<string>;
   /** The state of the data execution. */
-  state: DataExecutionState;
+  state?: Maybe<DataExecutionState>;
 }
 
 /** An enumeration of data execution states. */
@@ -1457,9 +1459,9 @@ type ExtendedValue = ExactlyOneOf<{
 /** An error in a cell. */
 interface ErrorValue {
   /** A message with more information about the error (in the spreadsheet's locale). */
-  message: string;
+  message?: Maybe<string>;
   /** The type of error. */
-  type: ErrorType;
+  type?: Maybe<ErrorType>;
 }
 
 enum ErrorType {
@@ -1491,12 +1493,12 @@ enum ErrorType {
  */
 interface BooleanCondition {
   /** The type of condition. */
-  type: ConditionType;
+  type?: Maybe<ConditionType>;
   /**
    * The values of the condition. The number of supported values depends on the condition type. Some support zero
    * values, others one or two values, and ConditionType.ONE_OF_LIST supports an arbitrary number of values.
    */
-  values: ConditionValue[];
+  values?: ConditionValue[];
 }
 
 /** The type of condition. */
@@ -1712,16 +1714,16 @@ enum RelativeDate {
  * range is empty. Empty ranges are typically not meaningful and are usually rendered in the UI as #REF!.
  */
 interface GridRange {
-  /** The sheet this range is on. */
-  sheetId: number;
   /** The end column (exclusive) of the range, or not set if unbounded. */
-  endColumnIndex?: number;
+  endColumnIndex?: Maybe<number>;
   /** The end row (exclusive) of the range, or not set if unbounded.  */
-  endRowIndex?: number;
+  endRowIndex?: Maybe<number>;
+  /** The sheet this range is on. */
+  sheetId?: Maybe<number>;
   /** The start column (inclusive) of the range, or not set if unbounded. */
-  startColumnIndex?: number;
+  startColumnIndex?: Maybe<number>;
   /** The start row (inclusive) of the range, or not set if unbounded. */
-  startRowIndex?: number;
+  startRowIndex?: Maybe<number>;
 }
 
 /** A sort order. */
@@ -1742,7 +1744,7 @@ type FilterSpec = ExactlyOneOf<{
   dataSourceColumnReference: DataSourceColumnReference;
 }> & {
   /** The criteria for the column. */
-  filterCriteria: FilterCriteria;
+  filterCriteria?: FilterCriteria;
 };
 
 /** Criteria for showing/hiding rows in a filter or filter view. */
@@ -1753,7 +1755,7 @@ type FilterCriteria = {
    */
   condition?: BooleanCondition;
   /** Values that should be hidden. */
-  hiddenValues?: string[];
+  hiddenValues?: Maybe<string[]>;
 } & (
   | ExactlyOneOf<{
       /**
@@ -1797,7 +1799,7 @@ type SortSpec = ExactlyOneOf<{
   dimensionIndex: number;
 }> & {
   /** The order data should be sorted. */
-  sortOrder: SortOrder;
+  sortOrder?: SortOrder;
 } & (
     | ExactlyOneOf<{
         /**
@@ -1845,25 +1847,25 @@ type EmbeddedObjectPosition = ExactlyOneOf<{
 /** The location an object is overlaid on top of a grid. */
 interface OverlayPosition {
   /** The cell the object is anchored to. */
-  anchorCell: GridCoordinate;
+  anchorCell?: GridCoordinate;
   /** The height of the object, in pixels. Defaults to 371. */
-  heightPixels: number;
+  heightPixels?: Maybe<number>;
   /** The horizontal offset, in pixels, that the object is offset from the anchor cell. */
-  offsetXPixels: number;
+  offsetXPixels?: Maybe<number>;
   /** The vertical offset, in pixels, that the object is offset from the anchor cell. */
-  offsetYPixels: number;
+  offsetYPixels?: Maybe<number>;
   /** The width of the object, in pixels. Defaults to 600. */
-  widthPixels: number;
+  widthPixels?: Maybe<number>;
 }
 
 /** A coordinate in a sheet. All indexes are zero-based. */
 interface GridCoordinate {
   /** The column index of the coordinate. */
-  columnIndex: number;
+  columnIndex?: Maybe<number>;
   /** The row index of the coordinate. */
-  rowIndex: number;
+  rowIndex?: Maybe<number>;
   /** The sheet this coordinate is on. */
-  sheetId: number;
+  sheetId?: Maybe<number>;
 }
 
 // 1.2 batchUpdate
