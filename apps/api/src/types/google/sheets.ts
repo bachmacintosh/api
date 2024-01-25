@@ -6150,7 +6150,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.batchUpdate": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate";
     path: {
       /**
        * The spreadsheet to apply the updates to.
@@ -6166,7 +6166,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.create": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets";
+    url: "https://sheets.googleapis.com/v4/spreadsheets";
     path: null;
     query: null;
     /** The request JSON body */
@@ -6177,7 +6177,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.developerMetadata.get": {
     method: "GET";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/developerMetadata/{metadataId}";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/developerMetadata/{metadataId}";
     path: {
       /**
        * The ID of the developer metadata to retrieve.
@@ -6196,7 +6196,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.developerMetadata.search": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/developerMetadata:search";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/developerMetadata:search";
     path: {
       /**
        * The ID of the spreadsheet to retrieve metadata from.
@@ -6212,7 +6212,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.get": {
     method: "GET";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}";
     path: {
       /**
        * The spreadsheet to request.
@@ -6236,7 +6236,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.getByDataFilter": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:getByDataFilter";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:getByDataFilter";
     path: {
       /**
        * The spreadsheet to request.
@@ -6252,7 +6252,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.sheets.copyTo": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/sheets/{sheetId}:copyTo";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/sheets/{sheetId}:copyTo";
     path: {
       /**
        * The ID of the sheet to copy.
@@ -6272,7 +6272,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.append": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}:append";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}:append";
     path: {
       /**
        * The [A1 notation](/sheets/api/guides/concepts#cell) of a range to search for a logical table of data. Values are appended after the last row of the table.
@@ -6331,7 +6331,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.batchClear": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchClear";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchClear";
     path: {
       /**
        * The ID of the spreadsheet to update.
@@ -6347,7 +6347,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.batchClearByDataFilter": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchClearByDataFilter";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchClearByDataFilter";
     path: {
       /**
        * The ID of the spreadsheet to update.
@@ -6363,7 +6363,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.batchGet": {
     method: "GET";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchGet";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchGet";
     path: {
       /**
        * The ID of the spreadsheet to retrieve data from.
@@ -6409,7 +6409,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.batchGetByDataFilter": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchGetByDataFilter";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchGetByDataFilter";
     path: {
       /**
        * The ID of the spreadsheet to retrieve data from.
@@ -6425,7 +6425,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.batchUpdate": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchUpdate";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchUpdate";
     path: {
       /**
        * The ID of the spreadsheet to update.
@@ -6441,7 +6441,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.batchUpdateByDataFilter": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchUpdateByDataFilter";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values:batchUpdateByDataFilter";
     path: {
       /**
        * The ID of the spreadsheet to update.
@@ -6457,7 +6457,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.clear": {
     method: "POST";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}:clear";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}:clear";
     path: {
       /**
        * The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the values to clear.
@@ -6477,7 +6477,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.get": {
     method: "GET";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}";
     path: {
       /**
        * The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the range to retrieve values from.
@@ -6523,7 +6523,7 @@ export interface GoogleSheetsAPIRequestMap {
    */
   "sheets.spreadsheets.values.update": {
     method: "PUT";
-    uri: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}";
+    url: "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}";
     path: {
       /**
        * The [A1 notation](/sheets/api/guides/concepts#cell) of the values to update.
