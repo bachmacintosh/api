@@ -1,16 +1,16 @@
-import type { Timestamp } from "./index";
+import type { Timestamp as TomorrowTimestamp } from "./index";
 
-export interface Interval {
-  startTime: Timestamp;
+export interface TomorrowInterval {
+  startTime: TomorrowTimestamp;
   values: {
     temperature: number;
   };
 }
 
-export interface Timeline {
-  endTime: Timestamp;
-  intervals: Interval[];
-  startTime: Timestamp;
+export interface TomorrowTimeline {
+  endTime: TomorrowTimestamp;
+  intervals: TomorrowInterval[];
+  startTime: TomorrowTimestamp;
   timestep: Timestep;
 }
 
@@ -42,12 +42,12 @@ export interface TomorrowRequest {
 
 export interface TomorrowResponse {
   data: {
-    timelines: Timeline[];
+    timelines: TomorrowTimeline[];
   };
 }
 
 export type TomorrowTime =
-  | Timestamp
+  | TomorrowTimestamp
   | "now"
   | `nowMinus${number}${"d" | "h" | "m"}`
   | `nowPlus${number}${"d" | "h" | "m"}`;
