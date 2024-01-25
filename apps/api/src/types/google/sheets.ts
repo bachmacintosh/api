@@ -6157,6 +6157,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: BatchUpdateSpreadsheetRequest;
   };
@@ -6166,6 +6167,8 @@ export interface GoogleSheetsAPIRequestMap {
   "sheets.spreadsheets.create": {
     method: "POST";
     uri: "https://sheets.googleapis.com/v4/spreadsheets";
+    path: null;
+    query: null;
     /** The request JSON body */
     body: Spreadsheet;
   };
@@ -6185,6 +6188,8 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
+    body: null;
   };
   /**
    * Returns all developer metadata matching the specified DataFilter. If the provided DataFilter represents a DeveloperMetadataLookup object, this will return all DeveloperMetadata entries selected by it. If the DataFilter represents a location in a spreadsheet, this will return all developer metadata associated with locations intersecting that region.
@@ -6198,6 +6203,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: SearchDeveloperMetadataRequest;
   };
@@ -6223,6 +6229,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       ranges?: string[];
     };
+    body: null;
   };
   /**
    * Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. This method differs from GetSpreadsheet in that it allows selecting which subsets of spreadsheet data to return by specifying a dataFilters parameter. Multiple DataFilters can be specified. Specifying one or more data filters returns the portions of the spreadsheet that intersect ranges matched by any of the filters. By default, data within grids is not returned. You can include grid data one of 2 ways: * Specify a [field mask](https://developers.google.com/sheets/api/guides/field-masks) listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, as a best practice, retrieve only the specific spreadsheet fields that you want.
@@ -6236,6 +6243,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: GetSpreadsheetByDataFilterRequest;
   };
@@ -6255,6 +6263,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: CopySheetToAnotherSpreadsheetRequest;
   };
@@ -6329,6 +6338,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: BatchClearValuesRequest;
   };
@@ -6344,6 +6354,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: BatchClearValuesByDataFilterRequest;
   };
@@ -6391,6 +6402,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       valueRenderOption?: "FORMATTED_VALUE" | "UNFORMATTED_VALUE" | "FORMULA";
     };
+    body: null;
   };
   /**
    * Returns one or more ranges of values that match the specified data filters. The caller must specify the spreadsheet ID and one or more DataFilters. Ranges that match any of the data filters in the request will be returned.
@@ -6404,6 +6416,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: BatchGetValuesByDataFilterRequest;
   };
@@ -6419,6 +6432,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: BatchUpdateValuesRequest;
   };
@@ -6434,6 +6448,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: BatchUpdateValuesByDataFilterRequest;
   };
@@ -6453,6 +6468,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       spreadsheetId: string;
     };
+    query: null;
     /** The request JSON body */
     body: ClearValuesRequest;
   };
@@ -6500,6 +6516,7 @@ export interface GoogleSheetsAPIRequestMap {
        */
       valueRenderOption?: "FORMATTED_VALUE" | "UNFORMATTED_VALUE" | "FORMULA";
     };
+    body: null;
   };
   /**
    * Sets values in a range of a spreadsheet. The caller must specify the spreadsheet ID, range, and a valueInputOption.
