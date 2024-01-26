@@ -59,6 +59,9 @@ importers:
       micromark-extension-gfm:
         specifier: 3.0.0
         version: 3.0.0
+      url-template:
+        specifier: 3.1.1
+        version: 3.1.1
     devDependencies:
       '@bachmacintosh/api-types':
         specifier: workspace:*
@@ -7168,6 +7171,11 @@ packages:
 
   /url-template@2.0.8:
     resolution: {integrity: sha512-XdVKMF4SJ0nP/O7XIPB0JwAEuT9lDIYnNsK8yGVe43y0AWoKeJNdv3ZNWh7ksJ6KqQFjOO6ox/VEitLnaVNufw==}
+    dev: false
+
+  /url-template@3.1.1:
+    resolution: {integrity: sha512-4oszoaEKE/mQOtAmdMWqIRHmkxWkUZMnXFnjQ5i01CuRSK3uluxcH1MRVVVWmhlnzT1SCDfKxxficm2G37qzCA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
   /urlpattern-polyfill@8.0.2:
