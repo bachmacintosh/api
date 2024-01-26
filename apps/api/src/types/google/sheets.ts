@@ -6592,5 +6592,5 @@ export interface GoogleSheetsAPIResponseMap {
 }
 
 export type GoogleSheetsAPIRequest<K extends GoogleSheetsAPIMethods> = GoogleSheetsAPIRequestMap[K];
-
+export type GoogleSheetsAPIParameters<K extends GoogleSheetsAPIMethods> = GoogleSheetsAPIParametersMap[K];
 export type GoogleSheetsAPIResponse<K extends GoogleSheetsAPIMethods> = GoogleSheetsAPIResponseMap[K];
