@@ -333,13 +333,29 @@ export default class GoogleSheets {
     if (options.query !== null) {
       let isFirstParam = true;
       for (const [key, value] of Object.entries(options.query)) {
-        if (isFirstParam) {
-          url += "?";
-          isFirstParam = false;
-        } else {
-          url += "&";
-        }
-        if (typeof value === "string" || typeof value === "boolean" || typeof value === "number") {
+        if (Array.isArray(value)) {
+          let subUrl = "";
+          for (const item of value) {
+            if (isFirstParam) {
+              subUrl += "?";
+              isFirstParam = false;
+            } else {
+              subUrl += "&";
+            }
+            if (typeof item === "string" || typeof item === "boolean" || typeof value === "number") {
+              subUrl += `${key}=${item}`;
+            }
+          }
+          if (subUrl) {
+            url += subUrl;
+          }
+        } else if (typeof value === "string" || typeof value === "boolean" || typeof value === "number") {
+          if (isFirstParam) {
+            url += "?";
+            isFirstParam = false;
+          } else {
+            url += "&";
+          }
           url += `${key}=${value}`;
         }
       }
