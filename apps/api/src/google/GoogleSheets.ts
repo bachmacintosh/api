@@ -339,7 +339,9 @@ export default class GoogleSheets {
         } else {
           url += "&";
         }
-        url += `${key}=${value}`;
+        if (typeof value === "string" || typeof value === "boolean" || typeof value === "number") {
+          url += `${key}=${value}`;
+        }
       }
     }
     const init: RequestInit = {
@@ -347,8 +349,10 @@ export default class GoogleSheets {
       headers: {
         Authorization: `Bearer ${this._accessToken}`,
       },
-      body: options.body === null ? null : JSON.stringify(options.body),
     };
+    if (options.body !== null) {
+      init.body = JSON.stringify(options.body);
+    }
     const response = await fetch(url, init);
     if (!response.ok) {
       const errorMessage = await response.text();
