@@ -1,15 +1,18 @@
-import type { AcState, SensiboConfig } from "./sensibo";
+import type { AcState, SensiboConfig } from "../sensibo";
 import type {
   EventSubSubscriptionEventMap,
   EventSubSubscriptionType,
   EventSubWebhookSubscription,
 } from "@bachmacintosh/api-types";
-import type { SteamMonitorConfig, SteamUserInfo } from "./steam";
-import type { WebhookEventMap, WebhookEventName } from "./github";
+import type { SteamMonitorConfig, SteamUserInfo } from "../steam";
+import type { WebhookEventMap, WebhookEventName } from "../github";
 
 export type CF = [env: Env, context: ExecutionContext];
 
 export interface Env {
+  CLOUDFLARE_ACCOUNT_TAG: string;
+  CLOUDFLARE_GQL_TOKEN: string;
+
   DB: D1Database;
 
   DISCORD_BOT_CLIENT_ID: string;
@@ -24,6 +27,9 @@ export interface Env {
 
   GITHUB_ACCESS_TOKEN: string;
   GITHUB_WEBHOOK_SECRET: string;
+
+  GOOGLE_SERVICE_ACCOUNT_CREDENTIALS: string;
+  GOOGLE_SPREADSHEET_ID_ANALYTICS: string;
 
   KV: KVNamespace;
 

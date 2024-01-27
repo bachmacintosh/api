@@ -9,6 +9,7 @@
     "check-types": {
       "dependsOn": ["^build"]
     },
+    "codegen": {},
     "deploy": {},
     "dev": {
       "cache": false,

@@ -1,0 +1,37 @@
+query GetWorkersAnalytics($accountTag: string!, $startDate: Date, $endDate: Date, $startTime: Time, $endTime: Time) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      workersInvocationsAdaptive(limit: 10000, filter: { date_geq: $startDate, date_leq: $endDate }) {
+        dimensions {
+          scriptName
+          date
+        }
+        quantiles {
+          cpuTimeP25
+          cpuTimeP50
+          cpuTimeP75
+          cpuTimeP90
+          cpuTimeP99
+          cpuTimeP999
+        }
+        sum {
+          requests
+        }
+        min {
+          cpuTime
+        }
+        max {
+          cpuTime
+        }
+      }
+      workersInvocationsScheduled(limit: 10000, filter: { datetime_geq: $startTime, datetime_leq: $endTime }) {
+        datetime
+        scheduledDatetime
+        scriptName
+        cron
+        cpuTimeUs
+        status
+      }
+    }
+  }
+}
