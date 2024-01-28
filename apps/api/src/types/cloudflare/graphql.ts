@@ -5553,6 +5553,123 @@ export type AccountD1AnalyticsAdaptiveGroupsSum = {
   writeQueries: Scalars['uint64']['output'];
 };
 
+/** Beta. D1 storage with adaptive sampling */
+export type AccountD1StorageAdaptiveGroups = {
+  __typename?: 'AccountD1StorageAdaptiveGroups';
+  /** List of dimensions to group by */
+  dimensions: Maybe<AccountD1StorageAdaptiveGroupsDimensions>;
+  /** The max of values for a metric per dimension */
+  max: Maybe<AccountD1StorageAdaptiveGroupsMax>;
+};
+
+export type AccountD1StorageAdaptiveGroupsDimensions = {
+  __typename?: 'AccountD1StorageAdaptiveGroupsDimensions';
+  /** The UUID of a D1 database */
+  databaseId: Scalars['string']['output'];
+  /** D1 storage sample timestamp */
+  date: Scalars['Date']['output'];
+  /** D1 storage sample timestamp, truncated to fifteen minutes */
+  datetimeFifteenMinutes: Scalars['Time']['output'];
+  /** D1 storage sample timestamp, truncated to five minutes */
+  datetimeFiveMinutes: Scalars['Time']['output'];
+  /** D1 storage sample timestamp, truncated to the hour */
+  datetimeHour: Scalars['Time']['output'];
+  /** D1 storage sample timestamp, truncated to the minute */
+  datetimeMinute: Scalars['Time']['output'];
+};
+
+export type AccountD1StorageAdaptiveGroupsFilter_InputObject = {
+  AND: InputMaybe<Array<AccountD1StorageAdaptiveGroupsFilter_InputObject>>;
+  OR: InputMaybe<Array<AccountD1StorageAdaptiveGroupsFilter_InputObject>>;
+  databaseId: InputMaybe<Scalars['string']['input']>;
+  databaseId_geq: InputMaybe<Scalars['string']['input']>;
+  databaseId_gt: InputMaybe<Scalars['string']['input']>;
+  databaseId_in: InputMaybe<Array<Scalars['string']['input']>>;
+  databaseId_leq: InputMaybe<Scalars['string']['input']>;
+  databaseId_like: InputMaybe<Scalars['string']['input']>;
+  databaseId_lt: InputMaybe<Scalars['string']['input']>;
+  databaseId_neq: InputMaybe<Scalars['string']['input']>;
+  databaseId_notin: InputMaybe<Array<Scalars['string']['input']>>;
+  databaseId_notlike: InputMaybe<Scalars['string']['input']>;
+  date: InputMaybe<Scalars['Date']['input']>;
+  date_geq: InputMaybe<Scalars['Date']['input']>;
+  date_gt: InputMaybe<Scalars['Date']['input']>;
+  date_in: InputMaybe<Array<Scalars['Date']['input']>>;
+  date_leq: InputMaybe<Scalars['Date']['input']>;
+  date_lt: InputMaybe<Scalars['Date']['input']>;
+  date_neq: InputMaybe<Scalars['Date']['input']>;
+  date_notin: InputMaybe<Array<Scalars['Date']['input']>>;
+  datetimeFifteenMinutes: InputMaybe<Scalars['Time']['input']>;
+  datetimeFifteenMinutes_geq: InputMaybe<Scalars['Time']['input']>;
+  datetimeFifteenMinutes_gt: InputMaybe<Scalars['Time']['input']>;
+  datetimeFifteenMinutes_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  datetimeFifteenMinutes_leq: InputMaybe<Scalars['Time']['input']>;
+  datetimeFifteenMinutes_lt: InputMaybe<Scalars['Time']['input']>;
+  datetimeFifteenMinutes_neq: InputMaybe<Scalars['Time']['input']>;
+  datetimeFifteenMinutes_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  datetimeFiveMinutes: InputMaybe<Scalars['Time']['input']>;
+  datetimeFiveMinutes_geq: InputMaybe<Scalars['Time']['input']>;
+  datetimeFiveMinutes_gt: InputMaybe<Scalars['Time']['input']>;
+  datetimeFiveMinutes_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  datetimeFiveMinutes_leq: InputMaybe<Scalars['Time']['input']>;
+  datetimeFiveMinutes_lt: InputMaybe<Scalars['Time']['input']>;
+  datetimeFiveMinutes_neq: InputMaybe<Scalars['Time']['input']>;
+  datetimeFiveMinutes_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  datetimeHour: InputMaybe<Scalars['Time']['input']>;
+  datetimeHour_geq: InputMaybe<Scalars['Time']['input']>;
+  datetimeHour_gt: InputMaybe<Scalars['Time']['input']>;
+  datetimeHour_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  datetimeHour_leq: InputMaybe<Scalars['Time']['input']>;
+  datetimeHour_lt: InputMaybe<Scalars['Time']['input']>;
+  datetimeHour_neq: InputMaybe<Scalars['Time']['input']>;
+  datetimeHour_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  datetimeMinute: InputMaybe<Scalars['Time']['input']>;
+  datetimeMinute_geq: InputMaybe<Scalars['Time']['input']>;
+  datetimeMinute_gt: InputMaybe<Scalars['Time']['input']>;
+  datetimeMinute_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  datetimeMinute_leq: InputMaybe<Scalars['Time']['input']>;
+  datetimeMinute_lt: InputMaybe<Scalars['Time']['input']>;
+  datetimeMinute_neq: InputMaybe<Scalars['Time']['input']>;
+  datetimeMinute_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+};
+
+export type AccountD1StorageAdaptiveGroupsMax = {
+  __typename?: 'AccountD1StorageAdaptiveGroupsMax';
+  /** The maximum size of the database (measured in bytes) observed over the queried time period. */
+  databaseSizeBytes: Scalars['uint64']['output'];
+};
+
+export enum AccountD1StorageAdaptiveGroupsOrderBy {
+  /** databaseId ascending */
+  DatabaseIdAsc = 'databaseId_ASC',
+  /** databaseId descending */
+  DatabaseIdDesc = 'databaseId_DESC',
+  /** date ascending */
+  DateAsc = 'date_ASC',
+  /** date descending */
+  DateDesc = 'date_DESC',
+  /** datetimeFifteenMinutes ascending */
+  DatetimeFifteenMinutesAsc = 'datetimeFifteenMinutes_ASC',
+  /** datetimeFifteenMinutes descending */
+  DatetimeFifteenMinutesDesc = 'datetimeFifteenMinutes_DESC',
+  /** datetimeFiveMinutes ascending */
+  DatetimeFiveMinutesAsc = 'datetimeFiveMinutes_ASC',
+  /** datetimeFiveMinutes descending */
+  DatetimeFiveMinutesDesc = 'datetimeFiveMinutes_DESC',
+  /** datetimeHour ascending */
+  DatetimeHourAsc = 'datetimeHour_ASC',
+  /** datetimeHour descending */
+  DatetimeHourDesc = 'datetimeHour_DESC',
+  /** datetimeMinute ascending */
+  DatetimeMinuteAsc = 'datetimeMinute_ASC',
+  /** datetimeMinute descending */
+  DatetimeMinuteDesc = 'datetimeMinute_DESC',
+  /** max(databaseSizeBytes) ascending */
+  MaxDatabaseSizeBytesAsc = 'max_databaseSizeBytes_ASC',
+  /** max(databaseSizeBytes) descending */
+  MaxDatabaseSizeBytesDesc = 'max_databaseSizeBytes_DESC'
+}
+
 /** Attack analytics metadata for attacks detected by dosd */
 export type AccountDosdAttackAnalyticsGroups = {
   __typename?: 'AccountDosdAttackAnalyticsGroups';
@@ -25586,6 +25703,7 @@ export type AccountSettings = {
   aiInferenceAdaptiveGroups: Settings;
   cdnNetworkAnalyticsAdaptiveGroups: Settings;
   d1AnalyticsAdaptiveGroups: Settings;
+  d1StorageAdaptiveGroups: Settings;
   dosdAttackAnalyticsGroups: Settings;
   dosdNetworkAnalyticsAdaptiveGroups: Settings;
   durableObjectsInvocationsAdaptiveGroups: Settings;
@@ -29157,6 +29275,8 @@ export type AccountWorkersInvocationsAdaptiveDimensions = {
   scriptName: Scalars['string']['output'];
   /** The unique tag of the script */
   scriptTag: Scalars['string']['output'];
+  /** The version of the Worker */
+  scriptVersion: Scalars['string']['output'];
   /** Status of the worker invocation */
   status: Scalars['string']['output'];
   /** Usage model of the worker invocation */
@@ -29238,6 +29358,16 @@ export type AccountWorkersInvocationsAdaptiveFilter_InputObject = {
   scriptTag_neq: InputMaybe<Scalars['string']['input']>;
   scriptTag_notin: InputMaybe<Array<Scalars['string']['input']>>;
   scriptTag_notlike: InputMaybe<Scalars['string']['input']>;
+  scriptVersion: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_geq: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_gt: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_in: InputMaybe<Array<Scalars['string']['input']>>;
+  scriptVersion_leq: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_like: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_lt: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_neq: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_notin: InputMaybe<Array<Scalars['string']['input']>>;
+  scriptVersion_notlike: InputMaybe<Scalars['string']['input']>;
   status: InputMaybe<Scalars['string']['input']>;
   status_geq: InputMaybe<Scalars['string']['input']>;
   status_gt: InputMaybe<Scalars['string']['input']>;
@@ -29453,6 +29583,10 @@ export enum AccountWorkersInvocationsAdaptiveOrderBy {
   ScriptTagAsc = 'scriptTag_ASC',
   /** scriptTag descending */
   ScriptTagDesc = 'scriptTag_DESC',
+  /** scriptVersion ascending */
+  ScriptVersionAsc = 'scriptVersion_ASC',
+  /** scriptVersion descending */
+  ScriptVersionDesc = 'scriptVersion_DESC',
   /** stableId ascending */
   StableIdAsc = 'stableId_ASC',
   /** stableId descending */
@@ -29859,6 +29993,8 @@ export type AccountWorkersSubrequestsAdaptiveGroupsDimensions = {
   environmentName: Scalars['string']['output'];
   /** The name of the script */
   scriptName: Scalars['string']['output'];
+  /** The version of the Worker */
+  scriptVersion: Scalars['string']['output'];
   /** Usage model of the worker invocation */
   usageModel: Scalars['string']['output'];
 };
@@ -29926,6 +30062,16 @@ export type AccountWorkersSubrequestsAdaptiveGroupsFilter_InputObject = {
   scriptName_neq: InputMaybe<Scalars['string']['input']>;
   scriptName_notin: InputMaybe<Array<Scalars['string']['input']>>;
   scriptName_notlike: InputMaybe<Scalars['string']['input']>;
+  scriptVersion: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_geq: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_gt: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_in: InputMaybe<Array<Scalars['string']['input']>>;
+  scriptVersion_leq: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_like: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_lt: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_neq: InputMaybe<Scalars['string']['input']>;
+  scriptVersion_notin: InputMaybe<Array<Scalars['string']['input']>>;
+  scriptVersion_notlike: InputMaybe<Scalars['string']['input']>;
   usageModel: InputMaybe<Scalars['string']['input']>;
   usageModel_geq: InputMaybe<Scalars['string']['input']>;
   usageModel_gt: InputMaybe<Scalars['string']['input']>;
@@ -29971,6 +30117,10 @@ export enum AccountWorkersSubrequestsAdaptiveGroupsOrderBy {
   ScriptNameAsc = 'scriptName_ASC',
   /** scriptName descending */
   ScriptNameDesc = 'scriptName_DESC',
+  /** scriptVersion ascending */
+  ScriptVersionAsc = 'scriptVersion_ASC',
+  /** scriptVersion descending */
+  ScriptVersionDesc = 'scriptVersion_DESC',
   /** stableId ascending */
   StableIdAsc = 'stableId_ASC',
   /** stableId descending */
@@ -30889,6 +31039,8 @@ export type ZoneCacheReserveOperationsAdaptiveGroupsDimensions = {
   datetimeHour: Scalars['Time']['output'];
   /** Request timestamp, truncated to start of an minute */
   datetimeMinute: Scalars['Time']['output'];
+  /** Jurisdiction of the R2 bucket, or 'default' if unrestricted */
+  jurisdiction: Scalars['string']['output'];
   /** Billable class of storage operation */
   operationClass: Scalars['string']['output'];
 };
@@ -30964,6 +31116,16 @@ export type ZoneCacheReserveOperationsAdaptiveGroupsFilter_InputObject = {
   datetime_lt: InputMaybe<Scalars['Time']['input']>;
   datetime_neq: InputMaybe<Scalars['Time']['input']>;
   datetime_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  jurisdiction: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_geq: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_gt: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_in: InputMaybe<Array<Scalars['string']['input']>>;
+  jurisdiction_leq: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_like: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_lt: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_neq: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_notin: InputMaybe<Array<Scalars['string']['input']>>;
+  jurisdiction_notlike: InputMaybe<Scalars['string']['input']>;
   operationClass: InputMaybe<Scalars['string']['input']>;
   operationClass_geq: InputMaybe<Scalars['string']['input']>;
   operationClass_gt: InputMaybe<Scalars['string']['input']>;
@@ -31013,6 +31175,10 @@ export enum ZoneCacheReserveOperationsAdaptiveGroupsOrderBy {
   DatetimeAsc = 'datetime_ASC',
   /** datetime descending */
   DatetimeDesc = 'datetime_DESC',
+  /** jurisdiction ascending */
+  JurisdictionAsc = 'jurisdiction_ASC',
+  /** jurisdiction descending */
+  JurisdictionDesc = 'jurisdiction_DESC',
   /** operationClass ascending */
   OperationClassAsc = 'operationClass_ASC',
   /** operationClass descending */
@@ -31243,6 +31409,8 @@ export type ZoneCacheReserveStorageAdaptiveGroupsDimensions = {
   datetimeHour: Scalars['Time']['output'];
   /** Storage sample timestamp, truncated to start of an minute */
   datetimeMinute: Scalars['Time']['output'];
+  /** Jurisdiction of the R2 bucket, or 'default' if unrestricted */
+  jurisdiction: Scalars['string']['output'];
 };
 
 export type ZoneCacheReserveStorageAdaptiveGroupsFilter_InputObject = {
@@ -31316,6 +31484,16 @@ export type ZoneCacheReserveStorageAdaptiveGroupsFilter_InputObject = {
   datetime_lt: InputMaybe<Scalars['Time']['input']>;
   datetime_neq: InputMaybe<Scalars['Time']['input']>;
   datetime_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  jurisdiction: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_geq: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_gt: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_in: InputMaybe<Array<Scalars['string']['input']>>;
+  jurisdiction_leq: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_like: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_lt: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_neq: InputMaybe<Scalars['string']['input']>;
+  jurisdiction_notin: InputMaybe<Array<Scalars['string']['input']>>;
+  jurisdiction_notlike: InputMaybe<Scalars['string']['input']>;
 };
 
 export type ZoneCacheReserveStorageAdaptiveGroupsMax = {
@@ -31363,6 +31541,10 @@ export enum ZoneCacheReserveStorageAdaptiveGroupsOrderBy {
   DatetimeAsc = 'datetime_ASC',
   /** datetime descending */
   DatetimeDesc = 'datetime_DESC',
+  /** jurisdiction ascending */
+  JurisdictionAsc = 'jurisdiction_ASC',
+  /** jurisdiction descending */
+  JurisdictionDesc = 'jurisdiction_DESC',
   /** max(objectCount) ascending */
   MaxObjectCountAsc = 'max_objectCount_ASC',
   /** max(objectCount) descending */
@@ -32454,6 +32636,16 @@ export type ZoneDnsAnalyticsAdaptiveGroupsDimensions = {
   responseStale: Scalars['uint8']['output'];
   /** Time at which the query was received */
   timestamp: Scalars['Time']['output'];
+  /** Time at which the query was received, truncated to multiple of 15 minutes */
+  timestampFifteenMinutes: Scalars['Time']['output'];
+  /** Time at which the query was received, truncated to multiple of 5 minutes */
+  timestampFiveMinutes: Scalars['Time']['output'];
+  /** Time at which the query was received, truncated to multiple of 30 minutes */
+  timestampHalfOfHour: Scalars['Time']['output'];
+  /** Time at which the query was received, truncated to the hour */
+  timestampHour: Scalars['Time']['output'];
+  /** Time at which the query was received, truncated to the minute */
+  timestampMinute: Scalars['Time']['output'];
   /** Upstream server that the query was forwarded to */
   upstream: Scalars['string']['output'];
 };
@@ -32556,6 +32748,46 @@ export type ZoneDnsAnalyticsAdaptiveGroupsFilter_InputObject = {
   responseStale_neq: InputMaybe<Scalars['uint8']['input']>;
   responseStale_notin: InputMaybe<Scalars['bytes']['input']>;
   timestamp: InputMaybe<Scalars['Time']['input']>;
+  timestampFifteenMinutes: InputMaybe<Scalars['Time']['input']>;
+  timestampFifteenMinutes_geq: InputMaybe<Scalars['Time']['input']>;
+  timestampFifteenMinutes_gt: InputMaybe<Scalars['Time']['input']>;
+  timestampFifteenMinutes_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampFifteenMinutes_leq: InputMaybe<Scalars['Time']['input']>;
+  timestampFifteenMinutes_lt: InputMaybe<Scalars['Time']['input']>;
+  timestampFifteenMinutes_neq: InputMaybe<Scalars['Time']['input']>;
+  timestampFifteenMinutes_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampFiveMinutes: InputMaybe<Scalars['Time']['input']>;
+  timestampFiveMinutes_geq: InputMaybe<Scalars['Time']['input']>;
+  timestampFiveMinutes_gt: InputMaybe<Scalars['Time']['input']>;
+  timestampFiveMinutes_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampFiveMinutes_leq: InputMaybe<Scalars['Time']['input']>;
+  timestampFiveMinutes_lt: InputMaybe<Scalars['Time']['input']>;
+  timestampFiveMinutes_neq: InputMaybe<Scalars['Time']['input']>;
+  timestampFiveMinutes_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampHalfOfHour: InputMaybe<Scalars['Time']['input']>;
+  timestampHalfOfHour_geq: InputMaybe<Scalars['Time']['input']>;
+  timestampHalfOfHour_gt: InputMaybe<Scalars['Time']['input']>;
+  timestampHalfOfHour_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampHalfOfHour_leq: InputMaybe<Scalars['Time']['input']>;
+  timestampHalfOfHour_lt: InputMaybe<Scalars['Time']['input']>;
+  timestampHalfOfHour_neq: InputMaybe<Scalars['Time']['input']>;
+  timestampHalfOfHour_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampHour: InputMaybe<Scalars['Time']['input']>;
+  timestampHour_geq: InputMaybe<Scalars['Time']['input']>;
+  timestampHour_gt: InputMaybe<Scalars['Time']['input']>;
+  timestampHour_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampHour_leq: InputMaybe<Scalars['Time']['input']>;
+  timestampHour_lt: InputMaybe<Scalars['Time']['input']>;
+  timestampHour_neq: InputMaybe<Scalars['Time']['input']>;
+  timestampHour_notin: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampMinute: InputMaybe<Scalars['Time']['input']>;
+  timestampMinute_geq: InputMaybe<Scalars['Time']['input']>;
+  timestampMinute_gt: InputMaybe<Scalars['Time']['input']>;
+  timestampMinute_in: InputMaybe<Array<Scalars['Time']['input']>>;
+  timestampMinute_leq: InputMaybe<Scalars['Time']['input']>;
+  timestampMinute_lt: InputMaybe<Scalars['Time']['input']>;
+  timestampMinute_neq: InputMaybe<Scalars['Time']['input']>;
+  timestampMinute_notin: InputMaybe<Array<Scalars['Time']['input']>>;
   timestamp_geq: InputMaybe<Scalars['Time']['input']>;
   timestamp_gt: InputMaybe<Scalars['Time']['input']>;
   timestamp_in: InputMaybe<Array<Scalars['Time']['input']>>;
@@ -32644,6 +32876,26 @@ export enum ZoneDnsAnalyticsAdaptiveGroupsOrderBy {
   ResponseStaleAsc = 'responseStale_ASC',
   /** responseStale descending */
   ResponseStaleDesc = 'responseStale_DESC',
+  /** timestampFifteenMinutes ascending */
+  TimestampFifteenMinutesAsc = 'timestampFifteenMinutes_ASC',
+  /** timestampFifteenMinutes descending */
+  TimestampFifteenMinutesDesc = 'timestampFifteenMinutes_DESC',
+  /** timestampFiveMinutes ascending */
+  TimestampFiveMinutesAsc = 'timestampFiveMinutes_ASC',
+  /** timestampFiveMinutes descending */
+  TimestampFiveMinutesDesc = 'timestampFiveMinutes_DESC',
+  /** timestampHalfOfHour ascending */
+  TimestampHalfOfHourAsc = 'timestampHalfOfHour_ASC',
+  /** timestampHalfOfHour descending */
+  TimestampHalfOfHourDesc = 'timestampHalfOfHour_DESC',
+  /** timestampHour ascending */
+  TimestampHourAsc = 'timestampHour_ASC',
+  /** timestampHour descending */
+  TimestampHourDesc = 'timestampHour_DESC',
+  /** timestampMinute ascending */
+  TimestampMinuteAsc = 'timestampMinute_ASC',
+  /** timestampMinute descending */
+  TimestampMinuteDesc = 'timestampMinute_DESC',
   /** timestamp ascending */
   TimestampAsc = 'timestamp_ASC',
   /** timestamp descending */
@@ -42682,6 +42934,8 @@ export type Account = {
   cdnNetworkAnalyticsAdaptiveGroups: Array<AccountCdnNetworkAnalyticsAdaptiveGroups>;
   /** Beta. Aggregated D1 analytics with adaptive sampling */
   d1AnalyticsAdaptiveGroups: Array<AccountD1AnalyticsAdaptiveGroups>;
+  /** Beta. D1 storage with adaptive sampling */
+  d1StorageAdaptiveGroups: Array<AccountD1StorageAdaptiveGroups>;
   /** Attack analytics metadata for attacks detected by dosd */
   dosdAttackAnalyticsGroups: Array<AccountDosdAttackAnalyticsGroups>;
   /** Network analytics data for dosd */
@@ -42892,6 +43146,13 @@ export type AccountD1AnalyticsAdaptiveGroupsArgs = {
   filter: AccountD1AnalyticsAdaptiveGroupsFilter_InputObject;
   limit: Scalars['uint64']['input'];
   orderBy: InputMaybe<Array<AccountD1AnalyticsAdaptiveGroupsOrderBy>>;
+};
+
+
+export type AccountD1StorageAdaptiveGroupsArgs = {
+  filter: AccountD1StorageAdaptiveGroupsFilter_InputObject;
+  limit: Scalars['uint64']['input'];
+  orderBy: InputMaybe<Array<AccountD1StorageAdaptiveGroupsOrderBy>>;
 };
 
 
@@ -43720,6 +43981,17 @@ export type ZoneZarazTriggersAdaptiveGroupsArgs = {
   orderBy: InputMaybe<Array<ZoneZarazTriggersAdaptiveGroupsOrderBy>>;
 };
 
+export type GetCloudflareAnalyticsQueryVariables = Exact<{
+  accountTag: Scalars['string']['input'];
+  startDate: InputMaybe<Scalars['Date']['input']>;
+  endDate: InputMaybe<Scalars['Date']['input']>;
+  startTime: InputMaybe<Scalars['Time']['input']>;
+  endTime: InputMaybe<Scalars['Time']['input']>;
+}>;
+
+
+export type GetCloudflareAnalyticsQuery = { __typename?: 'Query', viewer: { __typename?: 'viewer', accounts: Array<{ __typename?: 'account', r2OperationsAdaptiveGroups: Array<{ __typename?: 'AccountR2OperationsAdaptiveGroups', dimensions: { __typename?: 'AccountR2OperationsAdaptiveGroupsDimensions', bucketName: string, actionType: string, date: string } | null, sum: { __typename?: 'AccountR2OperationsAdaptiveGroupsSum', requests: number } | null }>, r2StorageAdaptiveGroups: Array<{ __typename?: 'AccountR2StorageAdaptiveGroups', dimensions: { __typename?: 'AccountR2StorageAdaptiveGroupsDimensions', bucketName: string, date: string } | null, max: { __typename?: 'AccountR2StorageAdaptiveGroupsMax', objectCount: number, uploadCount: number, metadataSize: number, payloadSize: number } | null }>, workersInvocationsAdaptive: Array<{ __typename?: 'AccountWorkersInvocationsAdaptive', dimensions: { __typename?: 'AccountWorkersInvocationsAdaptiveDimensions', scriptName: string, date: string } | null, quantiles: { __typename?: 'AccountWorkersInvocationsAdaptiveQuantiles', cpuTimeP25: number, cpuTimeP50: number, cpuTimeP75: number, cpuTimeP90: number, cpuTimeP99: number, cpuTimeP999: number } | null, sum: { __typename?: 'AccountWorkersInvocationsAdaptiveSum', requests: number } | null, min: { __typename?: 'AccountWorkersInvocationsAdaptiveMin', cpuTime: number } | null, max: { __typename?: 'AccountWorkersInvocationsAdaptiveMax', cpuTime: number } | null }>, workersInvocationsScheduled: Array<{ __typename?: 'AccountWorkersInvocationsScheduled', datetime: string, scheduledDatetime: string, scriptName: string, cron: string, cpuTimeUs: number, status: string }> }> } | null };
+
 export type GetR2AnalyticsQueryVariables = Exact<{
   accountTag: Scalars['string']['input'];
   startDate: InputMaybe<Scalars['Date']['input']>;
@@ -43741,5 +44013,6 @@ export type GetWorkersAnalyticsQueryVariables = Exact<{
 export type GetWorkersAnalyticsQuery = { __typename?: 'Query', viewer: { __typename?: 'viewer', accounts: Array<{ __typename?: 'account', workersInvocationsAdaptive: Array<{ __typename?: 'AccountWorkersInvocationsAdaptive', dimensions: { __typename?: 'AccountWorkersInvocationsAdaptiveDimensions', scriptName: string, date: string } | null, quantiles: { __typename?: 'AccountWorkersInvocationsAdaptiveQuantiles', cpuTimeP25: number, cpuTimeP50: number, cpuTimeP75: number, cpuTimeP90: number, cpuTimeP99: number, cpuTimeP999: number } | null, sum: { __typename?: 'AccountWorkersInvocationsAdaptiveSum', requests: number } | null, min: { __typename?: 'AccountWorkersInvocationsAdaptiveMin', cpuTime: number } | null, max: { __typename?: 'AccountWorkersInvocationsAdaptiveMax', cpuTime: number } | null }>, workersInvocationsScheduled: Array<{ __typename?: 'AccountWorkersInvocationsScheduled', datetime: string, scheduledDatetime: string, scriptName: string, cron: string, cpuTimeUs: number, status: string }> }> } | null };
 
 
+export const GetCloudflareAnalyticsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCloudflareAnalytics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accountTag"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"string"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startTime"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Time"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"endTime"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Time"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accounts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"accountTag"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accountTag"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"r2OperationsAdaptiveGroups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_geq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"date_leq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bucketName"}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requests"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"r2StorageAdaptiveGroups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_geq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"date_leq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bucketName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"max"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"objectCount"}},{"kind":"Field","name":{"kind":"Name","value":"uploadCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadataSize"}},{"kind":"Field","name":{"kind":"Name","value":"payloadSize"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"workersInvocationsAdaptive"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_geq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"date_leq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scriptName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"quantiles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP25"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP50"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP75"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP90"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP99"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP999"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requests"}}]}},{"kind":"Field","name":{"kind":"Name","value":"min"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cpuTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"max"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cpuTime"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"workersInvocationsScheduled"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"datetime_geq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startTime"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"datetime_leq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endTime"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"datetime"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledDatetime"}},{"kind":"Field","name":{"kind":"Name","value":"scriptName"}},{"kind":"Field","name":{"kind":"Name","value":"cron"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeUs"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCloudflareAnalyticsQuery, GetCloudflareAnalyticsQueryVariables>;
 export const GetR2AnalyticsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetR2Analytics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accountTag"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"string"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accounts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"accountTag"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accountTag"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"r2OperationsAdaptiveGroups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_geq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"date_leq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bucketName"}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requests"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"r2StorageAdaptiveGroups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_geq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"date_leq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bucketName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"max"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"objectCount"}},{"kind":"Field","name":{"kind":"Name","value":"uploadCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadataSize"}},{"kind":"Field","name":{"kind":"Name","value":"payloadSize"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetR2AnalyticsQuery, GetR2AnalyticsQueryVariables>;
 export const GetWorkersAnalyticsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorkersAnalytics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accountTag"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"string"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startTime"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Time"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"endTime"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Time"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accounts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"accountTag"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accountTag"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workersInvocationsAdaptive"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date_geq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startDate"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"date_leq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endDate"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scriptName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"quantiles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP25"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP50"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP75"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP90"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP99"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeP999"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sum"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requests"}}]}},{"kind":"Field","name":{"kind":"Name","value":"min"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cpuTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"max"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cpuTime"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"workersInvocationsScheduled"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"datetime_geq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startTime"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"datetime_leq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"endTime"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"datetime"}},{"kind":"Field","name":{"kind":"Name","value":"scheduledDatetime"}},{"kind":"Field","name":{"kind":"Name","value":"scriptName"}},{"kind":"Field","name":{"kind":"Name","value":"cron"}},{"kind":"Field","name":{"kind":"Name","value":"cpuTimeUs"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkersAnalyticsQuery, GetWorkersAnalyticsQueryVariables>;

@@ -1,11 +1,8 @@
 import {
   type Env,
-  GetR2AnalyticsDocument,
-  type GetR2AnalyticsQuery,
-  type GetR2AnalyticsQueryVariables,
-  GetWorkersAnalyticsDocument,
-  type GetWorkersAnalyticsQuery,
-  type GetWorkersAnalyticsQueryVariables,
+  GetCloudflareAnalyticsDocument,
+  type GetCloudflareAnalyticsQuery,
+  type GetCloudflareAnalyticsQueryVariables,
 } from "../types";
 import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
@@ -17,12 +14,8 @@ export default class CloudflareAnalytics {
     this.env = env;
   }
 
-  public async getR2Analytics(variables: GetR2AnalyticsQueryVariables): Promise<GetR2AnalyticsQuery> {
-    return this._makeRequest(GetR2AnalyticsDocument, variables);
-  }
-
-  public async getWorkersAnalytics(variables: GetWorkersAnalyticsQueryVariables): Promise<GetWorkersAnalyticsQuery> {
-    return await this._makeRequest(GetWorkersAnalyticsDocument, variables);
+  public async get(variables: GetCloudflareAnalyticsQueryVariables): Promise<GetCloudflareAnalyticsQuery> {
+    return this._makeRequest(GetCloudflareAnalyticsDocument, variables);
   }
 
   private async _makeRequest<T, V = Record<string, unknown>>(
