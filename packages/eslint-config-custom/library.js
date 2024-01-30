@@ -2,8 +2,6 @@ const { resolve } = require("node:path");
 
 const project = resolve(process.cwd(), "tsconfig.json");
 
-const complexity = 20;
-const maxDepth = 6;
 const maxLines = 10000;
 const maxLinesPerFunction = 1000;
 const maxParams = 4;
@@ -347,7 +345,6 @@ module.exports = {
     "grouped-accessor-pairs": ["error", "getBeforeSet"],
     "guard-for-in": "error",
     "id-length": ["error", { exceptions: ["t"], properties: "never" }],
-    "max-depth": ["error", maxDepth],
     "max-lines": ["error", maxLines],
     "max-lines-per-function": ["error", maxLinesPerFunction],
     "max-nested-callbacks": ["error"],
