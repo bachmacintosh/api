@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import type {
   CellData,
+  DimensionRange,
   Env,
   GetCloudflareAnalyticsQuery,
   Request,
@@ -313,7 +314,6 @@ async function checkIfSheetsHaveData(env: Env, sheetStatus: SheetStatus[], sheet
       ranges,
       majorDimension: "ROWS",
     });
-    console.info(values);
     if (Array.isArray(values.valueRanges)) {
       // At least one range was returned, so we'll check their content.
       for (const valueRange of values.valueRanges) {
@@ -392,24 +392,106 @@ async function clearExistingSheetsWithoutData(
   }
 }
 
+async function deleteOldRows(env: Env, sheetStatus: SheetStatus[], sheets: GoogleSheets): Promise<void> {
+  const TWO = 2;
+  const batchGetRanges: string[] = [];
+  const clearRanges: string[] = [];
+  const deleteRequests: Request[] = [];
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    timeZone: "America/New_York",
+  };
+  const currentDateString = new Date().toLocaleString("en-US", dateOptions);
+  const currentDate = new Date(currentDateString);
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  const currentDay = currentDate.getDate();
+
+  for (const status of sheetStatus) {
+    batchGetRanges.push(`${status.title}!A2:A`);
+  }
+  const batchGetResponse = await sheets.batchGetValues({
+    spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS,
+    ranges: batchGetRanges,
+  });
+  if (Array.isArray(batchGetResponse.valueRanges)) {
+    for (const valueRange of batchGetResponse.valueRanges) {
+      const statusIndex = batchGetResponse.valueRanges.indexOf(valueRange);
+      if (Array.isArray(valueRange.values) && valueRange.values.length > 0) {
+        const dimensions: DimensionRange = {
+          sheetId: sheetStatus[statusIndex].sheetId,
+          dimension: "ROWS",
+        };
+        let currentRow = 2;
+        for (const value of valueRange.values) {
+          if (typeof value[0] === "string" && value[0]) {
+            const testDate = new Date(value[0]);
+            if (!isNaN(testDate.getTime())) {
+              const testYear = testDate.getFullYear();
+              const testMonth = testDate.getMonth();
+              const testDay = testDate.getDate();
+              if (
+                currentYear - testYear >= TWO ||
+                (currentYear - testYear === 1 && currentMonth > testMonth) ||
+                (currentYear - testYear === 1 && currentMonth === testMonth && currentDay > testDay)
+              ) {
+                if (currentRow === TWO) {
+                  clearRanges.push(
+                    `${sheetStatus[statusIndex].title}!A2:${toA1Notation(TWO, sheetStatus[statusIndex].neededColumns)}`,
+                  );
+                } else if (typeof dimensions.startIndex === "number" && typeof dimensions.endIndex === "number") {
+                  dimensions.endIndex += 1;
+                } else {
+                  dimensions.startIndex = currentRow - 1;
+                  dimensions.endIndex = currentRow;
+                }
+              } else {
+                break;
+              }
+            }
+          }
+          currentRow += 1;
+        }
+        if (typeof dimensions.startIndex === "number" && typeof dimensions.endIndex === "number") {
+          console.info(dimensions);
+          deleteRequests.push({
+            deleteDimension: {
+              range: dimensions,
+            },
+          });
+        }
+      }
+    }
+    if (deleteRequests.length) {
+      console.info(deleteRequests);
+      await sheets.batchUpdateSpreadsheet({
+        spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS,
+        body: { requests: deleteRequests },
+      });
+    }
+    if (clearRanges.length) {
+      await sheets.batchClearValues({
+        spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS,
+        body: { ranges: clearRanges },
+      });
+    }
+  }
+}
+
 async function normalizeSpreadsheet(env: Env, sheetStatus: SheetStatus[], sheets: GoogleSheets): Promise<void> {
   console.info("Fetching Spreadsheet info from Google Sheets...");
   const spreadsheet = await sheets.getSpreadsheet({ spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS });
 
   console.info("Checking if sheets already exist...");
   checkIfSheetsExist(sheetStatus, spreadsheet);
-  console.info(sheetStatus);
 
   console.info("Checking if sheets already have data...");
   await checkIfSheetsHaveData(env, sheetStatus, sheets);
-  console.info(sheetStatus);
 
   console.info("Clearing sheets that exist but have incorrect or no data...");
   await clearExistingSheetsWithoutData(env, sheetStatus, sheets);
 
   console.info("Preparing batchUpdate Requests...");
   const requests = buildBatchUpdateSpreadsheetRequests(sheetStatus);
-  console.info(requests);
 
   console.info("Batch Updating Spreadsheet...");
   await sheets.batchUpdateSpreadsheet({ spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS, body: { requests } });
@@ -514,6 +596,9 @@ export default async function updateCloudflareAnalyticsSpreadsheet(env: Env): Pr
 
   console.info("Normalizing Spreadsheet...");
   await normalizeSpreadsheet(env, sheetStatus, sheets);
+
+  console.info("Deleting old rows from sheets...");
+  await deleteOldRows(env, sheetStatus, sheets);
 
   console.info("Appending Sheets with New Query Info");
   await appendSheetsWithQueryData(env, sheets, query);
