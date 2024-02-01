@@ -6,7 +6,7 @@ import monitorSteamGame from "./steam/monitorSteamGame";
 import updateCloudflareAnalyticsSpreadsheet from "./cloudflare/updateCloudflareAnalyticsSpreadsheet";
 
 export default async function handleScheduled(env: Env): Promise<void> {
-  const MIDNIGHT = 0;
+  const HOUR_12 = 12;
   const MINUTE_10 = 10;
   const dateOptions: Intl.DateTimeFormatOptions = {
     timeZone: "America/New_York",
@@ -24,7 +24,7 @@ export default async function handleScheduled(env: Env): Promise<void> {
     await handleSensiboPods(env, rest, hour);
   }
   await monitorSteamGame(env, rest);
-  if (hour === MIDNIGHT) {
+  if (hour === HOUR_12) {
     await updateCloudflareAnalyticsSpreadsheet(env);
   }
 }
