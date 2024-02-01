@@ -10,7 +10,7 @@ TITLE: Google Sheets API
 DESCRIPTION: Reads and writes Google Sheets.
 ROOT URL: https://sheets.googleapis.com/
 DOCUMENTATION: https://developers.google.com/sheets/
-REVISION DATE: 20240116
+REVISION DATE: 20240129
 */
 
 /*
