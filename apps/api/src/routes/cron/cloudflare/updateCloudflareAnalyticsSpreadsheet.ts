@@ -415,6 +415,7 @@ async function deleteOldRows(env: Env, sheetStatus: SheetStatus[], sheets: Googl
           dimension: "ROWS",
         };
         let currentRow = 2;
+        let hasMoreRowsBelow = false;
         for (const value of valueRange.values) {
           if (typeof value[0] === "string" && value[0]) {
             const testDate = new Date(value[0]);
@@ -427,17 +428,14 @@ async function deleteOldRows(env: Env, sheetStatus: SheetStatus[], sheets: Googl
                 (currentYear - testYear === 1 && currentMonth > testMonth) ||
                 (currentYear - testYear === 1 && currentMonth === testMonth && currentDay > testDay)
               ) {
-                if (currentRow === TWO) {
-                  clearRanges.push(
-                    `${sheetStatus[statusIndex].title}!A2:${toA1Notation(TWO, sheetStatus[statusIndex].neededColumns)}`,
-                  );
-                } else if (typeof dimensions.startIndex === "number" && typeof dimensions.endIndex === "number") {
+                if (typeof dimensions.startIndex === "number" && typeof dimensions.endIndex === "number") {
                   dimensions.endIndex += 1;
                 } else {
                   dimensions.startIndex = currentRow - 1;
                   dimensions.endIndex = currentRow;
                 }
               } else {
+                hasMoreRowsBelow = true;
                 break;
               }
             }
@@ -445,11 +443,19 @@ async function deleteOldRows(env: Env, sheetStatus: SheetStatus[], sheets: Googl
           currentRow += 1;
         }
         if (typeof dimensions.startIndex === "number" && typeof dimensions.endIndex === "number") {
-          deleteRequests.push({
-            deleteDimension: {
-              range: dimensions,
-            },
-          });
+          if (!hasMoreRowsBelow) {
+            dimensions.startIndex += 1;
+            clearRanges.push(
+              `${sheetStatus[statusIndex].title}!A2:${toA1Notation(TWO, sheetStatus[statusIndex].neededColumns)}`,
+            );
+          }
+          if (dimensions.endIndex > dimensions.startIndex) {
+            deleteRequests.push({
+              deleteDimension: {
+                range: dimensions,
+              },
+            });
+          }
         }
       }
     }
