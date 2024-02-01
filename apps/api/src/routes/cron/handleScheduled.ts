@@ -24,7 +24,7 @@ export default async function handleScheduled(env: Env): Promise<void> {
     await handleSensiboPods(env, rest, hour);
   }
   await monitorSteamGame(env, rest);
-  if (hour === HOUR_12) {
+  if (hour === HOUR_12 && minute < MINUTE_10) {
     await updateCloudflareAnalyticsSpreadsheet(env);
   }
 }
