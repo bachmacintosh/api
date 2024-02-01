@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "@discordjs/rest": "2.2.0",
-    "@googleapis/sheets": "5.0.5",
     "cloudflare-workers-and-google-oauth": "2.0.0",
     "drizzle-orm": "0.29.3",
     "graphql": "16.8.1",
