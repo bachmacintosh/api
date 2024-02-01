@@ -307,7 +307,6 @@ async function checkIfSheetsHaveData(env: Env, sheetStatus: SheetStatus[], sheet
   }
   if (rangeMap.size) {
     const ranges = [...rangeMap.keys()];
-    console.info(`Batch Getting Ranges: ${ranges.join(", ")}`);
     const values = await sheets.batchGetValues({
       spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS,
       ranges,
@@ -360,8 +359,6 @@ async function checkIfSheetsHaveData(env: Env, sheetStatus: SheetStatus[], sheet
         status.hasData = false;
       }
     }
-  } else {
-    console.info("No ranges seemed to exist. Skipping batch get.");
   }
 }
 
@@ -381,13 +378,10 @@ async function clearExistingSheetsWithoutData(
     }
   }
   if (ranges.length) {
-    console.info(`Clearing Sheets: ${ranges.join(", ")}`);
     await sheets.batchClearValues({
       spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS,
       body: { ranges },
     });
-  } else {
-    console.info("No sheets need to be batchCleared.");
   }
 }
 
@@ -451,7 +445,6 @@ async function deleteOldRows(env: Env, sheetStatus: SheetStatus[], sheets: Googl
           currentRow += 1;
         }
         if (typeof dimensions.startIndex === "number" && typeof dimensions.endIndex === "number") {
-          console.info(dimensions);
           deleteRequests.push({
             deleteDimension: {
               range: dimensions,
@@ -461,7 +454,6 @@ async function deleteOldRows(env: Env, sheetStatus: SheetStatus[], sheets: Googl
       }
     }
     if (deleteRequests.length) {
-      console.info(deleteRequests);
       await sheets.batchUpdateSpreadsheet({
         spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS,
         body: { requests: deleteRequests },
@@ -477,22 +469,12 @@ async function deleteOldRows(env: Env, sheetStatus: SheetStatus[], sheets: Googl
 }
 
 async function normalizeSpreadsheet(env: Env, sheetStatus: SheetStatus[], sheets: GoogleSheets): Promise<void> {
-  console.info("Fetching Spreadsheet info from Google Sheets...");
   const spreadsheet = await sheets.getSpreadsheet({ spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS });
 
-  console.info("Checking if sheets already exist...");
   checkIfSheetsExist(sheetStatus, spreadsheet);
-
-  console.info("Checking if sheets already have data...");
   await checkIfSheetsHaveData(env, sheetStatus, sheets);
-
-  console.info("Clearing sheets that exist but have incorrect or no data...");
   await clearExistingSheetsWithoutData(env, sheetStatus, sheets);
-
-  console.info("Preparing batchUpdate Requests...");
   const requests = buildBatchUpdateSpreadsheetRequests(sheetStatus);
-
-  console.info("Batch Updating Spreadsheet...");
   await sheets.batchUpdateSpreadsheet({ spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS, body: { requests } });
 }
 
@@ -571,7 +553,6 @@ export default async function updateCloudflareAnalyticsSpreadsheet(env: Env): Pr
   const analytics = new CloudflareAnalytics(env);
   const sheets = new GoogleSheets(env);
 
-  console.info("Fetching Cloudflare Analytics via GraphQL...");
   const TEN = 10;
   const today = new Date();
   const yesterday = new Date(today);
@@ -593,14 +574,7 @@ export default async function updateCloudflareAnalyticsSpreadsheet(env: Env): Pr
   const accountTag = env.CLOUDFLARE_ACCOUNT_TAG;
   const query = await analytics.get({ accountTag, startDate, endDate, startTime, endTime });
 
-  console.info("Normalizing Spreadsheet...");
   await normalizeSpreadsheet(env, sheetStatus, sheets);
-
-  console.info("Deleting old rows from sheets...");
   await deleteOldRows(env, sheetStatus, sheets);
-
-  console.info("Appending Sheets with New Query Info");
   await appendSheetsWithQueryData(env, sheets, query);
-
-  console.info("All Done!");
 }
