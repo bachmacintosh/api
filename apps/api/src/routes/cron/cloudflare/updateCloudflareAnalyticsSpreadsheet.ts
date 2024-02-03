@@ -481,7 +481,9 @@ async function normalizeSpreadsheet(env: Env, sheetStatus: SheetStatus[], sheets
   await checkIfSheetsHaveData(env, sheetStatus, sheets);
   await clearExistingSheetsWithoutData(env, sheetStatus, sheets);
   const requests = buildBatchUpdateSpreadsheetRequests(sheetStatus);
-  await sheets.batchUpdateSpreadsheet({ spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS, body: { requests } });
+  if (requests.length) {
+    await sheets.batchUpdateSpreadsheet({ spreadsheetId: env.GOOGLE_SPREADSHEET_ID_ANALYTICS, body: { requests } });
+  }
 }
 
 function toA1Notation(row: number, column: number): string {
