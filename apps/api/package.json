@@ -28,7 +28,7 @@
     "@graphql-typed-document-node/core": "3.2.0",
     "discord-api-types": "0.37.67",
     "dotenv": "16.3.1",
-    "drizzle-kit": "0.20.13",
+    "drizzle-kit": "0.20.14",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "5.3.3",
