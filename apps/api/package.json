@@ -20,7 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "@bachmacintosh/api-types": "workspace:*",
-    "@cloudflare/workers-types": "4.20240129.0",
+    "@cloudflare/workers-types": "4.20240208.0",
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/typed-document-node": "5.0.1",
     "@graphql-codegen/typescript": "4.0.1",
