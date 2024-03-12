@@ -255,7 +255,7 @@ const noMagicNumbersRules = [
     ignoreNumericLiteralTypes: true,
     ignoreReadonlyClassProperties: true,
     ignoreTypeIndexes: true,
-    ignore: [0, 1, "0n", "1n"],
+    ignore: [-1, 0, 1, "-1n", "0n", "1n"],
   },
 ];
 

@@ -36,11 +36,13 @@ export default async function cleanUpChannels(env: Env, rest: REST): Promise<voi
       messages.sort((messageA, messageB) => {
         const messageIdA = BigInt(messageA.id);
         const messageIdB = BigInt(messageB.id);
-        const sortResult = messageIdA - messageIdB;
-        if (sortResult < Number.MIN_SAFE_INTEGER || sortResult > Number.MAX_SAFE_INTEGER) {
-          throw new RangeError("Returned ID range is too big to sort.");
+        if (messageIdA < messageIdB) {
+          return -1;
+        } else if (messageIdA > messageIdB) {
+          return 1;
+        } else {
+          return 0;
         }
-        return Number(sortResult);
       });
       for (const message of messages) {
         const currentTime = Date.now();
