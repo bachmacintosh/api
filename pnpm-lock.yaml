@@ -82,8 +82,8 @@ importers:
         specifier: 3.2.0
         version: 3.2.0(graphql@16.8.1)
       discord-api-types:
-        specifier: 0.37.79
-        version: 0.37.79
+        specifier: 0.37.80
+        version: 0.37.80
       dotenv:
         specifier: 16.4.5
         version: 16.4.5
@@ -3517,8 +3517,8 @@ packages:
     resolution: {integrity: sha512-o/dXNFfhBpYHpQFdT6FWzeO7pKc838QeeZ9d91CfVAtpr5XLK4B/zYxQbYgPdoMiTDvJfzcsLW5naXgmHGDNXw==}
     dev: false
 
-  /discord-api-types@0.37.79:
-    resolution: {integrity: sha512-jblKMZL5f9t/pfUyhHNey8Lb9yVCcBVIPxz/JTY0raAmfj7CuFXdl9m5o/+iiB7E0vv1Kz9V7Ao5HtLRc2gH1Q==}
+  /discord-api-types@0.37.80:
+    resolution: {integrity: sha512-aQTZn3C34TOyOmbr9499DgMINZGRmh5K2gT4lZv1/tUb3swPQ6iCthqMVmA5G8d38lTiCwoSyULYAMHifjHh1g==}
     dev: true
 
   /doctrine@2.1.0:
