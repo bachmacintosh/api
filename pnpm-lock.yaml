@@ -36,8 +36,8 @@ importers:
         specifier: 2.0.0
         version: 2.0.0
       drizzle-orm:
-        specifier: 0.30.7
-        version: 0.30.7(@cloudflare/workers-types@4.20240423.0)
+        specifier: 0.30.10
+        version: 0.30.10(@cloudflare/workers-types@4.20240423.0)
       graphql:
         specifier: 16.8.1
         version: 16.8.1
@@ -3598,8 +3598,8 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.30.7(@cloudflare/workers-types@4.20240423.0):
-    resolution: {integrity: sha512-9qefSZQlu2fO2qv24piHyWFWcxcOY15//0v4j8qomMqaxzipNoG+fUBrQ7Ftk7PY7APRbRdn/nkEXWxiI4a8mw==}
+  /drizzle-orm@0.30.10(@cloudflare/workers-types@4.20240423.0):
+    resolution: {integrity: sha512-IRy/QmMWw9lAQHpwbUh1b8fcn27S/a9zMIzqea1WNOxK9/4EB8gIo+FZWLiPXzl2n9ixGSv8BhsLZiOppWEwBw==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
