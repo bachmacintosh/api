@@ -26,7 +26,7 @@
     "@graphql-codegen/typescript": "4.0.6",
     "@graphql-codegen/typescript-operations": "4.2.0",
     "@graphql-typed-document-node/core": "3.2.0",
-    "discord-api-types": "0.37.84",
+    "discord-api-types": "0.37.85",
     "dotenv": "16.4.5",
     "drizzle-kit": "0.20.17",
     "eslint-config-custom": "workspace:*",
