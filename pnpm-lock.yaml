@@ -42,8 +42,8 @@ importers:
         specifier: 16.8.1
         version: 16.8.1
       itty-router:
-        specifier: 4.2.2
-        version: 4.2.2
+        specifier: 5.0.17
+        version: 5.0.17
       mdast-util-from-markdown:
         specifier: 2.0.1
         version: 2.0.1
@@ -5058,8 +5058,8 @@ packages:
       ws: 8.16.0
     dev: true
 
-  /itty-router@4.2.2:
-    resolution: {integrity: sha512-KegPW0l9SNPadProoFT07AB84uOqLUwzlXQ7HsqkS31WUrxkjdhcemRpTDUuetbMJ89uBtWeQSVoiEmUAu31uw==}
+  /itty-router@5.0.17:
+    resolution: {integrity: sha512-ZHnPI0OOyTTLuNp2FdciejYaK4Wl3ZV3O0yEm8njOGggh/k/ek3BL7X2I5YsCOfc5vLhIJgj3Z4pUtLs6k9Ucg==}
     dev: false
 
   /jiti@1.21.0:
