@@ -100,8 +100,8 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
       undici:
-        specifier: 6.6.2
-        version: 6.6.2
+        specifier: 6.11.1
+        version: 6.11.1
       wrangler:
         specifier: 3.57.2
         version: 3.57.2(@cloudflare/workers-types@4.20240529.0)
@@ -7086,11 +7086,9 @@ packages:
       '@fastify/busboy': 2.0.0
     dev: true
 
-  /undici@6.6.2:
-    resolution: {integrity: sha512-vSqvUE5skSxQJ5sztTZ/CdeJb1Wq0Hf44hlYMciqHghvz+K88U0l7D6u1VsndoFgskDcnU+nG3gYmMzJVzd9Qg==}
+  /undici@6.11.1:
+    resolution: {integrity: sha512-KyhzaLJnV1qa3BSHdj4AZ2ndqI0QWPxYzaIOio0WzcEJB9gvuysprJSLtpvc2D9mhR9jPDUk7xlJlZbH2KR5iw==}
     engines: {node: '>=18.0'}
-    dependencies:
-      '@fastify/busboy': 2.0.0
     dev: true
 
   /unist-util-is@6.0.0:
