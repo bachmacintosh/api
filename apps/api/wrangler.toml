@@ -16,19 +16,19 @@ database_name = "api"
 database_id = "0f1d5ed6-0388-4df7-8f2e-2ff8580d40fa"
 migrations_dir = "drizzle"
 
-[triggers]
-crons = ["*/10 * * * *"]
+#[triggers]
+#crons = ["*/10 * * * *"]
 
 [limits]
 cpu_ms = 1000
 
-[[queues.producers]]
-  queue = "bach-queue"
-  binding = "QUEUE"
+#[[queues.producers]]
+#  queue = "bach-queue"
+#  binding = "QUEUE"
 
-[[queues.consumers]]
-  queue = "bach-queue"
-	dead_letter_queue = "bach-dead-queue"
-  max_batch_size = 20
-  max_batch_timeout = 5
-  max_retries = 5
+#[[queues.consumers]]
+#  queue = "bach-queue"
+#	dead_letter_queue = "bach-dead-queue"
+#  max_batch_size = 20
+#  max_batch_timeout = 5
+#  max_retries = 5
