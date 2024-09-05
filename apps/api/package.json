@@ -36,7 +36,7 @@
     "wrangler": "3.57.2"
   },
   "dependencies": {
-    "@discordjs/rest": "2.2.0",
+    "@discordjs/rest": "2.4.0",
     "cloudflare-workers-and-google-oauth": "2.0.0",
     "drizzle-orm": "0.30.10",
     "graphql": "16.8.1",
