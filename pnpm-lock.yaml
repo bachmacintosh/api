@@ -25,7 +25,7 @@ importers:
         version: link:packages/tsconfig
       turbo:
         specifier: latest
-        version: 1.13.3
+        version: 2.2.3
 
   apps/api:
     dependencies:
@@ -37,7 +37,7 @@ importers:
         version: 2.0.0
       drizzle-orm:
         specifier: 0.30.10
-        version: 0.30.10(@cloudflare/workers-types@4.20240529.0)
+        version: 0.30.10(@cloudflare/workers-types@4.20241018.0)
       graphql:
         specifier: 16.8.1
         version: 16.8.1
@@ -64,8 +64,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/api-types
       '@cloudflare/workers-types':
-        specifier: 4.20240529.0
-        version: 4.20240529.0
+        specifier: 4.20241018.0
+        version: 4.20241018.0
       '@graphql-codegen/cli':
         specifier: 5.0.2
         version: 5.0.2(graphql@16.8.1)(typescript@5.3.3)
@@ -104,7 +104,7 @@ importers:
         version: 6.6.2
       wrangler:
         specifier: 3.57.2
-        version: 3.57.2(@cloudflare/workers-types@4.20240529.0)
+        version: 3.57.2(@cloudflare/workers-types@4.20241018.0)
 
   packages/api-types:
     devDependencies:
@@ -1018,8 +1018,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workers-types@4.20240529.0:
-    resolution: {integrity: sha512-W5obfjAwCNdYk3feUHtDfUxtTU6WIq83k6gmrLLJv+HkgCkOTwwrDNs+3w1Qln0tMj+FQx/fbwxw3ZuHIoyzGg==}
+  /@cloudflare/workers-types@4.20241018.0:
+    resolution: {integrity: sha512-gGWumpaaqnjN/G6SI7CZQ13G4SpIUV+EM8QqvuN2D3cGDF6mKIm+ov7H4x7V/c+AdY90v0FCc8B5nmEEt90MvQ==}
 
   /@cspotcode/source-map-support@0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -3645,7 +3645,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.30.10(@cloudflare/workers-types@4.20240529.0):
+  /drizzle-orm@0.30.10(@cloudflare/workers-types@4.20241018.0):
     resolution: {integrity: sha512-IRy/QmMWw9lAQHpwbUh1b8fcn27S/a9zMIzqea1WNOxK9/4EB8gIo+FZWLiPXzl2n9ixGSv8BhsLZiOppWEwBw==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -3725,7 +3725,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@cloudflare/workers-types': 4.20240529.0
+      '@cloudflare/workers-types': 4.20241018.0
     dev: false
 
   /dset@3.1.3:
@@ -6910,64 +6910,64 @@ packages:
       yargs: 17.7.2
     dev: true
 
-  /turbo-darwin-64@1.13.3:
-    resolution: {integrity: sha512-glup8Qx1qEFB5jerAnXbS8WrL92OKyMmg5Hnd4PleLljAeYmx+cmmnsmLT7tpaVZIN58EAAwu8wHC6kIIqhbWA==}
+  /turbo-darwin-64@2.2.3:
+    resolution: {integrity: sha512-Rcm10CuMKQGcdIBS3R/9PMeuYnv6beYIHqfZFeKWVYEWH69sauj4INs83zKMTUiZJ3/hWGZ4jet9AOwhsssLyg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.13.3:
-    resolution: {integrity: sha512-/np2xD+f/+9qY8BVtuOQXRq5f9LehCFxamiQnwdqWm5iZmdjygC5T3uVSYuagVFsZKMvX3ycySwh8dylGTl6lg==}
+  /turbo-darwin-arm64@2.2.3:
+    resolution: {integrity: sha512-+EIMHkuLFqUdJYsA3roj66t9+9IciCajgj+DVek+QezEdOJKcRxlvDOS2BUaeN8kEzVSsNiAGnoysFWYw4K0HA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.13.3:
-    resolution: {integrity: sha512-G+HGrau54iAnbXLfl+N/PynqpDwi/uDzb6iM9hXEDG+yJnSJxaHMShhOkXYJPk9offm9prH33Khx2scXrYVW1g==}
+  /turbo-linux-64@2.2.3:
+    resolution: {integrity: sha512-UBhJCYnqtaeOBQLmLo8BAisWbc9v9daL9G8upLR+XGj6vuN/Nz6qUAhverN4Pyej1g4Nt1BhROnj6GLOPYyqxQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.13.3:
-    resolution: {integrity: sha512-qWwEl5VR02NqRyl68/3pwp3c/olZuSp+vwlwrunuoNTm6JXGLG5pTeme4zoHNnk0qn4cCX7DFrOboArlYxv0wQ==}
+  /turbo-linux-arm64@2.2.3:
+    resolution: {integrity: sha512-hJYT9dN06XCQ3jBka/EWvvAETnHRs3xuO/rb5bESmDfG+d9yQjeTMlhRXKrr4eyIMt6cLDt1LBfyi+6CQ+VAwQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.13.3:
-    resolution: {integrity: sha512-Nudr4bRChfJzBPzEmpVV85VwUYRCGKecwkBFpbp2a4NtrJ3+UP1VZES653ckqCu2FRyRuS0n03v9euMbAvzH+Q==}
+  /turbo-windows-64@2.2.3:
+    resolution: {integrity: sha512-NPrjacrZypMBF31b4HE4ROg4P3nhMBPHKS5WTpMwf7wydZ8uvdEHpESVNMOtqhlp857zbnKYgP+yJF30H3N2dQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.13.3:
-    resolution: {integrity: sha512-ouJCgsVLd3icjRLmRvHQDDZnmGzT64GBupM1Y+TjtYn2LVaEBoV6hicFy8x5DUpnqdLy+YpCzRMkWlwhmkX7sQ==}
+  /turbo-windows-arm64@2.2.3:
+    resolution: {integrity: sha512-fnNrYBCqn6zgKPKLHu4sOkihBI/+0oYFr075duRxqUZ+1aLWTAGfHZLgjVeLh3zR37CVzuerGIPWAEkNhkWEIw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.13.3:
-    resolution: {integrity: sha512-n17HJv4F4CpsYTvKzUJhLbyewbXjq1oLCi90i5tW1TiWDz16ML1eDG7wi5dHaKxzh5efIM56SITnuVbMq5dk4g==}
+  /turbo@2.2.3:
+    resolution: {integrity: sha512-5lDvSqIxCYJ/BAd6rQGK/AzFRhBkbu4JHVMLmGh/hCb7U3CqSnr5Tjwfy9vc+/5wG2DJ6wttgAaA7MoCgvBKZQ==}
     hasBin: true
     optionalDependencies:
-      turbo-darwin-64: 1.13.3
-      turbo-darwin-arm64: 1.13.3
-      turbo-linux-64: 1.13.3
-      turbo-linux-arm64: 1.13.3
-      turbo-windows-64: 1.13.3
-      turbo-windows-arm64: 1.13.3
+      turbo-darwin-64: 2.2.3
+      turbo-darwin-arm64: 2.2.3
+      turbo-linux-64: 2.2.3
+      turbo-linux-arm64: 2.2.3
+      turbo-windows-64: 2.2.3
+      turbo-windows-arm64: 2.2.3
     dev: true
 
   /type-check@0.4.0:
@@ -7287,7 +7287,7 @@ packages:
       '@cloudflare/workerd-windows-64': 1.20240524.0
     dev: true
 
-  /wrangler@3.57.2(@cloudflare/workers-types@4.20240529.0):
+  /wrangler@3.57.2(@cloudflare/workers-types@4.20241018.0):
     resolution: {integrity: sha512-QegYf0FW+4prlFKE9iHr1EGrCo8ejcGL9gaqEXrzQ0vbTdazykYbY0I5UpHFLNq2dIF9I/ifEoLRKr636tyHEw==}
     engines: {node: '>=16.17.0'}
     hasBin: true
@@ -7298,7 +7298,7 @@ packages:
         optional: true
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.2
-      '@cloudflare/workers-types': 4.20240529.0
+      '@cloudflare/workers-types': 4.20241018.0
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
       '@esbuild-plugins/node-modules-polyfill': 0.2.2(esbuild@0.17.19)
       blake3-wasm: 2.1.5
